@@ -123,6 +123,9 @@ const mockPatients = [
       { name: "Protein", target: 80, actual: 78, unit: "g", color: "hsl(var(--nutrient-protein))" },
       { name: "Fat", target: 60, actual: 55, unit: "g", color: "hsl(var(--nutrient-fat))" },
       { name: "Fibre", target: 30, actual: 28, unit: "g", color: "hsl(var(--nutrient-fibre))" },
+      { name: "Sugar", target: 45, actual: 20, unit: "g", color: "hsl(var(--nutrient-sugar))" },
+      { name: "Medication", target: 4, actual: 4, unit: "", color: "hsl(var(--nomi-amber))" },
+    ],
     ],
   },
 ];
