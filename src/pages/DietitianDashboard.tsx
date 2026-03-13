@@ -479,7 +479,7 @@ const DietitianDashboard = () => {
         </div>
 
         {/* Insight cards */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             { label: "Most Deficient", value: deficient.name, sub: `${Math.round((deficient.actual / deficient.target) * 100)}% of target`, color: "text-rag-red" },
             { label: "Most Consistent", value: consistent.name, sub: `${Math.round((consistent.actual / consistent.target) * 100)}% of target`, color: "text-nomi-green" },
