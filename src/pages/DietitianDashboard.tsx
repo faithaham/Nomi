@@ -195,6 +195,7 @@ const DietitianDashboard = () => {
   const [newMessage, setNewMessage] = useState("");
   const [feedback, setFeedback] = useState("");
   const [selectedCalDay, setSelectedCalDay] = useState<number | null>(null);
+  const [patientSearch, setPatientSearch] = useState("");
 
   const openPatientProfile = (id: number) => {
     setSelectedPatientId(id);
