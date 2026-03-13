@@ -402,7 +402,7 @@ const DietitianDashboard = () => {
         </div>
 
         {/* Thread */}
-        <div className="flex-1 border border-border rounded-lg bg-card flex flex-col">
+        <div className="flex-1 border border-border rounded-lg bg-card flex flex-col min-h-[300px] md:min-h-0">
           <div className="p-4 border-b border-border">
             <p className="font-semibold text-foreground">{convo.patient}</p>
           </div>
