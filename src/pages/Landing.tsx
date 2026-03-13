@@ -38,43 +38,72 @@ const BreadTagLogo = () => {
   const month = now.toLocaleString("en-US", { month: "short" }).toUpperCase();
 
   return (
-    <svg width="100" height="110" viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Bread tag shape */}
+    <svg width="120" height="130" viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <clipPath id="topHalf">
+          <rect x="0" y="0" width="120" height="58" />
+        </clipPath>
+        <clipPath id="bottomHalf">
+          <rect x="0" y="58" width="120" height="72" />
+        </clipPath>
+      </defs>
+
+      {/* Bottom half grey */}
       <path
-        d="M12 8 C12 4, 16 0, 20 0 L80 0 C84 0, 88 4, 88 8 L88 90 C88 94, 84 98, 80 98 L62 98 L58 110 L52 98 L20 98 C16 98, 12 94, 12 90 Z"
-        fill="hsl(210, 15%, 75%)"
+        d="M18 6 C16 3, 20 2, 24 3 Q30 1, 38 2 Q50 0, 62 1 Q74 0, 82 2 Q90 1, 96 3 C100 2, 103 5, 102 8 Q104 18, 103 30 Q104 42, 102 52 Q104 62, 103 72 Q104 82, 102 90 C103 94, 100 97, 96 98 Q88 100, 78 98 L72 98 Q68 99, 65 106 C63 112, 61 118, 60 120 C59 118, 57 112, 55 106 Q52 99, 48 98 L42 98 Q32 100, 24 98 C20 97, 17 94, 18 90 Q16 82, 17 72 Q16 62, 17 52 Q16 42, 17 30 Q16 18, 18 6 Z"
+        fill="hsl(210, 10%, 82%)"
+        clipPath="url(#bottomHalf)"
       />
       {/* Top half white */}
-      <clipPath id="topHalf">
-        <rect x="12" y="0" width="76" height="49" />
-      </clipPath>
       <path
-        d="M12 8 C12 4, 16 0, 20 0 L80 0 C84 0, 88 4, 88 8 L88 90 C88 94, 84 98, 80 98 L62 98 L58 110 L52 98 L20 98 C16 98, 12 94, 12 90 Z"
+        d="M18 6 C16 3, 20 2, 24 3 Q30 1, 38 2 Q50 0, 62 1 Q74 0, 82 2 Q90 1, 96 3 C100 2, 103 5, 102 8 Q104 18, 103 30 Q104 42, 102 52 Q104 62, 103 72 Q104 82, 102 90 C103 94, 100 97, 96 98 Q88 100, 78 98 L72 98 Q68 99, 65 106 C63 112, 61 118, 60 120 C59 118, 57 112, 55 106 Q52 99, 48 98 L42 98 Q32 100, 24 98 C20 97, 17 94, 18 90 Q16 82, 17 72 Q16 62, 17 52 Q16 42, 17 30 Q16 18, 18 6 Z"
         fill="white"
         clipPath="url(#topHalf)"
       />
-      {/* Two holes */}
-      <circle cx="32" cy="18" r="4" fill="hsl(210, 15%, 75%)" />
-      <circle cx="50" cy="18" r="4" fill="hsl(210, 15%, 75%)" />
+
+      {/* Thick doodle outline */}
+      <path
+        d="M18 6 C16 3, 20 2, 24 3 Q30 1, 38 2 Q50 0, 62 1 Q74 0, 82 2 Q90 1, 96 3 C100 2, 103 5, 102 8 Q104 18, 103 30 Q104 42, 102 52 Q104 62, 103 72 Q104 82, 102 90 C103 94, 100 97, 96 98 Q88 100, 78 98 L72 98 Q68 99, 65 106 C63 112, 61 118, 60 120 C59 118, 57 112, 55 106 Q52 99, 48 98 L42 98 Q32 100, 24 98 C20 97, 17 94, 18 90 Q16 82, 17 72 Q16 62, 17 52 Q16 42, 17 30 Q16 18, 18 6 Z"
+        fill="none"
+        stroke="hsl(215, 25%, 15%)"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+
+      {/* Notch / bite on right */}
+      <path
+        d="M102 32 C110 38, 110 50, 102 56"
+        fill="hsl(210, 20%, 98%)"
+        stroke="hsl(215, 25%, 15%)"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+      />
+
+      {/* Two wonky holes */}
+      <ellipse cx="38" cy="22" rx="5" ry="4" fill="none" stroke="hsl(215, 25%, 15%)" strokeWidth="3" transform="rotate(-8, 38, 22)" />
+      <ellipse cx="62" cy="22" rx="5" ry="4" fill="none" stroke="hsl(215, 25%, 15%)" strokeWidth="3" transform="rotate(6, 62, 22)" />
+
       {/* Date text */}
       <text
-        x="50"
-        y="58"
+        x="58"
+        y="78"
         textAnchor="middle"
         fontFamily="'DM Sans', system-ui, sans-serif"
-        fontWeight="700"
+        fontWeight="800"
         fontSize="28"
         fill="hsl(215, 25%, 15%)"
       >
         {day}
       </text>
       <text
-        x="50"
-        y="84"
+        x="58"
+        y="96"
         textAnchor="middle"
         fontFamily="'DM Sans', system-ui, sans-serif"
         fontWeight="700"
-        fontSize="20"
+        fontSize="16"
+        letterSpacing="2"
         fill="hsl(215, 25%, 15%)"
       >
         {month}
