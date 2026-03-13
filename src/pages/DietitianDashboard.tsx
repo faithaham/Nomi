@@ -249,9 +249,9 @@ const DietitianDashboard = () => {
 
       {/* Patient table */}
       <Card className="border-border">
-        <CardHeader className="pb-3 flex flex-row items-center justify-between space-y-0">
+        <CardHeader className="pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 space-y-0">
           <CardTitle className="text-base font-semibold text-foreground">Patient Overview</CardTitle>
-          <div className="relative w-64">
+          <div className="relative w-full sm:w-64">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
               placeholder="Search patients..."
