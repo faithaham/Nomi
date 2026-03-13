@@ -208,6 +208,7 @@ const DietitianDashboard = () => {
   const [feedback, setFeedback] = useState("");
   const [selectedCalDay, setSelectedCalDay] = useState<number | null>(null);
   const [patientSearch, setPatientSearch] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const openPatientProfile = (id: number) => {
     setSelectedPatientId(id);
