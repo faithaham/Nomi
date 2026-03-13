@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Landing from "./pages/Landing";
 import Index from "./pages/Index";
 import OneTimeVisit from "./pages/OneTimeVisit";
+import DietitianDashboard from "./pages/DietitianDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -20,7 +21,7 @@ const App = () => (
           <Route path="/" element={<Landing />} />
           <Route path="/patient" element={<Index />} />
           <Route path="/one-time" element={<OneTimeVisit />} />
-          <Route path="/dietitian" element={<Index />} />
+          <Route path="/dietitian" element={<DietitianDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
