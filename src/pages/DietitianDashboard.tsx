@@ -705,7 +705,7 @@ const DietitianDashboard = () => {
             {page === "profile" ? selectedPatient?.name ?? "Patient" : page}
           </h2>
           <div className="flex items-center gap-4">
-            <button className="relative">
+            <button className="relative hover:bg-muted/50 rounded-lg p-1.5 transition-colors" onClick={() => setPage("alerts")}>
               <Bell className="w-5 h-5 text-muted-foreground" />
               {activeAlerts.length > 0 && (
                 <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rag-red text-[9px] text-white flex items-center justify-center font-bold">
@@ -713,11 +713,12 @@ const DietitianDashboard = () => {
                 </span>
               )}
             </button>
-            <div className="flex items-center gap-2">
+            <button className="flex items-center gap-2 hover:bg-muted/50 rounded-lg px-2 py-1.5 transition-colors" onClick={() => setPage("settings")}>
               <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                 <span className="text-xs font-semibold text-primary">DW</span>
               </div>
               <span className="text-sm font-medium text-foreground hidden sm:inline">Dr. Williams</span>
+            </button>
             </div>
           </div>
         </header>
