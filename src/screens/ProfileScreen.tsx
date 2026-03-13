@@ -53,7 +53,7 @@ const ProfileScreen = () => {
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
         </div>
         <p className="text-xs text-muted-foreground mt-2 ml-13 pl-[52px]">
-          "Great progress this week, Sarah. Let's review your fibre targets next session."
+          "Hi Sarah — I noticed you've had a few meals this week without logging your Creon. Remember to take it with every meal and snack that contains fat or protein. It really helps with absorption. Let me know if you're having trouble remembering! 💊"
         </p>
       </motion.div>
 
