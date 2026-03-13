@@ -18,6 +18,7 @@ import {
   X,
   ArrowLeft,
   Camera,
+  Menu,
 } from "lucide-react";
 import DualRingChart from "@/components/DualRingChart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -207,6 +208,7 @@ const DietitianDashboard = () => {
   const [feedback, setFeedback] = useState("");
   const [selectedCalDay, setSelectedCalDay] = useState<number | null>(null);
   const [patientSearch, setPatientSearch] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const openPatientProfile = (id: number) => {
     setSelectedPatientId(id);
@@ -247,9 +249,9 @@ const DietitianDashboard = () => {
 
       {/* Patient table */}
       <Card className="border-border">
-        <CardHeader className="pb-3 flex flex-row items-center justify-between space-y-0">
+        <CardHeader className="pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 space-y-0">
           <CardTitle className="text-base font-semibold text-foreground">Patient Overview</CardTitle>
-          <div className="relative w-64">
+          <div className="relative w-full sm:w-64">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
               placeholder="Search patients..."
@@ -379,26 +381,28 @@ const DietitianDashboard = () => {
   const renderMessages = () => {
     const convo = mockMessages[selectedMessagePatient];
     return (
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-4 h-[calc(100vh-140px)]">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col md:flex-row gap-4 h-auto md:h-[calc(100vh-140px)]">
         {/* Patient list */}
-        <div className="w-72 shrink-0 border border-border rounded-lg overflow-hidden bg-card">
+        <div className="w-full md:w-72 md:shrink-0 border border-border rounded-lg overflow-hidden bg-card">
           <div className="p-3 border-b border-border">
             <p className="text-sm font-semibold text-foreground">Conversations</p>
           </div>
-          {mockMessages.map((m, i) => (
-            <button
-              key={m.patientId}
-              onClick={() => setSelectedMessagePatient(i)}
-              className={`w-full text-left p-3 border-b border-border transition-colors ${i === selectedMessagePatient ? "bg-primary/5" : "hover:bg-muted/30"}`}
-            >
-              <p className="text-sm font-medium text-foreground">{m.patient}</p>
-              <p className="text-xs text-muted-foreground truncate mt-0.5">{m.preview}</p>
-            </button>
-          ))}
+          <div className="flex md:flex-col overflow-x-auto md:overflow-x-visible">
+            {mockMessages.map((m, i) => (
+              <button
+                key={m.patientId}
+                onClick={() => setSelectedMessagePatient(i)}
+                className={`w-full min-w-[160px] md:min-w-0 text-left p-3 border-b border-border transition-colors ${i === selectedMessagePatient ? "bg-primary/5" : "hover:bg-muted/30"}`}
+              >
+                <p className="text-sm font-medium text-foreground">{m.patient}</p>
+                <p className="text-xs text-muted-foreground truncate mt-0.5">{m.preview}</p>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Thread */}
-        <div className="flex-1 border border-border rounded-lg bg-card flex flex-col">
+        <div className="flex-1 border border-border rounded-lg bg-card flex flex-col min-h-[300px] md:min-h-0">
           <div className="p-4 border-b border-border">
             <p className="font-semibold text-foreground">{convo.patient}</p>
           </div>
@@ -475,7 +479,7 @@ const DietitianDashboard = () => {
         </div>
 
         {/* Insight cards */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             { label: "Most Deficient", value: deficient.name, sub: `${Math.round((deficient.actual / deficient.target) * 100)}% of target`, color: "text-rag-red" },
             { label: "Most Consistent", value: consistent.name, sub: `${Math.round((consistent.actual / consistent.target) * 100)}% of target`, color: "text-nomi-green" },
@@ -659,11 +663,21 @@ const DietitianDashboard = () => {
 
   return (
     <div className="min-h-screen flex bg-background">
+      {/* Mobile sidebar overlay */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 bg-black/30 z-40 md:hidden" onClick={() => setSidebarOpen(false)} />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-60 shrink-0 bg-card border-r border-border flex flex-col">
-        <div className="p-5">
-          <h1 className="text-xl font-bold text-primary tracking-tight">NOMI</h1>
-          <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-0.5">Clinical Portal</p>
+      <aside className={`fixed md:relative z-50 md:z-auto top-0 left-0 h-full w-60 shrink-0 bg-card border-r border-border flex flex-col transition-transform duration-200 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}>
+        <div className="p-5 flex items-center justify-between">
+          <div>
+            <h1 className="text-xl font-bold text-primary tracking-tight">NOMI</h1>
+            <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-0.5">Clinical Portal</p>
+          </div>
+          <button className="md:hidden p-1 hover:bg-muted/50 rounded-lg" onClick={() => setSidebarOpen(false)}>
+            <X className="w-5 h-5 text-muted-foreground" />
+          </button>
         </div>
         <nav className="flex-1 px-3 space-y-1">
           {sidebarItems.map((item) => {
@@ -672,7 +686,7 @@ const DietitianDashboard = () => {
             return (
               <button
                 key={item.id}
-                onClick={() => setPage(item.id)}
+                onClick={() => { setPage(item.id); setSidebarOpen(false); }}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${active ? "bg-primary/10 text-primary font-medium" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
               >
                 <Icon className="w-4.5 h-4.5" />
@@ -700,10 +714,15 @@ const DietitianDashboard = () => {
       {/* Main */}
       <div className="flex-1 flex flex-col min-h-screen">
         {/* Top bar */}
-        <header className="h-14 border-b border-border bg-card flex items-center justify-between px-6">
-          <h2 className="text-sm font-semibold text-foreground capitalize">
-            {page === "profile" ? selectedPatient?.name ?? "Patient" : page}
-          </h2>
+        <header className="h-14 border-b border-border bg-card flex items-center justify-between px-4 md:px-6">
+          <div className="flex items-center gap-3">
+            <button className="md:hidden p-1.5 hover:bg-muted/50 rounded-lg transition-colors" onClick={() => setSidebarOpen(true)}>
+              <Menu className="w-5 h-5 text-muted-foreground" />
+            </button>
+            <h2 className="text-sm font-semibold text-foreground capitalize">
+              {page === "profile" ? selectedPatient?.name ?? "Patient" : page}
+            </h2>
+          </div>
           <div className="flex items-center gap-4">
             <button className="relative hover:bg-muted/50 rounded-lg p-1.5 transition-colors" onClick={() => setPage("alerts")}>
               <Bell className="w-5 h-5 text-muted-foreground" />
@@ -723,7 +742,7 @@ const DietitianDashboard = () => {
         </header>
 
         {/* Content */}
-        <main className="flex-1 p-6 overflow-y-auto">
+        <main className="flex-1 p-4 md:p-6 overflow-y-auto">
           <AnimatePresence mode="wait">
             {pageContent[page]()}
           </AnimatePresence>
