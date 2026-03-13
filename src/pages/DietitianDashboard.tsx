@@ -5,6 +5,7 @@ import {
   LayoutDashboard,
   Users,
   AlertTriangle,
+  Search,
   MessageSquare,
   Settings,
   Bell,
