@@ -63,7 +63,7 @@ const Landing = () => {
           Nutrition. Organised. Made Intuitive.
         </p>
         <p className="text-muted-foreground text-xs mt-3 max-w-xs mx-auto leading-relaxed">
-          A smart nutrition companion for patients with Cystic Fibrosis and their dietitians — tracking meals, enzymes and clinical insights in real time.
+          A smart nutrition companion for patients and their dietitians — tracking meals, enzymes and clinical insights in real time across any condition where nutrition matters.
         </p>
       </motion.div>
 
