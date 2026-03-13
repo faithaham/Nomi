@@ -5,6 +5,7 @@ import {
   LayoutDashboard,
   Users,
   AlertTriangle,
+  Search,
   MessageSquare,
   Settings,
   Bell,
@@ -195,6 +196,7 @@ const DietitianDashboard = () => {
   const [newMessage, setNewMessage] = useState("");
   const [feedback, setFeedback] = useState("");
   const [selectedCalDay, setSelectedCalDay] = useState<number | null>(null);
+  const [patientSearch, setPatientSearch] = useState("");
 
   const openPatientProfile = (id: number) => {
     setSelectedPatientId(id);
@@ -235,8 +237,17 @@ const DietitianDashboard = () => {
 
       {/* Patient table */}
       <Card className="border-border">
-        <CardHeader className="pb-3">
+        <CardHeader className="pb-3 flex flex-row items-center justify-between space-y-0">
           <CardTitle className="text-base font-semibold text-foreground">Patient Overview</CardTitle>
+          <div className="relative w-64">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="Search patients..."
+              value={patientSearch}
+              onChange={(e) => setPatientSearch(e.target.value)}
+              className="pl-9 h-9 text-sm"
+            />
+          </div>
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
@@ -253,7 +264,7 @@ const DietitianDashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {mockPatients.map((p) => (
+                {mockPatients.filter((p) => p.name.toLowerCase().includes(patientSearch.toLowerCase()) || p.condition.toLowerCase().includes(patientSearch.toLowerCase())).map((p) => (
                   <tr
                     key={p.id}
                     className="border-b border-border hover:bg-muted/30 cursor-pointer transition-colors"
