@@ -64,7 +64,15 @@ const TodayScreen = () => {
         ))}
       </motion.div>
 
-      {/* Recently logged */}
+      {/* Medication */}
+      <motion.div
+        className="mb-6"
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.45 }}
+      >
+        <MedicationTracker />
+      </motion.div>
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
