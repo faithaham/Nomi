@@ -719,7 +719,6 @@ const DietitianDashboard = () => {
               </div>
               <span className="text-sm font-medium text-foreground hidden sm:inline">Dr. Williams</span>
             </button>
-            </div>
           </div>
         </header>
 
