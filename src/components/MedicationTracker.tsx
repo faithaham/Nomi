@@ -42,11 +42,11 @@ const MedicationTracker = () => {
         </span>
       </div>
 
-      {creonMissed > 0 && (
+      {missed > 0 && (
         <div className="flex items-center gap-2 mb-3 px-2.5 py-2 rounded-lg bg-nomi-yellow-soft border border-accent/20">
           <AlertTriangle className="w-3.5 h-3.5 text-nomi-amber flex-shrink-0" />
           <span className="text-xs text-nomi-amber font-medium">
-            {creonMissed} Creon dose{creonMissed > 1 ? "s" : ""} not logged today
+            {missed} medication{missed > 1 ? "s" : ""} not logged today
           </span>
         </div>
       )}
