@@ -663,11 +663,21 @@ const DietitianDashboard = () => {
 
   return (
     <div className="min-h-screen flex bg-background">
+      {/* Mobile sidebar overlay */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 bg-black/30 z-40 md:hidden" onClick={() => setSidebarOpen(false)} />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-60 shrink-0 bg-card border-r border-border flex flex-col">
-        <div className="p-5">
-          <h1 className="text-xl font-bold text-primary tracking-tight">NOMI</h1>
-          <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-0.5">Clinical Portal</p>
+      <aside className={`fixed md:relative z-50 md:z-auto top-0 left-0 h-full w-60 shrink-0 bg-card border-r border-border flex flex-col transition-transform duration-200 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}>
+        <div className="p-5 flex items-center justify-between">
+          <div>
+            <h1 className="text-xl font-bold text-primary tracking-tight">NOMI</h1>
+            <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-0.5">Clinical Portal</p>
+          </div>
+          <button className="md:hidden p-1 hover:bg-muted/50 rounded-lg" onClick={() => setSidebarOpen(false)}>
+            <X className="w-5 h-5 text-muted-foreground" />
+          </button>
         </div>
         <nav className="flex-1 px-3 space-y-1">
           {sidebarItems.map((item) => {
@@ -676,7 +686,7 @@ const DietitianDashboard = () => {
             return (
               <button
                 key={item.id}
-                onClick={() => setPage(item.id)}
+                onClick={() => { setPage(item.id); setSidebarOpen(false); }}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${active ? "bg-primary/10 text-primary font-medium" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
               >
                 <Icon className="w-4.5 h-4.5" />
