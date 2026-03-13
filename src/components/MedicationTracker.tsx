@@ -11,16 +11,16 @@ interface Medication {
 }
 
 const initialMeds: Medication[] = [
-  { id: "1", name: "Creon 25,000", dose: "2 caps", time: "Breakfast", taken: true },
-  { id: "2", name: "Creon 25,000", dose: "2 caps", time: "Lunch", taken: false },
-  { id: "3", name: "Creon 25,000", dose: "2 caps", time: "Dinner", taken: false },
-  { id: "4", name: "Vitamin D", dose: "1000 IU", time: "Morning", taken: true },
+  { id: "1", name: "Metformin", dose: "500 mg", time: "Breakfast", taken: true },
+  { id: "2", name: "Metformin", dose: "500 mg", time: "Dinner", taken: false },
+  { id: "3", name: "Vitamin D", dose: "1000 IU", time: "Morning", taken: true },
+  { id: "4", name: "Iron Supplement", dose: "65 mg", time: "Afternoon", taken: false },
 ];
 
 const MedicationTracker = () => {
   const [medications, setMedications] = useState(initialMeds);
   const takenCount = medications.filter((m) => m.taken).length;
-  const creonMissed = medications.filter((m) => m.name.includes("Creon") && !m.taken).length;
+  const missed = medications.filter((m) => !m.taken).length;
 
   const toggleMed = (id: string) => {
     setMedications((prev) =>
@@ -42,11 +42,11 @@ const MedicationTracker = () => {
         </span>
       </div>
 
-      {creonMissed > 0 && (
+      {missed > 0 && (
         <div className="flex items-center gap-2 mb-3 px-2.5 py-2 rounded-lg bg-nomi-yellow-soft border border-accent/20">
           <AlertTriangle className="w-3.5 h-3.5 text-nomi-amber flex-shrink-0" />
           <span className="text-xs text-nomi-amber font-medium">
-            {creonMissed} Creon dose{creonMissed > 1 ? "s" : ""} not logged today
+            {missed} medication{missed > 1 ? "s" : ""} not logged today
           </span>
         </div>
       )}
@@ -59,9 +59,7 @@ const MedicationTracker = () => {
             className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-colors ${
               med.taken
                 ? "bg-nomi-green-soft"
-                : med.name.includes("Creon")
-                ? "bg-nomi-yellow-soft/50"
-                : "bg-secondary"
+                : "bg-nomi-yellow-soft/50"
             }`}
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
@@ -69,11 +67,9 @@ const MedicationTracker = () => {
           >
             <div
               className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
-                med.taken
-                  ? "bg-nomi-green border-nomi-green"
-                  : med.name.includes("Creon")
-                  ? "border-nomi-amber"
-                  : "border-border"
+                  med.taken
+                    ? "bg-nomi-green border-nomi-green"
+                    : "border-nomi-amber"
               }`}
             >
               {med.taken && <Check className="w-3 h-3 text-log-action-foreground" />}
