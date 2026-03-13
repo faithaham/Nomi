@@ -131,11 +131,12 @@ const mockPatients = [
 ];
 
 const mockAlerts = [
-  { id: 1, patientId: 4, patient: "David Chen", type: "Not logged in 5 days", date: "11 Mar 2026", severity: "red" as const },
-  { id: 2, patientId: 3, patient: "Amara Osei", type: "Not logged in 3 days", date: "12 Mar 2026", severity: "amber" as const },
-  { id: 3, patientId: 1, patient: "Sarah Johnson", type: "Fibre consistently under 50%", date: "13 Mar 2026", severity: "amber" as const },
-  { id: 4, patientId: 4, patient: "David Chen", type: "Sudden change in logging pattern", date: "10 Mar 2026", severity: "red" as const },
-  { id: 5, patientId: 3, patient: "Amara Osei", type: "Protein consistently under 50%", date: "12 Mar 2026", severity: "amber" as const },
+  { id: 1, patientId: 1, patient: "Sarah Johnson", type: "Meal logged without enzyme replacement — 3 occurrences this week", date: "13 Mar 2026", severity: "red" as const },
+  { id: 2, patientId: 4, patient: "David Chen", type: "Not logged in 5 days", date: "11 Mar 2026", severity: "red" as const },
+  { id: 3, patientId: 3, patient: "Amara Osei", type: "Not logged in 3 days", date: "12 Mar 2026", severity: "amber" as const },
+  { id: 4, patientId: 1, patient: "Sarah Johnson", type: "Fibre consistently under 50%", date: "13 Mar 2026", severity: "amber" as const },
+  { id: 5, patientId: 4, patient: "David Chen", type: "Sudden change in logging pattern", date: "10 Mar 2026", severity: "red" as const },
+  { id: 6, patientId: 3, patient: "Amara Osei", type: "Protein consistently under 50%", date: "12 Mar 2026", severity: "amber" as const },
 ];
 
 const mockMessages = [
