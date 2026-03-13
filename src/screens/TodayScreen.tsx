@@ -10,6 +10,7 @@ const nutrients = [
   { name: "Fat", target: 65, actual: 38, unit: "g", color: "hsl(var(--nutrient-fat))" },
   { name: "Fibre", target: 30, actual: 18, unit: "g", color: "hsl(var(--nutrient-fibre))" },
   { name: "Sugar", target: 50, actual: 22, unit: "g", color: "hsl(var(--nutrient-sugar))" },
+  { name: "Medication", target: 4, actual: 2, unit: "", color: "hsl(var(--nomi-amber))" },
 ];
 
 const recentMeal = {
