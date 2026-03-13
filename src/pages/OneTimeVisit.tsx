@@ -116,15 +116,16 @@ const OneTimeVisit = () => {
     <div className="flex items-center justify-center gap-2 mb-8">
       {[1, 2, 3].map((s) => (
         <div key={s} className="flex items-center gap-2">
-          <div
-            className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-colors ${
+          <button
+            onClick={() => setStep(s)}
+            className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-colors cursor-pointer hover:ring-2 hover:ring-primary/30 ${
               s <= current
                 ? "bg-primary text-primary-foreground"
                 : "bg-muted text-muted-foreground"
             }`}
           >
             {s}
-          </div>
+          </button>
           {s < 3 && (
             <div
               className={`w-8 h-0.5 ${
@@ -301,7 +302,7 @@ const OneTimeVisit = () => {
               <div className="mt-10">
                 <Button
                   onClick={() => setStep(2)}
-                  disabled={!firstName.trim()}
+                  disabled={false}
                   className="w-full h-14 text-base font-semibold rounded-xl"
                 >
                   Next
@@ -382,7 +383,7 @@ const OneTimeVisit = () => {
               <div className="mt-10">
                 <Button
                   onClick={() => setStep(3)}
-                  disabled={totalItems === 0}
+                  disabled={false}
                   className="w-full h-14 text-base font-semibold rounded-xl"
                 >
                   Next
