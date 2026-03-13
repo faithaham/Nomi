@@ -59,9 +59,7 @@ const MedicationTracker = () => {
             className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-colors ${
               med.taken
                 ? "bg-nomi-green-soft"
-                : med.name.includes("Creon")
-                ? "bg-nomi-yellow-soft/50"
-                : "bg-secondary"
+                : "bg-nomi-yellow-soft/50"
             }`}
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
