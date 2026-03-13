@@ -60,7 +60,7 @@ const Landing = () => {
           NOMI
         </h1>
         <p className="text-muted-foreground text-sm mt-1">
-          Nutrition. Organised. Made Intelligent.
+          Nutrition Optimisation. Made Intelligent.
         </p>
         <p className="text-muted-foreground text-xs mt-3 max-w-xs mx-auto leading-relaxed">
           A smart nutrition companion for patients and their dietitians — tracking meals, medication and clinical insights in real time across any condition where nutrition matters.
