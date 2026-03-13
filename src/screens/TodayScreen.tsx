@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import DualRingChart from "@/components/DualRingChart";
 import NutrientBar from "@/components/NutrientBar";
 import RecentlyLogged from "@/components/RecentlyLogged";
+import MedicationTracker from "@/components/MedicationTracker";
 
 const nutrients = [
   { name: "Carbs", target: 250, actual: 145, unit: "g", color: "hsl(var(--nutrient-carbs))" },
