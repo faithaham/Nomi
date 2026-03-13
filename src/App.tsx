@@ -21,7 +21,7 @@ const App = () => (
           <Route path="/" element={<Landing />} />
           <Route path="/patient" element={<Index />} />
           <Route path="/one-time" element={<OneTimeVisit />} />
-          <Route path="/dietitian" element={<Index />} />
+          <Route path="/dietitian" element={<DietitianDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
