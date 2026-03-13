@@ -383,7 +383,7 @@ const OneTimeVisit = () => {
               <div className="mt-10">
                 <Button
                   onClick={() => setStep(3)}
-                  disabled={totalItems === 0}
+                  disabled={false}
                   className="w-full h-14 text-base font-semibold rounded-xl"
                 >
                   Next
