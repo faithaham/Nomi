@@ -14,8 +14,8 @@ const ProfileScreen = () => {
             <User className="w-8 h-8 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-foreground">Sarah Thompson</h1>
-            <p className="text-sm text-muted-foreground">Type 2 Diabetes Management</p>
+            <h1 className="text-xl font-bold text-foreground">Sarah Johnson</h1>
+            <p className="text-sm text-muted-foreground">Cystic Fibrosis — Nutrition Management</p>
           </div>
         </div>
       </motion.div>
