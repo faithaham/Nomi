@@ -67,11 +67,9 @@ const MedicationTracker = () => {
           >
             <div
               className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
-                med.taken
-                  ? "bg-nomi-green border-nomi-green"
-                  : med.name.includes("Creon")
-                  ? "border-nomi-amber"
-                  : "border-border"
+                  med.taken
+                    ? "bg-nomi-green border-nomi-green"
+                    : "border-nomi-amber"
               }`}
             >
               {med.taken && <Check className="w-3 h-3 text-log-action-foreground" />}
