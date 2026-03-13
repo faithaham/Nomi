@@ -47,8 +47,8 @@ const ProfileScreen = () => {
             <Stethoscope className="w-5 h-5 text-primary" />
           </div>
           <div className="flex-1">
-            <p className="text-sm font-medium text-foreground">Dr. Emily Richards</p>
-            <p className="text-xs text-muted-foreground">Registered Dietitian</p>
+             <p className="text-sm font-medium text-foreground">Dr. Williams</p>
+             <p className="text-xs text-muted-foreground">Registered Dietitian</p>
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
         </div>
