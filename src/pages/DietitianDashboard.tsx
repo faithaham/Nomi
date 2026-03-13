@@ -18,6 +18,7 @@ import {
   X,
   ArrowLeft,
   Camera,
+  Menu,
 } from "lucide-react";
 import DualRingChart from "@/components/DualRingChart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
