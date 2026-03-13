@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Check, Clock, Pill } from "lucide-react";
+import { Check, Clock, Pill, AlertTriangle } from "lucide-react";
 import { useState } from "react";
 
 interface Medication {
@@ -11,15 +11,16 @@ interface Medication {
 }
 
 const initialMeds: Medication[] = [
-  { id: "1", name: "Metformin", dose: "500mg", time: "08:00 AM", taken: true },
-  { id: "2", name: "Metformin", dose: "500mg", time: "06:00 PM", taken: false },
-  { id: "3", name: "Vitamin D", dose: "1000 IU", time: "08:00 AM", taken: true },
-  { id: "4", name: "Omega-3", dose: "1000mg", time: "08:00 AM", taken: false },
+  { id: "1", name: "Creon 25,000", dose: "2 caps", time: "Breakfast", taken: true },
+  { id: "2", name: "Creon 25,000", dose: "2 caps", time: "Lunch", taken: false },
+  { id: "3", name: "Creon 25,000", dose: "2 caps", time: "Dinner", taken: false },
+  { id: "4", name: "Vitamin D", dose: "1000 IU", time: "Morning", taken: true },
 ];
 
 const MedicationTracker = () => {
   const [medications, setMedications] = useState(initialMeds);
   const takenCount = medications.filter((m) => m.taken).length;
+  const creonMissed = medications.filter((m) => m.name.includes("Creon") && !m.taken).length;
 
   const toggleMed = (id: string) => {
     setMedications((prev) =>
@@ -41,13 +42,26 @@ const MedicationTracker = () => {
         </span>
       </div>
 
+      {creonMissed > 0 && (
+        <div className="flex items-center gap-2 mb-3 px-2.5 py-2 rounded-lg bg-nomi-yellow-soft border border-accent/20">
+          <AlertTriangle className="w-3.5 h-3.5 text-nomi-amber flex-shrink-0" />
+          <span className="text-xs text-nomi-amber font-medium">
+            {creonMissed} Creon dose{creonMissed > 1 ? "s" : ""} not logged today
+          </span>
+        </div>
+      )}
+
       <div className="space-y-2">
         {medications.map((med, i) => (
           <motion.button
             key={med.id}
             onClick={() => toggleMed(med.id)}
             className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-colors ${
-              med.taken ? "bg-nomi-green-soft" : "bg-secondary"
+              med.taken
+                ? "bg-nomi-green-soft"
+                : med.name.includes("Creon")
+                ? "bg-nomi-yellow-soft/50"
+                : "bg-secondary"
             }`}
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
@@ -57,6 +71,8 @@ const MedicationTracker = () => {
               className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
                 med.taken
                   ? "bg-nomi-green border-nomi-green"
+                  : med.name.includes("Creon")
+                  ? "border-nomi-amber"
                   : "border-border"
               }`}
             >

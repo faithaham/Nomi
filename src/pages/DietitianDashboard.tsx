@@ -42,18 +42,18 @@ const mockPatients = [
     id: 1,
     name: "Sarah Johnson",
     age: 34,
-    condition: "IBS",
+    condition: "Cystic Fibrosis",
     lastLogged: "Today",
     lastLoggedDays: 0,
-    compliance: 87,
+    compliance: 72,
     alerts: true,
     nutrients: [
-      { name: "Carbs", target: 250, actual: 200, unit: "g", color: "hsl(var(--nutrient-carbs))" },
-      { name: "Protein", target: 80, actual: 65, unit: "g", color: "hsl(var(--nutrient-protein))" },
-      { name: "Fat", target: 65, actual: 50, unit: "g", color: "hsl(var(--nutrient-fat))" },
-      { name: "Fibre", target: 30, actual: 22, unit: "g", color: "hsl(var(--nutrient-fibre))" },
-      { name: "Sugar", target: 50, actual: 18, unit: "g", color: "hsl(var(--nutrient-sugar))" },
-      { name: "Medication", target: 4, actual: 3, unit: "", color: "hsl(var(--nomi-amber))" },
+      { name: "Carbs", target: 250, actual: 162, unit: "g", color: "hsl(var(--nutrient-carbs))" },
+      { name: "Protein", target: 80, actual: 34, unit: "g", color: "hsl(var(--nutrient-protein))" },
+      { name: "Fat", target: 65, actual: 41, unit: "g", color: "hsl(var(--nutrient-fat))" },
+      { name: "Fibre", target: 30, actual: 9, unit: "g", color: "hsl(var(--nutrient-fibre))" },
+      { name: "Sugar", target: 50, actual: 28, unit: "g", color: "hsl(var(--nutrient-sugar))" },
+      { name: "Creon", target: 3, actual: 0, unit: "", color: "hsl(var(--nomi-amber))" },
     ],
   },
   {
@@ -131,22 +131,24 @@ const mockPatients = [
 ];
 
 const mockAlerts = [
-  { id: 1, patientId: 4, patient: "David Chen", type: "Not logged in 5 days", date: "11 Mar 2026", severity: "red" as const },
-  { id: 2, patientId: 3, patient: "Amara Osei", type: "Not logged in 3 days", date: "12 Mar 2026", severity: "amber" as const },
-  { id: 3, patientId: 1, patient: "Sarah Johnson", type: "Fibre consistently under 50%", date: "13 Mar 2026", severity: "amber" as const },
-  { id: 4, patientId: 4, patient: "David Chen", type: "Sudden change in logging pattern", date: "10 Mar 2026", severity: "red" as const },
-  { id: 5, patientId: 3, patient: "Amara Osei", type: "Protein consistently under 50%", date: "12 Mar 2026", severity: "amber" as const },
+  { id: 1, patientId: 1, patient: "Sarah Johnson", type: "Meal logged without enzyme replacement — 3 occurrences this week", date: "13 Mar 2026", severity: "red" as const },
+  { id: 2, patientId: 4, patient: "David Chen", type: "Not logged in 5 days", date: "11 Mar 2026", severity: "red" as const },
+  { id: 3, patientId: 3, patient: "Amara Osei", type: "Not logged in 3 days", date: "12 Mar 2026", severity: "amber" as const },
+  { id: 4, patientId: 1, patient: "Sarah Johnson", type: "Fibre consistently under 50%", date: "13 Mar 2026", severity: "amber" as const },
+  { id: 5, patientId: 4, patient: "David Chen", type: "Sudden change in logging pattern", date: "10 Mar 2026", severity: "red" as const },
+  { id: 6, patientId: 3, patient: "Amara Osei", type: "Protein consistently under 50%", date: "12 Mar 2026", severity: "amber" as const },
 ];
 
 const mockMessages = [
   {
     patientId: 1,
     patient: "Sarah Johnson",
-    preview: "Thank you for the feedback on my fibre...",
+    preview: "Hi Sarah — I noticed you've had a few meals...",
     messages: [
-      { from: "patient", text: "Hi, I've been struggling with my fibre intake this week. Any tips?", time: "09:12" },
-      { from: "dietitian", text: "Try adding chia seeds or flaxseed to your morning porridge — they're a great easy source of fibre.", time: "10:30" },
-      { from: "patient", text: "Thank you for the feedback on my fibre — I'll try that tomorrow!", time: "11:45" },
+      { from: "patient", text: "Hi, I logged my lunch but forgot to take my Creon again. Sorry!", time: "12:50" },
+      { from: "dietitian", text: "Hi Sarah — I noticed you've had a few meals this week without logging your Creon. Remember to take it with every meal and snack that contains fat or protein. It really helps with absorption. Let me know if you're having trouble remembering! 💊", time: "13:15" },
+      { from: "patient", text: "Thank you — I'll set a reminder on my phone. It's just easy to forget when I'm at work.", time: "13:22" },
+      { from: "dietitian", text: "That's a great idea. You could also keep a small pack in your bag so it's always to hand. We'll review at your next appointment.", time: "13:30" },
     ],
   },
   {
