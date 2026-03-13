@@ -381,22 +381,24 @@ const DietitianDashboard = () => {
   const renderMessages = () => {
     const convo = mockMessages[selectedMessagePatient];
     return (
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-4 h-[calc(100vh-140px)]">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col md:flex-row gap-4 h-auto md:h-[calc(100vh-140px)]">
         {/* Patient list */}
-        <div className="w-72 shrink-0 border border-border rounded-lg overflow-hidden bg-card">
+        <div className="w-full md:w-72 md:shrink-0 border border-border rounded-lg overflow-hidden bg-card">
           <div className="p-3 border-b border-border">
             <p className="text-sm font-semibold text-foreground">Conversations</p>
           </div>
-          {mockMessages.map((m, i) => (
-            <button
-              key={m.patientId}
-              onClick={() => setSelectedMessagePatient(i)}
-              className={`w-full text-left p-3 border-b border-border transition-colors ${i === selectedMessagePatient ? "bg-primary/5" : "hover:bg-muted/30"}`}
-            >
-              <p className="text-sm font-medium text-foreground">{m.patient}</p>
-              <p className="text-xs text-muted-foreground truncate mt-0.5">{m.preview}</p>
-            </button>
-          ))}
+          <div className="flex md:flex-col overflow-x-auto md:overflow-x-visible">
+            {mockMessages.map((m, i) => (
+              <button
+                key={m.patientId}
+                onClick={() => setSelectedMessagePatient(i)}
+                className={`w-full min-w-[160px] md:min-w-0 text-left p-3 border-b border-border transition-colors ${i === selectedMessagePatient ? "bg-primary/5" : "hover:bg-muted/30"}`}
+              >
+                <p className="text-sm font-medium text-foreground">{m.patient}</p>
+                <p className="text-xs text-muted-foreground truncate mt-0.5">{m.preview}</p>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Thread */}
