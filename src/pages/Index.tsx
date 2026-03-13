@@ -21,6 +21,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background max-w-lg mx-auto relative">
+      <HomeButton />
       <Screen />
       <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
     </div>
