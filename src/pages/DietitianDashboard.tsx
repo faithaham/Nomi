@@ -53,7 +53,7 @@ const mockPatients = [
       { name: "Fat", target: 65, actual: 41, unit: "g", color: "hsl(var(--nutrient-fat))" },
       { name: "Fibre", target: 30, actual: 9, unit: "g", color: "hsl(var(--nutrient-fibre))" },
       { name: "Sugar", target: 50, actual: 28, unit: "g", color: "hsl(var(--nutrient-sugar))" },
-      { name: "Medication", target: 4, actual: 2, unit: "", color: "hsl(var(--nomi-amber))" },
+      { name: "Creon", target: 3, actual: 0, unit: "", color: "hsl(var(--nomi-amber))" },
     ],
   },
   {
@@ -131,7 +131,7 @@ const mockPatients = [
 ];
 
 const mockAlerts = [
-  { id: 1, patientId: 1, patient: "Sarah Johnson", type: "Meal logged without medication — 3 occurrences this week", date: "13 Mar 2026", severity: "red" as const },
+  { id: 1, patientId: 1, patient: "Sarah Johnson", type: "Meal logged without enzyme replacement — 3 occurrences this week", date: "13 Mar 2026", severity: "red" as const },
   { id: 2, patientId: 4, patient: "David Chen", type: "Not logged in 5 days", date: "11 Mar 2026", severity: "red" as const },
   { id: 3, patientId: 3, patient: "Amara Osei", type: "Not logged in 3 days", date: "12 Mar 2026", severity: "amber" as const },
   { id: 4, patientId: 1, patient: "Sarah Johnson", type: "Fibre consistently under 50%", date: "13 Mar 2026", severity: "amber" as const },
@@ -145,8 +145,8 @@ const mockMessages = [
     patient: "Sarah Johnson",
     preview: "Hi Sarah — I noticed you've had a few meals...",
     messages: [
-      { from: "patient", text: "Hi, I logged my lunch but forgot to take my medication again. Sorry!", time: "12:50" },
-      { from: "dietitian", text: "Hi Sarah — I noticed you've missed logging your medication a few times this week. Staying consistent really helps with your progress. Let me know if you need help with reminders! 💊", time: "13:15" },
+      { from: "patient", text: "Hi, I logged my lunch but forgot to take my Creon again. Sorry!", time: "12:50" },
+      { from: "dietitian", text: "Hi Sarah — I noticed you've had a few meals this week without logging your Creon. Remember to take it with every meal and snack that contains fat or protein. It really helps with absorption. Let me know if you're having trouble remembering! 💊", time: "13:15" },
       { from: "patient", text: "Thank you — I'll set a reminder on my phone. It's just easy to forget when I'm at work.", time: "13:22" },
       { from: "dietitian", text: "That's a great idea. You could also keep a small pack in your bag so it's always to hand. We'll review at your next appointment.", time: "13:30" },
     ],

@@ -11,7 +11,7 @@ const nutrients = [
   { name: "Fat", target: 65, actual: 41, unit: "g", color: "hsl(var(--nutrient-fat))" },
   { name: "Fibre", target: 30, actual: 9, unit: "g", color: "hsl(var(--nutrient-fibre))" },
   { name: "Sugar", target: 50, actual: 28, unit: "g", color: "hsl(var(--nutrient-sugar))" },
-  { name: "Medication", target: 4, actual: 2, unit: "", color: "hsl(var(--nomi-amber))" },
+  { name: "Creon", target: 3, actual: 0, unit: "", color: "hsl(var(--nomi-amber))" },
 ];
 
 const recentMeal = {
@@ -50,9 +50,9 @@ const TodayScreen = () => {
       >
         <AlertTriangle className="w-5 h-5 text-nomi-amber flex-shrink-0 mt-0.5" />
         <div>
-          <p className="text-sm font-semibold text-foreground">Medication not logged with lunch</p>
+          <p className="text-sm font-semibold text-foreground">Creon not logged with lunch</p>
           <p className="text-xs text-muted-foreground mt-0.5">
-            You logged a meal but didn't record your medication. This is the 3rd time this week. Tap below to log it now.
+            You logged a meal but didn't record your enzyme replacement. This is the 3rd time this week. Tap below to log it now.
           </p>
         </div>
       </motion.div>
@@ -107,7 +107,7 @@ const TodayScreen = () => {
           <span className="text-[10px] text-muted-foreground ml-auto">Just now</span>
         </div>
         <p className="text-sm text-foreground">
-          Hi Sarah — I noticed you've missed logging your medication a few times this week. Staying consistent really helps with your progress. Let me know if you need help with reminders! 💊
+          Hi Sarah — I noticed you've had a few meals this week without logging your Creon. Remember to take it with every meal and snack that contains fat or protein. It really helps with absorption. Let me know if you're having trouble remembering! 💊
         </p>
       </motion.div>
 
