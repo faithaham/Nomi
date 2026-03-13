@@ -714,10 +714,15 @@ const DietitianDashboard = () => {
       {/* Main */}
       <div className="flex-1 flex flex-col min-h-screen">
         {/* Top bar */}
-        <header className="h-14 border-b border-border bg-card flex items-center justify-between px-6">
-          <h2 className="text-sm font-semibold text-foreground capitalize">
-            {page === "profile" ? selectedPatient?.name ?? "Patient" : page}
-          </h2>
+        <header className="h-14 border-b border-border bg-card flex items-center justify-between px-4 md:px-6">
+          <div className="flex items-center gap-3">
+            <button className="md:hidden p-1.5 hover:bg-muted/50 rounded-lg transition-colors" onClick={() => setSidebarOpen(true)}>
+              <Menu className="w-5 h-5 text-muted-foreground" />
+            </button>
+            <h2 className="text-sm font-semibold text-foreground capitalize">
+              {page === "profile" ? selectedPatient?.name ?? "Patient" : page}
+            </h2>
+          </div>
           <div className="flex items-center gap-4">
             <button className="relative hover:bg-muted/50 rounded-lg p-1.5 transition-colors" onClick={() => setPage("alerts")}>
               <Bell className="w-5 h-5 text-muted-foreground" />
