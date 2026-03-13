@@ -143,11 +143,12 @@ const mockMessages = [
   {
     patientId: 1,
     patient: "Sarah Johnson",
-    preview: "Thank you for the feedback on my fibre...",
+    preview: "Hi Sarah — I noticed you've had a few meals...",
     messages: [
-      { from: "patient", text: "Hi, I've been struggling with my fibre intake this week. Any tips?", time: "09:12" },
-      { from: "dietitian", text: "Try adding chia seeds or flaxseed to your morning porridge — they're a great easy source of fibre.", time: "10:30" },
-      { from: "patient", text: "Thank you for the feedback on my fibre — I'll try that tomorrow!", time: "11:45" },
+      { from: "patient", text: "Hi, I logged my lunch but forgot to take my Creon again. Sorry!", time: "12:50" },
+      { from: "dietitian", text: "Hi Sarah — I noticed you've had a few meals this week without logging your Creon. Remember to take it with every meal and snack that contains fat or protein. It really helps with absorption. Let me know if you're having trouble remembering! 💊", time: "13:15" },
+      { from: "patient", text: "Thank you — I'll set a reminder on my phone. It's just easy to forget when I'm at work.", time: "13:22" },
+      { from: "dietitian", text: "That's a great idea. You could also keep a small pack in your bag so it's always to hand. We'll review at your next appointment.", time: "13:30" },
     ],
   },
   {
