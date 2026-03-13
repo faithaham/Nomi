@@ -107,7 +107,7 @@ const TodayScreen = () => {
           <span className="text-[10px] text-muted-foreground ml-auto">Just now</span>
         </div>
         <p className="text-sm text-foreground">
-          Hi Sarah — I noticed you've missed logging your medication a few times this week. Staying consistent really helps with your progress. Let me know if you need help with reminders! 💊
+          Hi Sarah — I noticed you've had a few meals this week without logging your Creon. Remember to take it with every meal and snack that contains fat or protein. It really helps with absorption. Let me know if you're having trouble remembering! 💊
         </p>
       </motion.div>
 
