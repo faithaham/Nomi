@@ -32,6 +32,57 @@ const cards = [
   },
 ];
 
+const BreadTagLogo = () => {
+  const now = new Date();
+  const day = now.getDate().toString();
+  const month = now.toLocaleString("en-US", { month: "short" }).toUpperCase();
+
+  return (
+    <svg width="100" height="110" viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Bread tag shape */}
+      <path
+        d="M12 8 C12 4, 16 0, 20 0 L80 0 C84 0, 88 4, 88 8 L88 90 C88 94, 84 98, 80 98 L62 98 L58 110 L52 98 L20 98 C16 98, 12 94, 12 90 Z"
+        fill="hsl(210, 15%, 75%)"
+      />
+      {/* Top half white */}
+      <clipPath id="topHalf">
+        <rect x="12" y="0" width="76" height="49" />
+      </clipPath>
+      <path
+        d="M12 8 C12 4, 16 0, 20 0 L80 0 C84 0, 88 4, 88 8 L88 90 C88 94, 84 98, 80 98 L62 98 L58 110 L52 98 L20 98 C16 98, 12 94, 12 90 Z"
+        fill="white"
+        clipPath="url(#topHalf)"
+      />
+      {/* Two holes */}
+      <circle cx="32" cy="18" r="4" fill="hsl(210, 15%, 75%)" />
+      <circle cx="50" cy="18" r="4" fill="hsl(210, 15%, 75%)" />
+      {/* Date text */}
+      <text
+        x="50"
+        y="58"
+        textAnchor="middle"
+        fontFamily="'DM Sans', system-ui, sans-serif"
+        fontWeight="700"
+        fontSize="28"
+        fill="hsl(215, 25%, 15%)"
+      >
+        {day}
+      </text>
+      <text
+        x="50"
+        y="84"
+        textAnchor="middle"
+        fontFamily="'DM Sans', system-ui, sans-serif"
+        fontWeight="700"
+        fontSize="20"
+        fill="hsl(215, 25%, 15%)"
+      >
+        {month}
+      </text>
+    </svg>
+  );
+};
+
 const Landing = () => {
   const navigate = useNavigate();
 
@@ -49,17 +100,18 @@ const Landing = () => {
         </span>
       </motion.div>
 
-      {/* Logo & Name */}
+      {/* Logo Unit: Bread Tag + NOMI + Tagline */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className="text-center mb-10"
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="text-center mb-10 flex flex-col items-center gap-4"
       >
-        <h1 className="text-4xl font-bold tracking-tight text-foreground">
+        <BreadTagLogo />
+        <h1 className="text-4xl font-bold tracking-tight" style={{ color: "hsl(215, 50%, 22%)" }}>
           NOMI
         </h1>
-        <p className="text-muted-foreground text-sm mt-2">
+        <p className="text-muted-foreground text-sm -mt-2">
           Nutrition. Organised. Made Intuitive.
         </p>
       </motion.div>
