@@ -20,7 +20,7 @@ const initialMeds: Medication[] = [
 const MedicationTracker = () => {
   const [medications, setMedications] = useState(initialMeds);
   const takenCount = medications.filter((m) => m.taken).length;
-  const creonMissed = medications.filter((m) => m.name.includes("Creon") && !m.taken).length;
+  const missed = medications.filter((m) => !m.taken).length;
 
   const toggleMed = (id: string) => {
     setMedications((prev) =>
