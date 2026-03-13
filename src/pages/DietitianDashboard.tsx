@@ -126,7 +126,6 @@ const mockPatients = [
       { name: "Sugar", target: 45, actual: 20, unit: "g", color: "hsl(var(--nutrient-sugar))" },
       { name: "Medication", target: 4, actual: 4, unit: "", color: "hsl(var(--nomi-amber))" },
     ],
-    ],
   },
 ];
 
