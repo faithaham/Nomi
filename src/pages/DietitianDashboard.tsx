@@ -639,10 +639,10 @@ const DietitianDashboard = () => {
   return (
     <div className="min-h-screen flex bg-background">
       {/* Sidebar */}
-      <aside className="w-60 shrink-0 bg-nomi-blue-dark flex flex-col">
+      <aside className="w-60 shrink-0 bg-card border-r border-border flex flex-col">
         <div className="p-5">
-          <h1 className="text-xl font-bold text-white tracking-tight">NOMI</h1>
-          <p className="text-[10px] text-white/50 uppercase tracking-widest mt-0.5">Clinical Portal</p>
+          <h1 className="text-xl font-bold text-primary tracking-tight">NOMI</h1>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-0.5">Clinical Portal</p>
         </div>
         <nav className="flex-1 px-3 space-y-1">
           {sidebarItems.map((item) => {
@@ -652,12 +652,12 @@ const DietitianDashboard = () => {
               <button
                 key={item.id}
                 onClick={() => setPage(item.id)}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${active ? "bg-white/15 text-white font-medium" : "text-white/60 hover:text-white hover:bg-white/5"}`}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${active ? "bg-primary/10 text-primary font-medium" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
               >
                 <Icon className="w-4.5 h-4.5" />
                 <span>{item.label}</span>
                 {item.id === "alerts" && activeAlerts.length > 0 && (
-                  <span className="ml-auto text-[10px] bg-rag-red text-white px-1.5 py-0.5 rounded-full font-semibold">
+                  <span className="ml-auto text-[10px] bg-rag-red text-primary-foreground px-1.5 py-0.5 rounded-full font-semibold">
                     {activeAlerts.length}
                   </span>
                 )}
@@ -668,7 +668,7 @@ const DietitianDashboard = () => {
         <div className="p-3">
           <button
             onClick={() => navigate("/")}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-white/40 hover:text-white hover:bg-white/5 transition-colors"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
           >
             <Home className="w-4.5 h-4.5" />
             <span>Back to Demo</span>
