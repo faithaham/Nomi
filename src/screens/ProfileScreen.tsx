@@ -14,8 +14,8 @@ const ProfileScreen = () => {
             <User className="w-8 h-8 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-foreground">Sarah Thompson</h1>
-            <p className="text-sm text-muted-foreground">Type 2 Diabetes Management</p>
+            <h1 className="text-xl font-bold text-foreground">Sarah Johnson</h1>
+            <p className="text-sm text-muted-foreground">Cystic Fibrosis — Nutrition Management</p>
           </div>
         </div>
       </motion.div>
@@ -47,8 +47,8 @@ const ProfileScreen = () => {
             <Stethoscope className="w-5 h-5 text-primary" />
           </div>
           <div className="flex-1">
-            <p className="text-sm font-medium text-foreground">Dr. Emily Richards</p>
-            <p className="text-xs text-muted-foreground">Registered Dietitian</p>
+             <p className="text-sm font-medium text-foreground">Dr. Williams</p>
+             <p className="text-xs text-muted-foreground">Registered Dietitian</p>
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
         </div>
