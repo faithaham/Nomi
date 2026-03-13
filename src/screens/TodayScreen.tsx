@@ -50,9 +50,9 @@ const TodayScreen = () => {
       >
         <AlertTriangle className="w-5 h-5 text-nomi-amber flex-shrink-0 mt-0.5" />
         <div>
-          <p className="text-sm font-semibold text-foreground">Medication not logged with lunch</p>
+          <p className="text-sm font-semibold text-foreground">Creon not logged with lunch</p>
           <p className="text-xs text-muted-foreground mt-0.5">
-            You logged a meal but didn't record your medication. This is the 3rd time this week. Tap below to log it now.
+            You logged a meal but didn't record your enzyme replacement. This is the 3rd time this week. Tap below to log it now.
           </p>
         </div>
       </motion.div>
