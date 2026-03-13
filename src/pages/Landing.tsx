@@ -49,6 +49,21 @@ const Landing = () => {
         </span>
       </motion.div>
 
+      {/* App Name */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="text-center mb-10"
+      >
+        <h1 className="text-4xl font-bold tracking-tight text-primary">
+          NOMI
+        </h1>
+        <p className="text-muted-foreground text-sm mt-1">
+          Nutrition. Organised. Made Intuitive.
+        </p>
+      </motion.div>
+
       {/* Card Buttons */}
       <div className="w-full flex flex-col gap-5">
         {cards.map((card, i) => {
