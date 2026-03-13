@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Landing from "./pages/Landing";
 import Index from "./pages/Index";
 import OneTimeVisit from "./pages/OneTimeVisit";
+import DietitianDashboard from "./pages/DietitianDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
