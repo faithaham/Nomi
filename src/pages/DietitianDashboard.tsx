@@ -51,6 +51,8 @@ const mockPatients = [
       { name: "Protein", target: 80, actual: 65, unit: "g", color: "hsl(var(--nutrient-protein))" },
       { name: "Fat", target: 65, actual: 50, unit: "g", color: "hsl(var(--nutrient-fat))" },
       { name: "Fibre", target: 30, actual: 22, unit: "g", color: "hsl(var(--nutrient-fibre))" },
+      { name: "Sugar", target: 50, actual: 18, unit: "g", color: "hsl(var(--nutrient-sugar))" },
+      { name: "Medication", target: 4, actual: 3, unit: "", color: "hsl(var(--nomi-amber))" },
     ],
   },
   {
@@ -67,6 +69,8 @@ const mockPatients = [
       { name: "Protein", target: 90, actual: 70, unit: "g", color: "hsl(var(--nutrient-protein))" },
       { name: "Fat", target: 55, actual: 48, unit: "g", color: "hsl(var(--nutrient-fat))" },
       { name: "Fibre", target: 35, actual: 15, unit: "g", color: "hsl(var(--nutrient-fibre))" },
+      { name: "Sugar", target: 45, actual: 30, unit: "g", color: "hsl(var(--nutrient-sugar))" },
+      { name: "Medication", target: 3, actual: 2, unit: "", color: "hsl(var(--nomi-amber))" },
     ],
   },
   {
@@ -83,6 +87,8 @@ const mockPatients = [
       { name: "Protein", target: 75, actual: 40, unit: "g", color: "hsl(var(--nutrient-protein))" },
       { name: "Fat", target: 60, actual: 55, unit: "g", color: "hsl(var(--nutrient-fat))" },
       { name: "Fibre", target: 28, actual: 10, unit: "g", color: "hsl(var(--nutrient-fibre))" },
+      { name: "Sugar", target: 50, actual: 42, unit: "g", color: "hsl(var(--nutrient-sugar))" },
+      { name: "Medication", target: 2, actual: 0, unit: "", color: "hsl(var(--nomi-amber))" },
     ],
   },
   {
@@ -99,6 +105,8 @@ const mockPatients = [
       { name: "Protein", target: 85, actual: 50, unit: "g", color: "hsl(var(--nutrient-protein))" },
       { name: "Fat", target: 50, actual: 45, unit: "g", color: "hsl(var(--nutrient-fat))" },
       { name: "Fibre", target: 30, actual: 8, unit: "g", color: "hsl(var(--nutrient-fibre))" },
+      { name: "Sugar", target: 40, actual: 35, unit: "g", color: "hsl(var(--nutrient-sugar))" },
+      { name: "Medication", target: 2, actual: 1, unit: "", color: "hsl(var(--nomi-amber))" },
     ],
   },
   {
@@ -115,6 +123,8 @@ const mockPatients = [
       { name: "Protein", target: 80, actual: 78, unit: "g", color: "hsl(var(--nutrient-protein))" },
       { name: "Fat", target: 60, actual: 55, unit: "g", color: "hsl(var(--nutrient-fat))" },
       { name: "Fibre", target: 30, actual: 28, unit: "g", color: "hsl(var(--nutrient-fibre))" },
+      { name: "Sugar", target: 45, actual: 20, unit: "g", color: "hsl(var(--nutrient-sugar))" },
+      { name: "Medication", target: 4, actual: 4, unit: "", color: "hsl(var(--nomi-amber))" },
     ],
   },
 ];
