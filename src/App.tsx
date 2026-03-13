@@ -19,7 +19,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/patient" element={<Index />} />
-          <Route path="/one-time" element={<Index />} />
+          <Route path="/one-time" element={<OneTimeVisit />} />
           <Route path="/dietitian" element={<Index />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
