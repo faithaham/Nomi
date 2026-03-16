@@ -67,6 +67,7 @@ const OneTimeVisit = () => {
   const [step, setStep] = useState(0);
 
   // Form state
+  const [diaryDate, setDiaryDate] = useState<Date>(new Date());
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [condition, setCondition] = useState("");
