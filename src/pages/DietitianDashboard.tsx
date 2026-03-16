@@ -736,9 +736,9 @@ const DietitianDashboard = () => {
             </button>
             <button className="flex items-center gap-2 hover:bg-muted/50 rounded-lg px-2 py-1.5 transition-colors" onClick={() => setPage("settings")}>
               <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                <span className="text-xs font-semibold text-primary">DW</span>
+                <span className="text-xs font-semibold text-primary">FA</span>
               </div>
-              <span className="text-sm font-medium text-foreground hidden sm:inline">Dr. Williams</span>
+              <span className="text-sm font-medium text-foreground hidden sm:inline">Faith Ahamefula</span>
             </button>
           </div>
         </header>
