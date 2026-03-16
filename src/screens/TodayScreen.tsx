@@ -3,6 +3,7 @@ import { AlertTriangle } from "lucide-react";
 import DualRingChart from "@/components/DualRingChart";
 import NutrientBar from "@/components/NutrientBar";
 import RecentlyLogged from "@/components/RecentlyLogged";
+import NomiIntelligence from "@/components/NomiIntelligence";
 import MedicationTracker from "@/components/MedicationTracker";
 
 const nutrients = [
