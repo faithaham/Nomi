@@ -24,7 +24,7 @@ const cards = [
   {
     id: "patient",
     icon: User,
-    label: "Patient Overview",
+    label: "Patient Interface",
     subtitle: "Your full personalised nutrition journey",
     route: "/patient",
     colorClass: "bg-nomi-green-soft text-foreground border-nomi-green/30",

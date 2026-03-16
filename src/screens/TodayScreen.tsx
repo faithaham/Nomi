@@ -3,6 +3,7 @@ import { AlertTriangle } from "lucide-react";
 import DualRingChart from "@/components/DualRingChart";
 import NutrientBar from "@/components/NutrientBar";
 import RecentlyLogged from "@/components/RecentlyLogged";
+import NomiIntelligence from "@/components/NomiIntelligence";
 import MedicationTracker from "@/components/MedicationTracker";
 
 const nutrients = [
@@ -117,6 +118,15 @@ const TodayScreen = () => {
         transition={{ duration: 0.4, delay: 0.55 }}
       >
         <RecentlyLogged meal={recentMeal} />
+      </motion.div>
+
+      {/* NOMI Intelligence */}
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.6 }}
+      >
+        <NomiIntelligence />
       </motion.div>
     </div>
   );
