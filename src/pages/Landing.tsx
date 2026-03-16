@@ -6,8 +6,8 @@ const cards = [
   {
     id: "one-time",
     icon: UserRound,
-    label: "First Time Visit",
-    subtitle: "Log your meals without an account",
+    label: "Generate a Food Diary",
+    subtitle: "Log your day of eating",
     route: "/one-time",
     colorClass: "bg-nomi-yellow-soft text-accent-foreground border-accent/30",
     iconColor: "text-accent",
