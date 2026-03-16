@@ -48,7 +48,7 @@ const mockPatients = [
     compliance: 72,
     alerts: true,
     nutrients: [
-      { name: "Carbs", target: 250, actual: 162, unit: "g", color: "hsl(var(--nutrient-carbs))" },
+      { name: "Carbohydrates", target: 250, actual: 162, unit: "g", color: "hsl(var(--nutrient-carbs))" },
       { name: "Protein", target: 80, actual: 34, unit: "g", color: "hsl(var(--nutrient-protein))" },
       { name: "Fat", target: 65, actual: 41, unit: "g", color: "hsl(var(--nutrient-fat))" },
       { name: "Fibre", target: 30, actual: 9, unit: "g", color: "hsl(var(--nutrient-fibre))" },
@@ -66,7 +66,7 @@ const mockPatients = [
     compliance: 72,
     alerts: false,
     nutrients: [
-      { name: "Carbs", target: 200, actual: 130, unit: "g", color: "hsl(var(--nutrient-carbs))" },
+      { name: "Carbohydrates", target: 200, actual: 130, unit: "g", color: "hsl(var(--nutrient-carbs))" },
       { name: "Protein", target: 90, actual: 70, unit: "g", color: "hsl(var(--nutrient-protein))" },
       { name: "Fat", target: 55, actual: 48, unit: "g", color: "hsl(var(--nutrient-fat))" },
       { name: "Fibre", target: 35, actual: 15, unit: "g", color: "hsl(var(--nutrient-fibre))" },

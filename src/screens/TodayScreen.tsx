@@ -6,7 +6,7 @@ import RecentlyLogged from "@/components/RecentlyLogged";
 import MedicationTracker from "@/components/MedicationTracker";
 
 const nutrients = [
-  { name: "Carbs", target: 250, actual: 162, unit: "g", color: "hsl(var(--nutrient-carbs))" },
+  { name: "Carbohydrates", target: 250, actual: 162, unit: "g", color: "hsl(var(--nutrient-carbs))" },
   { name: "Protein", target: 80, actual: 34, unit: "g", color: "hsl(var(--nutrient-protein))" },
   { name: "Fat", target: 65, actual: 41, unit: "g", color: "hsl(var(--nutrient-fat))" },
   { name: "Fibre", target: 30, actual: 9, unit: "g", color: "hsl(var(--nutrient-fibre))" },
