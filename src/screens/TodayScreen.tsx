@@ -101,9 +101,9 @@ const TodayScreen = () => {
       >
         <div className="flex items-center gap-2 mb-2">
           <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
-            <span className="text-[10px] font-bold text-primary">DW</span>
+            <span className="text-[10px] font-bold text-primary">FA</span>
           </div>
-          <span className="text-xs font-semibold text-primary">Dr. Williams</span>
+          <span className="text-xs font-semibold text-primary">Faith Ahamefula</span>
           <span className="text-[10px] text-muted-foreground ml-auto">Just now</span>
         </div>
         <p className="text-sm text-foreground">
