@@ -6,7 +6,7 @@ const cards = [
   {
     id: "one-time",
     icon: UserRound,
-    label: "One Time Visit",
+    label: "First Time Visit",
     subtitle: "Log your meals without an account",
     route: "/one-time",
     colorClass: "bg-nomi-yellow-soft text-accent-foreground border-accent/30",
