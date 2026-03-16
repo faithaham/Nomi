@@ -176,7 +176,7 @@ const OneTimeVisit = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1, duration: 0.4 }}
                 >
-                  Log your meals today —<br />no account needed
+                  Log your day of eating
                 </motion.h1>
 
                 <motion.p
@@ -185,8 +185,8 @@ const OneTimeVisit = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25, duration: 0.4 }}
                 >
-                  Your GP or dietitian has asked you to keep a food diary. Fill
-                  in what you eat today and we'll generate a simple summary you
+                  Your Dietitian or GP has asked you to keep a food diary. Fill
+                  in what you ate today, and we'll generate a simple summary you
                   can share at your next appointment.
                 </motion.p>
 
