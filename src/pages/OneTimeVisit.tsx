@@ -35,7 +35,7 @@ const DIETARY_RESTRICTIONS = [
   "None",
 ];
 
-const MEAL_SECTIONS = ["Breakfast", "Lunch", "Dinner", "Snacks"] as const;
+const MEAL_SECTIONS = ["Breakfast", "Lunch", "Dinner", "Snacks", "Drinks"] as const;
 
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
