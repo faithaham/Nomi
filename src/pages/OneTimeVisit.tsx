@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Home, Camera, X, Download, ExternalLink } from "lucide-react";
+import { ArrowLeft, Home, Camera, X, Download, ExternalLink, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import DualRingChart from "@/components/DualRingChart";
+import PortionSelector from "@/components/PortionSelector";
 
 const CONDITIONS = [
   "Diabetes Type 1",
@@ -35,7 +36,7 @@ const DIETARY_RESTRICTIONS = [
   "None",
 ];
 
-const MEAL_SECTIONS = ["Breakfast", "Lunch", "Dinner", "Snacks"] as const;
+const MEAL_SECTIONS = ["Breakfast", "Lunch", "Dinner", "Snacks", "Drinks"] as const;
 
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
@@ -73,12 +74,28 @@ const OneTimeVisit = () => {
     Lunch: [],
     Dinner: [],
     Snacks: [],
+    Drinks: [],
   });
   const [searchInputs, setSearchInputs] = useState<Record<string, string>>({
     Breakfast: "",
     Lunch: "",
     Dinner: "",
     Snacks: "",
+    Drinks: "",
+  });
+  const [mealTimes, setMealTimes] = useState<Record<string, string>>({
+    Breakfast: "",
+    Lunch: "",
+    Dinner: "",
+    Snacks: "",
+    Drinks: "",
+  });
+  const [mealPortions, setMealPortions] = useState<Record<string, number>>({
+    Breakfast: 1,
+    Lunch: 1,
+    Dinner: 1,
+    Snacks: 1,
+    Drinks: 1,
   });
 
   const toggleRestriction = (r: string) => {
@@ -326,7 +343,7 @@ const OneTimeVisit = () => {
 
               <div className="space-y-8">
                 {MEAL_SECTIONS.map((section) => (
-                  <div key={section}>
+                  <div key={section} className="bg-card rounded-2xl border border-border p-4">
                     <h3 className="text-base font-semibold text-foreground mb-3">
                       {section}
                     </h3>
@@ -343,8 +360,8 @@ const OneTimeVisit = () => {
                         onKeyDown={(e) =>
                           e.key === "Enter" && addFoodItem(section)
                         }
-                        placeholder={`Search for a food item...`}
-                        className="h-11 rounded-xl bg-card border-border flex-1"
+                        placeholder={section === "Drinks" ? "Search for a drink..." : "Search for a food item..."}
+                        className="h-11 rounded-xl bg-background border-border flex-1"
                       />
                       <Button
                         variant="outline"
@@ -357,7 +374,7 @@ const OneTimeVisit = () => {
                     </div>
 
                     {meals[section].length > 0 && (
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-2 mb-3">
                         {meals[section].map((item, i) => (
                           <motion.span
                             key={`${item}-${i}`}
@@ -376,6 +393,35 @@ const OneTimeVisit = () => {
                         ))}
                       </div>
                     )}
+
+                    {/* Time picker */}
+                    <div className="mb-3">
+                      <label className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-1.5">
+                        <Clock className="w-3.5 h-3.5" />
+                        When did you have this meal?
+                      </label>
+                      <Input
+                        type="time"
+                        value={mealTimes[section]}
+                        onChange={(e) =>
+                          setMealTimes((prev) => ({ ...prev, [section]: e.target.value }))
+                        }
+                        className="h-10 rounded-xl bg-background border-border w-36"
+                      />
+                    </div>
+
+                    {/* Portion selector */}
+                    <div>
+                      <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
+                        How much of this meal did you finish?
+                      </label>
+                      <PortionSelector
+                        value={mealPortions[section]}
+                        onChange={(val) =>
+                          setMealPortions((prev) => ({ ...prev, [section]: val }))
+                        }
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
