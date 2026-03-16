@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import DualRingChart from "@/components/DualRingChart";
+import PortionSelector from "@/components/PortionSelector";
 
 const CONDITIONS = [
   "Diabetes Type 1",
