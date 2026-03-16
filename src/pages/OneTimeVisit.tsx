@@ -74,12 +74,28 @@ const OneTimeVisit = () => {
     Lunch: [],
     Dinner: [],
     Snacks: [],
+    Drinks: [],
   });
   const [searchInputs, setSearchInputs] = useState<Record<string, string>>({
     Breakfast: "",
     Lunch: "",
     Dinner: "",
     Snacks: "",
+    Drinks: "",
+  });
+  const [mealTimes, setMealTimes] = useState<Record<string, string>>({
+    Breakfast: "",
+    Lunch: "",
+    Dinner: "",
+    Snacks: "",
+    Drinks: "",
+  });
+  const [mealPortions, setMealPortions] = useState<Record<string, number>>({
+    Breakfast: 1,
+    Lunch: 1,
+    Dinner: 1,
+    Snacks: 1,
+    Drinks: 1,
   });
 
   const toggleRestriction = (r: string) => {
