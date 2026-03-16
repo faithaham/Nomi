@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Home, Camera, X, Download, ExternalLink, Clock } from "lucide-react";
+import { ArrowLeft, Home, Camera, X, Download, ExternalLink, Clock, CalendarIcon, Mic } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,6 +15,10 @@ import {
 } from "@/components/ui/select";
 import DualRingChart from "@/components/DualRingChart";
 import PortionSelector from "@/components/PortionSelector";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 const CONDITIONS = [
   "Diabetes Type 1",
@@ -63,6 +67,7 @@ const OneTimeVisit = () => {
   const [step, setStep] = useState(0);
 
   // Form state
+  const [diaryDate, setDiaryDate] = useState<Date>(new Date());
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [condition, setCondition] = useState("");
@@ -340,6 +345,60 @@ const OneTimeVisit = () => {
               <p className="text-muted-foreground text-sm mb-8">
                 Add items to each meal. Don't worry about being exact.
               </p>
+
+              {/* Date picker */}
+              <div className="bg-card rounded-2xl border border-border p-4 mb-2">
+                <label className="text-sm font-medium text-foreground mb-2 block">
+                  Date of diary entry
+                </label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full h-12 justify-start text-left font-normal rounded-xl bg-background border-border",
+                        !diaryDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {diaryDate ? format(diaryDate, "PPP") : <span>Pick a date</span>}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={diaryDate}
+                      onSelect={(d) => d && setDiaryDate(d)}
+                      initialFocus
+                      className={cn("p-3 pointer-events-auto")}
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              {/* Voice recording */}
+              <div className="bg-card rounded-2xl border border-border p-4">
+                <label className="text-sm font-medium text-foreground mb-1 block">
+                  Record a verbal diet history
+                </label>
+                <p className="text-xs text-muted-foreground mb-3">
+                  Tap the microphone to dictate what you ate. Your recording will be transcribed automatically. Try to follow the structure of the sections below — mention your breakfast, lunch, dinner, snacks, and drinks in order.
+                </p>
+                <Button
+                  variant="outline"
+                  className="h-12 w-full rounded-xl border-border gap-2 text-muted-foreground hover:text-foreground"
+                >
+                  <Mic className="w-5 h-5 text-destructive" />
+                  Start recording
+                </Button>
+              </div>
+
+              {/* Divider & manual title */}
+              <div className="pt-6 pb-2">
+                <h3 className="text-lg font-bold text-foreground">
+                  Manually record your day of eating
+                </h3>
+              </div>
 
               <div className="space-y-8">
                 {MEAL_SECTIONS.map((section) => (
