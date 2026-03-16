@@ -476,7 +476,7 @@ const DietitianDashboard = () => {
           </div>
           <div>
             <h2 className="text-xl font-bold text-foreground">{p.name}</h2>
-            <p className="text-sm text-muted-foreground">Age {p.age} · {p.condition} · Assigned: Dr. Williams</p>
+            <p className="text-sm text-muted-foreground">Age {p.age} · {p.condition} · Assigned: Faith Ahamefula</p>
           </div>
         </div>
 
