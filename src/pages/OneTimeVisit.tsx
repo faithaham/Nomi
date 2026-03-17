@@ -40,7 +40,8 @@ const DIETARY_RESTRICTIONS = [
   "None",
 ];
 
-const MEAL_SECTIONS = ["Breakfast", "Lunch", "Dinner", "Morning Snack", "Afternoon Snack", "Evening Snack", "Drinks"] as const;
+const MEAL_SECTIONS = ["Breakfast", "Lunch", "Dinner", "Snacks", "Drinks"] as const;
+const SNACK_SUBSECTIONS = ["Morning Snack", "Afternoon Snack", "Evening Snack"] as const;
 
 const FREQUENCY_OPTIONS = ["Once daily", "Twice daily", "Three times daily", "With every meal", "As needed"];
 
