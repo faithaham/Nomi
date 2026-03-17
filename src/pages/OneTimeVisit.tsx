@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Home, Camera, X, Download, ExternalLink, Clock, CalendarIcon, Mic } from "lucide-react";
+import { ArrowLeft, Home, Camera, X, Download, ExternalLink, Clock, CalendarIcon, Mic, Pill, Plus, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -40,7 +40,33 @@ const DIETARY_RESTRICTIONS = [
   "None",
 ];
 
-const MEAL_SECTIONS = ["Breakfast", "Lunch", "Dinner", "Snacks", "Drinks"] as const;
+const MEAL_SECTIONS = ["Breakfast", "Lunch", "Dinner", "Morning Snack", "Afternoon Snack", "Evening Snack", "Drinks"] as const;
+
+const FREQUENCY_OPTIONS = ["Once daily", "Twice daily", "Three times daily", "With every meal", "As needed"];
+
+const COMMON_MEDICATIONS = [
+  "Creon 25,000",
+  "Creon 10,000",
+  "Kaftrio",
+  "Omeprazole",
+  "Insulin",
+  "Metformin",
+  "Vitamin D",
+  "Iron supplement",
+  "Calcium supplement",
+  "Multivitamin",
+  "Omega-3",
+  "Probiotics",
+];
+
+const MEAL_ASSIGN_OPTIONS = ["Breakfast", "Lunch", "Dinner", "Morning Snack", "Afternoon Snack", "Evening Snack", "All meals"];
+
+interface MedicationEntry {
+  id: string;
+  name: string;
+  frequency: string;
+  mealTimes: string[];
+}
 
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
@@ -73,33 +99,48 @@ const OneTimeVisit = () => {
   const [condition, setCondition] = useState("");
   const [restrictions, setRestrictions] = useState<string[]>([]);
 
+  // Medications state
+  const [medications, setMedications] = useState<MedicationEntry[]>([]);
+  const [medSearch, setMedSearch] = useState("");
+  const [selectedMed, setSelectedMed] = useState("");
+  const [medFrequency, setMedFrequency] = useState("");
+  const [medMealTimes, setMedMealTimes] = useState<string[]>([]);
+
   // Food diary state
   const [meals, setMeals] = useState<Record<string, string[]>>({
     Breakfast: [],
     Lunch: [],
     Dinner: [],
-    Snacks: [],
+    "Morning Snack": [],
+    "Afternoon Snack": [],
+    "Evening Snack": [],
     Drinks: [],
   });
   const [searchInputs, setSearchInputs] = useState<Record<string, string>>({
     Breakfast: "",
     Lunch: "",
     Dinner: "",
-    Snacks: "",
+    "Morning Snack": "",
+    "Afternoon Snack": "",
+    "Evening Snack": "",
     Drinks: "",
   });
   const [mealTimes, setMealTimes] = useState<Record<string, string>>({
     Breakfast: "",
     Lunch: "",
     Dinner: "",
-    Snacks: "",
+    "Morning Snack": "",
+    "Afternoon Snack": "",
+    "Evening Snack": "",
     Drinks: "",
   });
   const [mealPortions, setMealPortions] = useState<Record<string, number>>({
     Breakfast: 1,
     Lunch: 1,
     Dinner: 1,
-    Snacks: 1,
+    "Morning Snack": 1,
+    "Afternoon Snack": 1,
+    "Evening Snack": 1,
     Drinks: 1,
   });
 
@@ -107,6 +148,29 @@ const OneTimeVisit = () => {
     setRestrictions((prev) =>
       prev.includes(r) ? prev.filter((x) => x !== r) : [...prev, r]
     );
+  };
+
+  const toggleMedMealTime = (meal: string) => {
+    setMedMealTimes((prev) =>
+      prev.includes(meal) ? prev.filter((x) => x !== meal) : [...prev, meal]
+    );
+  };
+
+  const addMedication = () => {
+    const name = selectedMed || medSearch.trim();
+    if (!name || !medFrequency) return;
+    setMedications((prev) => [
+      ...prev,
+      { id: Date.now().toString(), name, frequency: medFrequency, mealTimes: medMealTimes },
+    ]);
+    setSelectedMed("");
+    setMedSearch("");
+    setMedFrequency("");
+    setMedMealTimes([]);
+  };
+
+  const removeMedication = (id: string) => {
+    setMedications((prev) => prev.filter((m) => m.id !== id));
   };
 
   const addFoodItem = (section: string) => {
@@ -123,8 +187,6 @@ const OneTimeVisit = () => {
     }));
   };
 
-  const totalItems = Object.values(meals).flat().length;
-
   // Summary nutrients (demo data)
   const summaryNutrients = [
     { name: "Carbohydrates", target: 250, actual: 180, unit: "g", color: "hsl(var(--nutrient-carbs))" },
@@ -134,9 +196,13 @@ const OneTimeVisit = () => {
     { name: "Sugar", target: 50, actual: 32, unit: "g", color: "hsl(var(--nutrient-sugar))" },
   ];
 
+  const filteredMeds = medSearch
+    ? COMMON_MEDICATIONS.filter((m) => m.toLowerCase().includes(medSearch.toLowerCase()))
+    : [];
+
   const ProgressIndicator = ({ current }: { current: number }) => (
     <div className="flex items-center justify-center gap-2 mb-8">
-      {[1, 2, 3].map((s) => (
+      {[1, 2, 3, 4].map((s) => (
         <div key={s} className="flex items-center gap-2">
           <button
             onClick={() => setStep(s)}
@@ -148,7 +214,7 @@ const OneTimeVisit = () => {
           >
             {s}
           </button>
-          {s < 3 && (
+          {s < 4 && (
             <div
               className={`w-8 h-0.5 ${
                 s < current ? "bg-primary" : "bg-muted"
@@ -333,11 +399,177 @@ const OneTimeVisit = () => {
             </motion.div>
           )}
 
-          {/* PAGE 3 — FOOD DIARY */}
+          {/* PAGE 3 — MEDICATIONS & SUPPLEMENTS */}
           {step === 2 && (
-            <motion.div key="diary" {...fadeUp}>
+            <motion.div key="medications" {...fadeUp}>
               <TopBar />
               <ProgressIndicator current={2} />
+
+              <h2 className="text-2xl font-bold text-foreground mb-2">
+                Medications & Supplements
+              </h2>
+              <p className="text-muted-foreground text-sm mb-8">
+                Tell us about your prescribed medications and supplements.
+              </p>
+
+              {/* Example notification */}
+              <div className="bg-nomi-blue-soft rounded-2xl border border-primary/20 p-4 mb-6">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <AlertTriangle className="w-4 h-4 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground mb-1">
+                      Example: Creon (Pancreatic Enzyme Replacement)
+                    </p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      If you take Creon, it's important to take this medication with any food, drink, or snack containing fat. NOMI will remind you to log your enzymes alongside your meals.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Add medication form */}
+              <div className="bg-card rounded-2xl border border-border p-4 mb-4">
+                <h3 className="text-base font-semibold text-foreground mb-3 flex items-center gap-2">
+                  <Pill className="w-4 h-4 text-primary" />
+                  Add a medication or supplement
+                </h3>
+
+                {/* Search / select medication */}
+                <div className="mb-3">
+                  <Label className="text-xs font-medium text-muted-foreground mb-1.5 block">
+                    Medication or supplement name
+                  </Label>
+                  <Input
+                    value={medSearch}
+                    onChange={(e) => {
+                      setMedSearch(e.target.value);
+                      setSelectedMed("");
+                    }}
+                    placeholder="Search or type a medication..."
+                    className="h-11 rounded-xl bg-background border-border"
+                  />
+                  {filteredMeds.length > 0 && !selectedMed && (
+                    <div className="mt-1 bg-card border border-border rounded-xl overflow-hidden">
+                      {filteredMeds.map((m) => (
+                        <button
+                          key={m}
+                          onClick={() => {
+                            setSelectedMed(m);
+                            setMedSearch(m);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm text-foreground hover:bg-muted transition-colors"
+                        >
+                          {m}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Frequency */}
+                <div className="mb-3">
+                  <Label className="text-xs font-medium text-muted-foreground mb-1.5 block">
+                    How often do you take this?
+                  </Label>
+                  <Select value={medFrequency} onValueChange={setMedFrequency}>
+                    <SelectTrigger className="h-11 rounded-xl bg-background border-border">
+                      <SelectValue placeholder="Select frequency" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {FREQUENCY_OPTIONS.map((f) => (
+                        <SelectItem key={f} value={f}>{f}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Assign to meal times */}
+                <div className="mb-4">
+                  <Label className="text-xs font-medium text-muted-foreground mb-2 block">
+                    Assign to meal times (optional)
+                  </Label>
+                  <div className="flex flex-wrap gap-2">
+                    {MEAL_ASSIGN_OPTIONS.map((meal) => (
+                      <button
+                        key={meal}
+                        onClick={() => toggleMedMealTime(meal)}
+                        className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
+                          medMealTimes.includes(meal)
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-muted text-muted-foreground hover:bg-muted/80"
+                        }`}
+                      >
+                        {meal}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <Button
+                  onClick={addMedication}
+                  disabled={!(selectedMed || medSearch.trim()) || !medFrequency}
+                  className="w-full h-11 rounded-xl gap-2"
+                >
+                  <Plus className="w-4 h-4" />
+                  Add medication
+                </Button>
+              </div>
+
+              {/* Added medications list */}
+              {medications.length > 0 && (
+                <div className="space-y-2 mb-6">
+                  <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    Your medications ({medications.length})
+                  </h4>
+                  {medications.map((med) => (
+                    <motion.div
+                      key={med.id}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="bg-card rounded-xl border border-border p-3 flex items-start justify-between"
+                    >
+                      <div>
+                        <p className="text-sm font-medium text-foreground">{med.name}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">{med.frequency}</p>
+                        {med.mealTimes.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mt-1.5">
+                            {med.mealTimes.map((mt) => (
+                              <span key={mt} className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
+                                {mt}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      <button
+                        onClick={() => removeMedication(med.id)}
+                        className="text-muted-foreground hover:text-destructive transition-colors mt-0.5"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+
+              <div className="mt-10">
+                <Button
+                  onClick={() => setStep(3)}
+                  className="w-full h-14 text-base font-semibold rounded-xl"
+                >
+                  Next
+                </Button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* PAGE 4 — FOOD DIARY */}
+          {step === 3 && (
+            <motion.div key="diary" {...fadeUp}>
+              <TopBar />
+              <ProgressIndicator current={3} />
 
               <h2 className="text-2xl font-bold text-foreground mb-2">
                 What did you eat today?
@@ -487,7 +719,7 @@ const OneTimeVisit = () => {
 
               <div className="mt-10">
                 <Button
-                  onClick={() => setStep(3)}
+                  onClick={() => setStep(4)}
                   disabled={false}
                   className="w-full h-14 text-base font-semibold rounded-xl"
                 >
@@ -497,11 +729,11 @@ const OneTimeVisit = () => {
             </motion.div>
           )}
 
-          {/* PAGE 4 — SUMMARY */}
-          {step === 3 && (
+          {/* PAGE 5 — SUMMARY */}
+          {step === 4 && (
             <motion.div key="summary" {...fadeUp}>
               <TopBar />
-              <ProgressIndicator current={3} />
+              <ProgressIndicator current={4} />
 
               <h2 className="text-2xl font-bold text-foreground mb-2">
                 Your summary{firstName ? `, ${firstName}` : ""}
@@ -529,6 +761,25 @@ const OneTimeVisit = () => {
                     )
                 )}
               </div>
+
+              {/* Medications summary */}
+              {medications.length > 0 && (
+                <div className="bg-card rounded-2xl border border-border p-5 mb-6">
+                  <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <Pill className="w-3.5 h-3.5 text-primary" />
+                    Your medications
+                  </h3>
+                  {medications.map((med) => (
+                    <div key={med.id} className="mb-2 last:mb-0">
+                      <p className="text-sm text-foreground font-medium">{med.name}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {med.frequency}
+                        {med.mealTimes.length > 0 && ` · ${med.mealTimes.join(", ")}`}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {/* Ring chart */}
               <div className="bg-card rounded-2xl border border-border p-6 mb-2 flex flex-col items-center">
