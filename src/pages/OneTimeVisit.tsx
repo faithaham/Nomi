@@ -40,7 +40,8 @@ const DIETARY_RESTRICTIONS = [
   "None",
 ];
 
-const MEAL_SECTIONS = ["Breakfast", "Lunch", "Dinner", "Morning Snack", "Afternoon Snack", "Evening Snack", "Drinks"] as const;
+const MEAL_SECTIONS = ["Breakfast", "Lunch", "Dinner", "Snacks", "Drinks"] as const;
+const SNACK_SUBSECTIONS = ["Morning Snack", "Afternoon Snack", "Evening Snack"] as const;
 
 const FREQUENCY_OPTIONS = ["Once daily", "Twice daily", "Three times daily", "With every meal", "As needed"];
 
@@ -59,7 +60,7 @@ const COMMON_MEDICATIONS = [
   "Probiotics",
 ];
 
-const MEAL_ASSIGN_OPTIONS = ["Breakfast", "Lunch", "Dinner", "Morning Snack", "Afternoon Snack", "Evening Snack", "All meals"];
+const MEAL_ASSIGN_OPTIONS = ["Breakfast", "Lunch", "Dinner", "Snacks", "All meals"];
 
 interface MedicationEntry {
   id: string;
@@ -107,42 +108,19 @@ const OneTimeVisit = () => {
   const [medMealTimes, setMedMealTimes] = useState<string[]>([]);
 
   // Food diary state
-  const [meals, setMeals] = useState<Record<string, string[]>>({
-    Breakfast: [],
-    Lunch: [],
-    Dinner: [],
-    "Morning Snack": [],
-    "Afternoon Snack": [],
-    "Evening Snack": [],
-    Drinks: [],
-  });
-  const [searchInputs, setSearchInputs] = useState<Record<string, string>>({
-    Breakfast: "",
-    Lunch: "",
-    Dinner: "",
-    "Morning Snack": "",
-    "Afternoon Snack": "",
-    "Evening Snack": "",
-    Drinks: "",
-  });
-  const [mealTimes, setMealTimes] = useState<Record<string, string>>({
-    Breakfast: "",
-    Lunch: "",
-    Dinner: "",
-    "Morning Snack": "",
-    "Afternoon Snack": "",
-    "Evening Snack": "",
-    Drinks: "",
-  });
-  const [mealPortions, setMealPortions] = useState<Record<string, number>>({
-    Breakfast: 1,
-    Lunch: 1,
-    Dinner: 1,
-    "Morning Snack": 1,
-    "Afternoon Snack": 1,
-    "Evening Snack": 1,
-    Drinks: 1,
-  });
+  const allSections = ["Breakfast", "Lunch", "Dinner", "Morning Snack", "Afternoon Snack", "Evening Snack", "Snacks", "Drinks"];
+  const [meals, setMeals] = useState<Record<string, string[]>>(
+    Object.fromEntries(allSections.map((s) => [s, []]))
+  );
+  const [searchInputs, setSearchInputs] = useState<Record<string, string>>(
+    Object.fromEntries(allSections.map((s) => [s, ""]))
+  );
+  const [mealTimes, setMealTimes] = useState<Record<string, string>>(
+    Object.fromEntries(allSections.map((s) => [s, ""]))
+  );
+  const [mealPortions, setMealPortions] = useState<Record<string, number>>(
+    Object.fromEntries(allSections.map((s) => [s, 1]))
+  );
 
   const toggleRestriction = (r: string) => {
     setRestrictions((prev) =>
@@ -633,88 +611,134 @@ const OneTimeVisit = () => {
               </div>
 
               <div className="space-y-8">
-                {MEAL_SECTIONS.map((section) => (
-                  <div key={section} className="bg-card rounded-2xl border border-border p-4">
-                    <h3 className="text-base font-semibold text-foreground mb-3">
-                      {section}
-                    </h3>
+                {MEAL_SECTIONS.map((section) => {
+                  if (section === "Snacks") {
+                    return (
+                      <div key="Snacks" className="bg-card rounded-2xl border border-border p-4">
+                        <h3 className="text-base font-semibold text-foreground mb-4">Snacks</h3>
+                        <div className="space-y-6">
+                          {SNACK_SUBSECTIONS.map((sub) => (
+                            <div key={sub} className="border-t border-border pt-4 first:border-t-0 first:pt-0">
+                              <h4 className="text-sm font-medium text-muted-foreground mb-2">{sub}</h4>
 
-                    <div className="flex gap-2 mb-3">
-                      <Input
-                        value={searchInputs[section]}
-                        onChange={(e) =>
-                          setSearchInputs((prev) => ({
-                            ...prev,
-                            [section]: e.target.value,
-                          }))
-                        }
-                        onKeyDown={(e) =>
-                          e.key === "Enter" && addFoodItem(section)
-                        }
-                        placeholder={section === "Drinks" ? "Search for a drink..." : "Search for a food item..."}
-                        className="h-11 rounded-xl bg-background border-border flex-1"
-                      />
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-11 w-11 rounded-xl border-border shrink-0"
-                        onClick={() => {}}
-                      >
-                        <Camera className="w-4 h-4 text-muted-foreground" />
-                      </Button>
-                    </div>
+                              <div className="flex gap-2 mb-3">
+                                <Input
+                                  value={searchInputs[sub]}
+                                  onChange={(e) =>
+                                    setSearchInputs((prev) => ({ ...prev, [sub]: e.target.value }))
+                                  }
+                                  onKeyDown={(e) => e.key === "Enter" && addFoodItem(sub)}
+                                  placeholder="Search for a food item..."
+                                  className="h-11 rounded-xl bg-background border-border flex-1"
+                                />
+                                <Button variant="outline" size="icon" className="h-11 w-11 rounded-xl border-border shrink-0">
+                                  <Camera className="w-4 h-4 text-muted-foreground" />
+                                </Button>
+                              </div>
 
-                    {meals[section].length > 0 && (
-                      <div className="flex flex-wrap gap-2 mb-3">
-                        {meals[section].map((item, i) => (
-                          <motion.span
-                            key={`${item}-${i}`}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nomi-blue-soft text-primary text-sm font-medium"
-                          >
-                            {item}
-                            <button
-                              onClick={() => removeFoodItem(section, i)}
-                              className="hover:text-destructive transition-colors"
-                            >
-                              <X className="w-3.5 h-3.5" />
-                            </button>
-                          </motion.span>
-                        ))}
+                              {meals[sub].length > 0 && (
+                                <div className="flex flex-wrap gap-2 mb-3">
+                                  {meals[sub].map((item, i) => (
+                                    <motion.span
+                                      key={`${item}-${i}`}
+                                      initial={{ opacity: 0, scale: 0.9 }}
+                                      animate={{ opacity: 1, scale: 1 }}
+                                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nomi-blue-soft text-primary text-sm font-medium"
+                                    >
+                                      {item}
+                                      <button onClick={() => removeFoodItem(sub, i)} className="hover:text-destructive transition-colors">
+                                        <X className="w-3.5 h-3.5" />
+                                      </button>
+                                    </motion.span>
+                                  ))}
+                                </div>
+                              )}
+
+                              <div className="mb-3">
+                                <label className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-1.5">
+                                  <Clock className="w-3.5 h-3.5" />
+                                  When did you have this snack?
+                                </label>
+                                <Input
+                                  type="time"
+                                  value={mealTimes[sub]}
+                                  onChange={(e) => setMealTimes((prev) => ({ ...prev, [sub]: e.target.value }))}
+                                  className="h-10 rounded-xl bg-background border-border w-36"
+                                />
+                              </div>
+
+                              <div>
+                                <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
+                                  How much did you finish?
+                                </label>
+                                <PortionSelector
+                                  value={mealPortions[sub]}
+                                  onChange={(val) => setMealPortions((prev) => ({ ...prev, [sub]: val }))}
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    )}
+                    );
+                  }
 
-                    {/* Time picker */}
-                    <div className="mb-3">
-                      <label className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-1.5">
-                        <Clock className="w-3.5 h-3.5" />
-                        When did you have this meal?
-                      </label>
-                      <Input
-                        type="time"
-                        value={mealTimes[section]}
-                        onChange={(e) =>
-                          setMealTimes((prev) => ({ ...prev, [section]: e.target.value }))
-                        }
-                        className="h-10 rounded-xl bg-background border-border w-36"
-                      />
+                  return (
+                    <div key={section} className="bg-card rounded-2xl border border-border p-4">
+                      <h3 className="text-base font-semibold text-foreground mb-3">{section}</h3>
+                      <div className="flex gap-2 mb-3">
+                        <Input
+                          value={searchInputs[section]}
+                          onChange={(e) => setSearchInputs((prev) => ({ ...prev, [section]: e.target.value }))}
+                          onKeyDown={(e) => e.key === "Enter" && addFoodItem(section)}
+                          placeholder={section === "Drinks" ? "Search for a drink..." : "Search for a food item..."}
+                          className="h-11 rounded-xl bg-background border-border flex-1"
+                        />
+                        <Button variant="outline" size="icon" className="h-11 w-11 rounded-xl border-border shrink-0" onClick={() => {}}>
+                          <Camera className="w-4 h-4 text-muted-foreground" />
+                        </Button>
+                      </div>
+                      {meals[section].length > 0 && (
+                        <div className="flex flex-wrap gap-2 mb-3">
+                          {meals[section].map((item, i) => (
+                            <motion.span
+                              key={`${item}-${i}`}
+                              initial={{ opacity: 0, scale: 0.9 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nomi-blue-soft text-primary text-sm font-medium"
+                            >
+                              {item}
+                              <button onClick={() => removeFoodItem(section, i)} className="hover:text-destructive transition-colors">
+                                <X className="w-3.5 h-3.5" />
+                              </button>
+                            </motion.span>
+                          ))}
+                        </div>
+                      )}
+                      <div className="mb-3">
+                        <label className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-1.5">
+                          <Clock className="w-3.5 h-3.5" />
+                          When did you have this meal?
+                        </label>
+                        <Input
+                          type="time"
+                          value={mealTimes[section]}
+                          onChange={(e) => setMealTimes((prev) => ({ ...prev, [section]: e.target.value }))}
+                          className="h-10 rounded-xl bg-background border-border w-36"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
+                          How much of this meal did you finish?
+                        </label>
+                        <PortionSelector
+                          value={mealPortions[section]}
+                          onChange={(val) => setMealPortions((prev) => ({ ...prev, [section]: val }))}
+                        />
+                      </div>
                     </div>
-
-                    {/* Portion selector */}
-                    <div>
-                      <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
-                        How much of this meal did you finish?
-                      </label>
-                      <PortionSelector
-                        value={mealPortions[section]}
-                        onChange={(val) =>
-                          setMealPortions((prev) => ({ ...prev, [section]: val }))
-                        }
-                      />
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               <div className="mt-10">
@@ -742,25 +766,47 @@ const OneTimeVisit = () => {
                 Here's an overview of what you logged today.
               </p>
 
-              {/* Logged items */}
-              <div className="bg-card rounded-2xl border border-border p-5 mb-6">
-                <h3 className="text-sm font-semibold text-foreground mb-3">
-                  What you logged
-                </h3>
-                {MEAL_SECTIONS.map(
-                  (section) =>
-                    meals[section].length > 0 && (
-                      <div key={section} className="mb-3 last:mb-0">
-                        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                          {section}
-                        </span>
-                        <p className="text-sm text-foreground mt-0.5">
-                          {meals[section].join(", ")}
-                        </p>
-                      </div>
-                    )
-                )}
-              </div>
+              {/* Food Diary */}
+              {(() => {
+                const EXAMPLE_DIARY: Record<string, string[]> = {
+                  Breakfast: ["Porridge with honey", "Glass of orange juice"],
+                  Lunch: ["Ham & cheese sandwich", "Apple", "Packet of crisps"],
+                  Dinner: ["Spaghetti bolognese", "Side salad", "Garlic bread"],
+                  "Morning Snack": ["Banana"],
+                  "Afternoon Snack": ["Yoghurt"],
+                  "Evening Snack": ["Biscuits x2"],
+                  Drinks: ["Water", "Tea with milk", "Ribena"],
+                };
+
+                const DIARY_SECTIONS = ["Breakfast", "Lunch", "Dinner", "Morning Snack", "Afternoon Snack", "Evening Snack", "Drinks"];
+                const hasUserData = DIARY_SECTIONS.some((s) => meals[s]?.length > 0);
+                const displayData = hasUserData ? meals : EXAMPLE_DIARY;
+
+                return (
+                  <div className="bg-card rounded-2xl border border-border p-5 mb-6">
+                    <h3 className="text-sm font-semibold text-foreground mb-3">
+                      Your Food Diary
+                    </h3>
+                    {!hasUserData && (
+                      <p className="text-xs text-muted-foreground italic mb-3">Example food diary</p>
+                    )}
+                    {DIARY_SECTIONS.map((section) => {
+                      const items = displayData[section];
+                      if (!items || items.length === 0) return null;
+                      return (
+                        <div key={section} className="mb-3 last:mb-0">
+                          <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                            {section}
+                          </span>
+                          <p className="text-sm text-foreground mt-0.5">
+                            {items.join(", ")}
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
 
               {/* Medications summary */}
               {medications.length > 0 && (
