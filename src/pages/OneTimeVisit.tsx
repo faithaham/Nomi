@@ -766,24 +766,47 @@ const OneTimeVisit = () => {
                 Here's an overview of what you logged today.
               </p>
 
-              {/* Logged items */}
-              <div className="bg-card rounded-2xl border border-border p-5 mb-6">
-                <h3 className="text-sm font-semibold text-foreground mb-3">
-                  What you logged
-                </h3>
-                {MEAL_SECTIONS.map(
-                  (section) =>
-                    meals[section].length > 0 && (
-                      <div key={section} className="mb-3 last:mb-0">
-                        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                          {section}
-                        </span>
-                        <p className="text-sm text-foreground mt-0.5">
-                          {meals[section].join(", ")}
-                        </p>
-                      </div>
-                    )
-                )}
+              {/* Food Diary */}
+              {(() => {
+                const EXAMPLE_DIARY: Record<string, string[]> = {
+                  Breakfast: ["Porridge with honey", "Glass of orange juice"],
+                  Lunch: ["Ham & cheese sandwich", "Apple", "Packet of crisps"],
+                  Dinner: ["Spaghetti bolognese", "Side salad", "Garlic bread"],
+                  "Morning Snack": ["Banana"],
+                  "Afternoon Snack": ["Yoghurt"],
+                  "Evening Snack": ["Biscuits x2"],
+                  Drinks: ["Water", "Tea with milk", "Ribena"],
+                };
+
+                const DIARY_SECTIONS = ["Breakfast", "Lunch", "Dinner", "Morning Snack", "Afternoon Snack", "Evening Snack", "Drinks"];
+                const hasUserData = DIARY_SECTIONS.some((s) => meals[s]?.length > 0);
+                const displayData = hasUserData ? meals : EXAMPLE_DIARY;
+
+                return (
+                  <div className="bg-card rounded-2xl border border-border p-5 mb-6">
+                    <h3 className="text-sm font-semibold text-foreground mb-3">
+                      Your Food Diary
+                    </h3>
+                    {!hasUserData && (
+                      <p className="text-xs text-muted-foreground italic mb-3">Example food diary</p>
+                    )}
+                    {DIARY_SECTIONS.map((section) => {
+                      const items = displayData[section];
+                      if (!items || items.length === 0) return null;
+                      return (
+                        <div key={section} className="mb-3 last:mb-0">
+                          <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                            {section}
+                          </span>
+                          <p className="text-sm text-foreground mt-0.5">
+                            {items.join(", ")}
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
               </div>
 
               {/* Medications summary */}
