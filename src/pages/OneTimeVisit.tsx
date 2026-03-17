@@ -108,42 +108,19 @@ const OneTimeVisit = () => {
   const [medMealTimes, setMedMealTimes] = useState<string[]>([]);
 
   // Food diary state
-  const [meals, setMeals] = useState<Record<string, string[]>>({
-    Breakfast: [],
-    Lunch: [],
-    Dinner: [],
-    "Morning Snack": [],
-    "Afternoon Snack": [],
-    "Evening Snack": [],
-    Drinks: [],
-  });
-  const [searchInputs, setSearchInputs] = useState<Record<string, string>>({
-    Breakfast: "",
-    Lunch: "",
-    Dinner: "",
-    "Morning Snack": "",
-    "Afternoon Snack": "",
-    "Evening Snack": "",
-    Drinks: "",
-  });
-  const [mealTimes, setMealTimes] = useState<Record<string, string>>({
-    Breakfast: "",
-    Lunch: "",
-    Dinner: "",
-    "Morning Snack": "",
-    "Afternoon Snack": "",
-    "Evening Snack": "",
-    Drinks: "",
-  });
-  const [mealPortions, setMealPortions] = useState<Record<string, number>>({
-    Breakfast: 1,
-    Lunch: 1,
-    Dinner: 1,
-    "Morning Snack": 1,
-    "Afternoon Snack": 1,
-    "Evening Snack": 1,
-    Drinks: 1,
-  });
+  const allSections = ["Breakfast", "Lunch", "Dinner", "Morning Snack", "Afternoon Snack", "Evening Snack", "Snacks", "Drinks"];
+  const [meals, setMeals] = useState<Record<string, string[]>>(
+    Object.fromEntries(allSections.map((s) => [s, []]))
+  );
+  const [searchInputs, setSearchInputs] = useState<Record<string, string>>(
+    Object.fromEntries(allSections.map((s) => [s, ""]))
+  );
+  const [mealTimes, setMealTimes] = useState<Record<string, string>>(
+    Object.fromEntries(allSections.map((s) => [s, ""]))
+  );
+  const [mealPortions, setMealPortions] = useState<Record<string, number>>(
+    Object.fromEntries(allSections.map((s) => [s, 1]))
+  );
 
   const toggleRestriction = (r: string) => {
     setRestrictions((prev) =>
