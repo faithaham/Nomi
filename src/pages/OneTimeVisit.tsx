@@ -807,7 +807,6 @@ const OneTimeVisit = () => {
                   </div>
                 );
               })()}
-              </div>
 
               {/* Medications summary */}
               {medications.length > 0 && (
