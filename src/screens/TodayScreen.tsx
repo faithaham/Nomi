@@ -31,6 +31,7 @@ const getGreeting = () => {
 };
 
 const TodayScreen = () => {
+  const [creonResponse, setCreonResponse] = useState<string | null>(null);
   return (
     <div className="px-5 pt-6 pb-28 max-w-lg mx-auto">
       {/* Greeting */}
