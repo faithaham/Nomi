@@ -60,7 +60,7 @@ const COMMON_MEDICATIONS = [
   "Probiotics",
 ];
 
-const MEAL_ASSIGN_OPTIONS = ["Breakfast", "Lunch", "Dinner", "Morning Snack", "Afternoon Snack", "Evening Snack", "All meals"];
+const MEAL_ASSIGN_OPTIONS = ["Breakfast", "Lunch", "Dinner", "Snacks", "All meals"];
 
 interface MedicationEntry {
   id: string;
