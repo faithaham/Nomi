@@ -611,88 +611,134 @@ const OneTimeVisit = () => {
               </div>
 
               <div className="space-y-8">
-                {MEAL_SECTIONS.map((section) => (
-                  <div key={section} className="bg-card rounded-2xl border border-border p-4">
-                    <h3 className="text-base font-semibold text-foreground mb-3">
-                      {section}
-                    </h3>
+                {MEAL_SECTIONS.map((section) => {
+                  if (section === "Snacks") {
+                    return (
+                      <div key="Snacks" className="bg-card rounded-2xl border border-border p-4">
+                        <h3 className="text-base font-semibold text-foreground mb-4">Snacks</h3>
+                        <div className="space-y-6">
+                          {SNACK_SUBSECTIONS.map((sub) => (
+                            <div key={sub} className="border-t border-border pt-4 first:border-t-0 first:pt-0">
+                              <h4 className="text-sm font-medium text-muted-foreground mb-2">{sub}</h4>
 
-                    <div className="flex gap-2 mb-3">
-                      <Input
-                        value={searchInputs[section]}
-                        onChange={(e) =>
-                          setSearchInputs((prev) => ({
-                            ...prev,
-                            [section]: e.target.value,
-                          }))
-                        }
-                        onKeyDown={(e) =>
-                          e.key === "Enter" && addFoodItem(section)
-                        }
-                        placeholder={section === "Drinks" ? "Search for a drink..." : "Search for a food item..."}
-                        className="h-11 rounded-xl bg-background border-border flex-1"
-                      />
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-11 w-11 rounded-xl border-border shrink-0"
-                        onClick={() => {}}
-                      >
-                        <Camera className="w-4 h-4 text-muted-foreground" />
-                      </Button>
-                    </div>
+                              <div className="flex gap-2 mb-3">
+                                <Input
+                                  value={searchInputs[sub]}
+                                  onChange={(e) =>
+                                    setSearchInputs((prev) => ({ ...prev, [sub]: e.target.value }))
+                                  }
+                                  onKeyDown={(e) => e.key === "Enter" && addFoodItem(sub)}
+                                  placeholder="Search for a food item..."
+                                  className="h-11 rounded-xl bg-background border-border flex-1"
+                                />
+                                <Button variant="outline" size="icon" className="h-11 w-11 rounded-xl border-border shrink-0">
+                                  <Camera className="w-4 h-4 text-muted-foreground" />
+                                </Button>
+                              </div>
 
-                    {meals[section].length > 0 && (
-                      <div className="flex flex-wrap gap-2 mb-3">
-                        {meals[section].map((item, i) => (
-                          <motion.span
-                            key={`${item}-${i}`}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nomi-blue-soft text-primary text-sm font-medium"
-                          >
-                            {item}
-                            <button
-                              onClick={() => removeFoodItem(section, i)}
-                              className="hover:text-destructive transition-colors"
-                            >
-                              <X className="w-3.5 h-3.5" />
-                            </button>
-                          </motion.span>
-                        ))}
+                              {meals[sub].length > 0 && (
+                                <div className="flex flex-wrap gap-2 mb-3">
+                                  {meals[sub].map((item, i) => (
+                                    <motion.span
+                                      key={`${item}-${i}`}
+                                      initial={{ opacity: 0, scale: 0.9 }}
+                                      animate={{ opacity: 1, scale: 1 }}
+                                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nomi-blue-soft text-primary text-sm font-medium"
+                                    >
+                                      {item}
+                                      <button onClick={() => removeFoodItem(sub, i)} className="hover:text-destructive transition-colors">
+                                        <X className="w-3.5 h-3.5" />
+                                      </button>
+                                    </motion.span>
+                                  ))}
+                                </div>
+                              )}
+
+                              <div className="mb-3">
+                                <label className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-1.5">
+                                  <Clock className="w-3.5 h-3.5" />
+                                  When did you have this snack?
+                                </label>
+                                <Input
+                                  type="time"
+                                  value={mealTimes[sub]}
+                                  onChange={(e) => setMealTimes((prev) => ({ ...prev, [sub]: e.target.value }))}
+                                  className="h-10 rounded-xl bg-background border-border w-36"
+                                />
+                              </div>
+
+                              <div>
+                                <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
+                                  How much did you finish?
+                                </label>
+                                <PortionSelector
+                                  value={mealPortions[sub]}
+                                  onChange={(val) => setMealPortions((prev) => ({ ...prev, [sub]: val }))}
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    )}
+                    );
+                  }
 
-                    {/* Time picker */}
-                    <div className="mb-3">
-                      <label className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-1.5">
-                        <Clock className="w-3.5 h-3.5" />
-                        When did you have this meal?
-                      </label>
-                      <Input
-                        type="time"
-                        value={mealTimes[section]}
-                        onChange={(e) =>
-                          setMealTimes((prev) => ({ ...prev, [section]: e.target.value }))
-                        }
-                        className="h-10 rounded-xl bg-background border-border w-36"
-                      />
+                  return (
+                    <div key={section} className="bg-card rounded-2xl border border-border p-4">
+                      <h3 className="text-base font-semibold text-foreground mb-3">{section}</h3>
+                      <div className="flex gap-2 mb-3">
+                        <Input
+                          value={searchInputs[section]}
+                          onChange={(e) => setSearchInputs((prev) => ({ ...prev, [section]: e.target.value }))}
+                          onKeyDown={(e) => e.key === "Enter" && addFoodItem(section)}
+                          placeholder={section === "Drinks" ? "Search for a drink..." : "Search for a food item..."}
+                          className="h-11 rounded-xl bg-background border-border flex-1"
+                        />
+                        <Button variant="outline" size="icon" className="h-11 w-11 rounded-xl border-border shrink-0" onClick={() => {}}>
+                          <Camera className="w-4 h-4 text-muted-foreground" />
+                        </Button>
+                      </div>
+                      {meals[section].length > 0 && (
+                        <div className="flex flex-wrap gap-2 mb-3">
+                          {meals[section].map((item, i) => (
+                            <motion.span
+                              key={`${item}-${i}`}
+                              initial={{ opacity: 0, scale: 0.9 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nomi-blue-soft text-primary text-sm font-medium"
+                            >
+                              {item}
+                              <button onClick={() => removeFoodItem(section, i)} className="hover:text-destructive transition-colors">
+                                <X className="w-3.5 h-3.5" />
+                              </button>
+                            </motion.span>
+                          ))}
+                        </div>
+                      )}
+                      <div className="mb-3">
+                        <label className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-1.5">
+                          <Clock className="w-3.5 h-3.5" />
+                          When did you have this meal?
+                        </label>
+                        <Input
+                          type="time"
+                          value={mealTimes[section]}
+                          onChange={(e) => setMealTimes((prev) => ({ ...prev, [section]: e.target.value }))}
+                          className="h-10 rounded-xl bg-background border-border w-36"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
+                          How much of this meal did you finish?
+                        </label>
+                        <PortionSelector
+                          value={mealPortions[section]}
+                          onChange={(val) => setMealPortions((prev) => ({ ...prev, [section]: val }))}
+                        />
+                      </div>
                     </div>
-
-                    {/* Portion selector */}
-                    <div>
-                      <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
-                        How much of this meal did you finish?
-                      </label>
-                      <PortionSelector
-                        value={mealPortions[section]}
-                        onChange={(val) =>
-                          setMealPortions((prev) => ({ ...prev, [section]: val }))
-                        }
-                      />
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               <div className="mt-10">
