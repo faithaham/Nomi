@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { AlertTriangle } from "lucide-react";
 import DualRingChart from "@/components/DualRingChart";
@@ -30,6 +31,7 @@ const getGreeting = () => {
 };
 
 const TodayScreen = () => {
+  const [creonResponse, setCreonResponse] = useState<string | null>(null);
   return (
     <div className="px-5 pt-6 pb-28 max-w-lg mx-auto">
       {/* Greeting */}
@@ -42,20 +44,75 @@ const TodayScreen = () => {
         <h1 className="text-2xl font-bold text-foreground">Sarah</h1>
       </motion.div>
 
-      {/* NOMI Alert Banner — No Creon logged */}
+      {/* NOMI Gentle Prompt — Enzyme not logged */}
       <motion.div
-        className="mt-4 bg-nomi-yellow-soft border border-accent/30 rounded-xl p-4 flex items-start gap-3"
+        className="mt-4 bg-nomi-yellow-soft border border-accent/30 rounded-xl p-4"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.1 }}
       >
-        <AlertTriangle className="w-5 h-5 text-nomi-amber flex-shrink-0 mt-0.5" />
-        <div>
-          <p className="text-sm font-semibold text-foreground">Creon not logged with lunch</p>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            You logged a meal but didn't record your enzyme replacement. This is the 3rd time this week. Tap below to log it now.
-          </p>
+        <div className="flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-nomi-amber flex-shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm font-semibold text-foreground">Enzyme replacement not logged</p>
+            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+              NOMI has noted you have not logged your enzyme replacement with lunch. Please let us know what happened — this helps your care team support you better.
+            </p>
+          </div>
         </div>
+
+        <div className="mt-3 flex flex-wrap gap-2">
+          {[
+            "I forgot to take them",
+            "I took them but forgot to log",
+          ].map((option) => (
+            <button
+              key={option}
+              onClick={() => setCreonResponse(option)}
+              className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
+                creonResponse === option
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-background border-border text-foreground hover:bg-muted"
+              }`}
+            >
+              {option}
+            </button>
+          ))}
+          <button
+            onClick={() => setCreonResponse(creonResponse === "__other__" ? null : "__other__")}
+            className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
+              creonResponse === "__other__" || (creonResponse && !["I forgot to take them", "I took them but forgot to log", null].includes(creonResponse))
+                ? "bg-primary text-primary-foreground border-primary"
+                : "bg-background border-border text-foreground hover:bg-muted"
+            }`}
+          >
+            Other
+          </button>
+        </div>
+
+        {(creonResponse === "__other__" || (creonResponse && !["I forgot to take them", "I took them but forgot to log", null, "__other__"].includes(creonResponse))) && (
+          <div className="mt-2">
+            <input
+              type="text"
+              placeholder="Tell us what happened…"
+              className="w-full text-xs px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+              value={creonResponse === "__other__" ? "" : (creonResponse || "")}
+              onChange={(e) => setCreonResponse(e.target.value || "__other__")}
+            />
+          </div>
+        )}
+
+        {creonResponse && creonResponse !== "__other__" && (
+          <motion.div
+            className="mt-3 flex justify-end"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <button className="text-xs font-medium px-4 py-1.5 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
+              Submit
+            </button>
+          </motion.div>
+        )}
       </motion.div>
 
       {/* Ring Chart */}
