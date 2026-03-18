@@ -336,8 +336,8 @@ const OneTimeVisit = () => {
                     Email address
                   </Label>
                   <p className="text-xs text-muted-foreground mt-0.5 mb-1.5">
-                    So we can save your diary if you want to access it later
-                  </p>
+
+                </p>
                   <Input
                   id="email"
                   type="email"
