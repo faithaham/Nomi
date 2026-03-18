@@ -574,9 +574,9 @@ const OneTimeVisit = () => {
               <h2 className="text-2xl font-bold text-foreground mb-2">
                 What did you eat today?
               </h2>
-              <p className="text-muted-foreground text-sm mb-8">
-                Add items to each meal. Don't worry about being exact.
-              </p>
+              <p className="text-muted-foreground text-sm mb-8">Add items to each meal. Try to add much detail as possible, this helps to assess your nutritional intake
+
+            </p>
 
               {/* Date picker */}
               <div className="bg-card rounded-2xl border border-border p-4 mb-2">
