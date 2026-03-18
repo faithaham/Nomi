@@ -59,6 +59,9 @@
     --nutrient-fat: 45 90% 50%;
     --nutrient-fibre: 145 55% 42%;
     --nutrient-sugar: 280 50% 55%;
+    --nutrient-fluids: 195 70% 50%;
+    --nutrient-vitd: 30 80% 55%;
+    --nutrient-calcium: 170 45% 45%;
 
     /* RAG status */
     --rag-green: 145 55% 42%;
