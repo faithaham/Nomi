@@ -4,6 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Home, Camera, X, Download, ExternalLink, Clock, CalendarIcon, Mic, Pill, Plus, AlertTriangle, Droplets } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
