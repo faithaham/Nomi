@@ -35,6 +35,7 @@
         "@radix-ui/react-tooltip": "1.1.4",
         "@swc/core": "^1.15.18",
         "@swc/core-linux-x64-gnu": "^1.15.18",
+        "@swc/core-linux-x64-musl": "^1.15.18",
         "@tanstack/react-query": "5.56.2",
         "@vitejs/plugin-react": "^6.0.1",
         "@vitejs/plugin-react-swc": "3.11.0",
