@@ -186,6 +186,14 @@ const OneTimeVisit = () => {
   const micronutrients = [
     { name: "Vitamin D", target: 25, actual: 12, unit: "µg", color: "hsl(var(--nutrient-vitd))" },
     { name: "Calcium", target: 1000, actual: 620, unit: "mg", color: "hsl(var(--nutrient-calcium))" },
+    { name: "Iron", target: 14, actual: 6, unit: "mg", color: "hsl(var(--nutrient-iron))" },
+  ];
+
+  const nomiNutrientInsights = [
+    { food: "Porridge", insight: "Great source of fibre and iron — helps towards your daily targets." },
+    { food: "Yoghurt", insight: "Good source of calcium and protein — supports bone health." },
+    { food: "Orange juice", insight: "Rich in Vitamin C which aids iron absorption from other foods." },
+    { food: "Cheese", insight: "Excellent source of calcium and fat-soluble vitamins." },
   ];
 
   const filteredMeds = medSearch
