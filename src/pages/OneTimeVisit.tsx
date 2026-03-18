@@ -180,9 +180,13 @@ const OneTimeVisit = () => {
     { name: "Fat", target: 65, actual: 45, unit: "g", color: "hsl(var(--nutrient-fat))" },
     { name: "Fibre", target: 30, actual: 14, unit: "g", color: "hsl(var(--nutrient-fibre))" },
     { name: "Sugar", target: 50, actual: 32, unit: "g", color: "hsl(var(--nutrient-sugar))" },
+    { name: "Fluids", target: 2000, actual: 1400, unit: "ml", color: "hsl(var(--nutrient-fluids))" },
   ];
 
-  const filteredMeds = medSearch
+  const micronutrients = [
+    { name: "Vitamin D", target: 25, actual: 12, unit: "µg", color: "hsl(var(--nutrient-vitd))" },
+    { name: "Calcium", target: 1000, actual: 620, unit: "mg", color: "hsl(var(--nutrient-calcium))" },
+  ];
     ? COMMON_MEDICATIONS.filter((m) => m.toLowerCase().includes(medSearch.toLowerCase()))
     : [];
 
