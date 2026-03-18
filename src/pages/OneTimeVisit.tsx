@@ -187,6 +187,8 @@ const OneTimeVisit = () => {
     { name: "Vitamin D", target: 25, actual: 12, unit: "µg", color: "hsl(var(--nutrient-vitd))" },
     { name: "Calcium", target: 1000, actual: 620, unit: "mg", color: "hsl(var(--nutrient-calcium))" },
   ];
+
+  const filteredMeds = medSearch
     ? COMMON_MEDICATIONS.filter((m) => m.toLowerCase().includes(medSearch.toLowerCase()))
     : [];
 
