@@ -71,7 +71,7 @@ const ProgressScreen = () => {
         <Flame className="w-8 h-8 text-nomi-amber" />
         <div>
           <p className="font-bold text-foreground">7-day streak!</p>
-          <p className="text-xs text-muted-foreground">You've logged every day this week</p>
+          <p className="text-xs text-muted-foreground">You've logged every day this week, well done!</p>
         </div>
       </motion.div>
 
