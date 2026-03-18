@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Home, Camera, X, Download, ExternalLink, Clock, CalendarIcon, Mic, Pill, Plus, AlertTriangle, Droplets } from "lucide-react";
+import { ArrowLeft, Home, Camera, X, Download, ExternalLink, Clock, CalendarIcon, Mic, Pill, Plus, AlertTriangle, Droplets, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -186,6 +186,14 @@ const OneTimeVisit = () => {
   const micronutrients = [
     { name: "Vitamin D", target: 25, actual: 12, unit: "µg", color: "hsl(var(--nutrient-vitd))" },
     { name: "Calcium", target: 1000, actual: 620, unit: "mg", color: "hsl(var(--nutrient-calcium))" },
+    { name: "Iron", target: 14, actual: 6, unit: "mg", color: "hsl(var(--nutrient-iron))" },
+  ];
+
+  const nomiNutrientInsights = [
+    { food: "Porridge", insight: "Great source of fibre and iron — helps towards your daily targets." },
+    { food: "Yoghurt", insight: "Good source of calcium and protein — supports bone health." },
+    { food: "Orange juice", insight: "Rich in Vitamin C which aids iron absorption from other foods." },
+    { food: "Cheese", insight: "Excellent source of calcium and fat-soluble vitamins." },
   ];
 
   const filteredMeds = medSearch
@@ -944,14 +952,14 @@ const OneTimeVisit = () => {
                 })}
               </div>
 
-              {/* CF-relevant Micronutrients */}
+              {/* Vitamins & Minerals */}
               <div className="bg-card rounded-2xl border border-border p-5 mb-6">
                 <h3 className="text-sm font-semibold text-foreground mb-1 flex items-center gap-2">
                   <Droplets className="w-3.5 h-3.5 text-primary" />
-                  Key Micronutrients for Cystic Fibrosis
+                  Vitamins &amp; Minerals
                 </h3>
                 <p className="text-xs text-muted-foreground mb-4">
-                  Patients with CF are at higher risk of deficiency in these nutrients.
+                  It's important to prioritise these intakes to support your overall health. For more specific requirements, consult your Dietitian.
                 </p>
                 {micronutrients.map((n) => {
                   const pct = Math.min(n.actual / n.target, 1);
@@ -982,6 +990,34 @@ const OneTimeVisit = () => {
                     </div>
                   );
                 })}
+              </div>
+
+              {/* NOMI Intelligence — Nutrient Sources */}
+              <div className="bg-ai-card rounded-2xl border border-primary/15 p-5 mb-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Lightbulb className="w-4 h-4 text-primary" />
+                  </div>
+                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    NOMI Intelligence
+                  </span>
+                </div>
+                <p className="text-sm text-foreground mb-3 leading-relaxed">
+                  Based on what you've logged today, here are some good nutrient sources NOMI spotted in your diet:
+                </p>
+                <div className="space-y-2.5">
+                  {nomiNutrientInsights.map((item) => (
+                    <div key={item.food} className="flex items-start gap-2.5">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
+                      <p className="text-xs text-foreground leading-relaxed">
+                        <span className="font-semibold">{item.food}</span> — {item.insight}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground mt-3 leading-relaxed">
+                  For personalised advice on vitamins and minerals, speak to your Dietitian via the <span className="font-semibold text-primary">Messages</span> tab.
+                </p>
               </div>
 
               {/* Action buttons */}
