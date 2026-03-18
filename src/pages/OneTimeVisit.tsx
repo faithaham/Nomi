@@ -780,44 +780,108 @@ const OneTimeVisit = () => {
                 Here's an overview of what you logged today.
               </p>
 
-              {/* Food Diary */}
+              {/* Food Diary Table */}
               {(() => {
-                const EXAMPLE_DIARY: Record<string, string[]> = {
-                  Breakfast: ["Porridge with honey", "Glass of orange juice"],
-                  Lunch: ["Ham & cheese sandwich", "Apple", "Packet of crisps"],
-                  Dinner: ["Spaghetti bolognese", "Side salad", "Garlic bread"],
-                  "Morning Snack": ["Banana"],
-                  "Afternoon Snack": ["Yoghurt"],
-                  "Evening Snack": ["Biscuits x2"],
-                  Drinks: ["Water", "Tea with milk", "Ribena"],
+                interface DiaryEntry {
+                  food: string;
+                  amount: string;
+                  time: string;
+                }
+                const EXAMPLE_DIARY_TABLE: Record<string, DiaryEntry[]> = {
+                  Breakfast: [
+                    { food: "Porridge with honey", amount: "1 bowl (250g)", time: "07:30" },
+                    { food: "Glass of orange juice", amount: "200ml", time: "07:30" },
+                  ],
+                  Lunch: [
+                    { food: "Ham & cheese sandwich", amount: "1 whole", time: "12:15" },
+                    { food: "Apple", amount: "1 medium", time: "12:15" },
+                    { food: "Packet of crisps", amount: "25g", time: "12:15" },
+                  ],
+                  Dinner: [
+                    { food: "Spaghetti bolognese", amount: "350g", time: "18:30" },
+                    { food: "Side salad", amount: "1 portion", time: "18:30" },
+                    { food: "Garlic bread", amount: "2 slices", time: "18:30" },
+                  ],
+                  "Morning Snack": [
+                    { food: "Banana", amount: "1 medium", time: "10:00" },
+                  ],
+                  "Afternoon Snack": [
+                    { food: "Yoghurt", amount: "150g", time: "15:00" },
+                  ],
+                  "Evening Snack": [
+                    { food: "Biscuits", amount: "2 biscuits", time: "20:30" },
+                  ],
+                  Drinks: [
+                    { food: "Water", amount: "500ml", time: "Throughout" },
+                    { food: "Tea with milk", amount: "3 cups", time: "Various" },
+                    { food: "Ribena", amount: "250ml", time: "14:00" },
+                  ],
                 };
 
                 const DIARY_SECTIONS = ["Breakfast", "Lunch", "Dinner", "Morning Snack", "Afternoon Snack", "Evening Snack", "Drinks"];
                 const hasUserData = DIARY_SECTIONS.some((s) => meals[s]?.length > 0);
-                const displayData = hasUserData ? meals : EXAMPLE_DIARY;
 
                 return (
-                  <div className="bg-card rounded-2xl border border-border p-5 mb-6">
-                    <h3 className="text-sm font-semibold text-foreground mb-3">
+                  <div className="bg-card rounded-2xl border border-border p-5 mb-6 overflow-hidden">
+                    <h3 className="text-sm font-semibold text-foreground mb-1">
                       Your Food Diary
                     </h3>
                     {!hasUserData && (
                       <p className="text-xs text-muted-foreground italic mb-3">Example food diary</p>
                     )}
-                    {DIARY_SECTIONS.map((section) => {
-                      const items = displayData[section];
-                      if (!items || items.length === 0) return null;
-                      return (
-                        <div key={section} className="mb-3 last:mb-0">
-                          <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                            {section}
-                          </span>
-                          <p className="text-sm text-foreground mt-0.5">
-                            {items.join(", ")}
-                          </p>
-                        </div>
-                      );
-                    })}
+                    <div className="overflow-x-auto -mx-5 px-5">
+                      <Table>
+                        <TableHeader>
+                          <TableRow className="border-border">
+                            <TableHead className="text-xs font-semibold text-muted-foreground h-9 px-3">Meal</TableHead>
+                            <TableHead className="text-xs font-semibold text-muted-foreground h-9 px-3">Food / Drink</TableHead>
+                            <TableHead className="text-xs font-semibold text-muted-foreground h-9 px-3">Amount</TableHead>
+                            <TableHead className="text-xs font-semibold text-muted-foreground h-9 px-3">Time</TableHead>
+                            <TableHead className="text-xs font-semibold text-muted-foreground h-9 px-3">Portion</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {DIARY_SECTIONS.map((section) => {
+                            if (hasUserData) {
+                              const items = meals[section];
+                              if (!items || items.length === 0) return null;
+                              const time = mealTimes[section] || "—";
+                              const portion = mealPortions[section];
+                              const portionLabel = portion === 0 ? "None" : portion === 0.25 ? "¼" : portion === 0.5 ? "½" : portion === 0.75 ? "¾" : "All";
+                              return items.map((item, i) => (
+                                <TableRow key={`${section}-${i}`} className="border-border">
+                                  {i === 0 && (
+                                    <TableCell rowSpan={items.length} className="text-xs font-medium text-foreground px-3 py-2 align-top whitespace-nowrap">
+                                      {section}
+                                    </TableCell>
+                                  )}
+                                  <TableCell className="text-xs text-foreground px-3 py-2">{item}</TableCell>
+                                  <TableCell className="text-xs text-muted-foreground px-3 py-2">—</TableCell>
+                                  <TableCell className="text-xs text-muted-foreground px-3 py-2">{i === 0 ? time : ""}</TableCell>
+                                  <TableCell className="text-xs text-muted-foreground px-3 py-2">{i === 0 ? portionLabel : ""}</TableCell>
+                                </TableRow>
+                              ));
+                            } else {
+                              const entries = EXAMPLE_DIARY_TABLE[section];
+                              if (!entries || entries.length === 0) return null;
+                              return entries.map((entry, i) => (
+                                <TableRow key={`${section}-${i}`} className="border-border">
+                                  {i === 0 && (
+                                    <TableCell rowSpan={entries.length} className="text-xs font-medium text-foreground px-3 py-2 align-top whitespace-nowrap">
+                                      {section}
+                                    </TableCell>
+                                  )}
+                                  <TableCell className="text-xs text-foreground px-3 py-2">{entry.food}</TableCell>
+                                  <TableCell className="text-xs text-muted-foreground px-3 py-2">{entry.amount}</TableCell>
+                                  <TableCell className="text-xs text-muted-foreground px-3 py-2">{entry.time}</TableCell>
+                                  <TableCell className="text-xs text-muted-foreground px-3 py-2">All</TableCell>
+                                </TableRow>
+                              ));
+                            }
+                          })}
+                        </TableBody>
+                      </Table>
+                    </div>
                   </div>
                 );
               })()}
@@ -880,11 +944,44 @@ const OneTimeVisit = () => {
                 })}
               </div>
 
-              {/* Written summary */}
-              <div className="bg-nomi-blue-soft rounded-2xl border border-primary/20 p-5 mb-8">
-                <p className="text-sm text-foreground leading-relaxed">
-                  {getSummary(condition)}
+              {/* CF-relevant Micronutrients */}
+              <div className="bg-card rounded-2xl border border-border p-5 mb-6">
+                <h3 className="text-sm font-semibold text-foreground mb-1 flex items-center gap-2">
+                  <Droplets className="w-3.5 h-3.5 text-primary" />
+                  Key Micronutrients for Cystic Fibrosis
+                </h3>
+                <p className="text-xs text-muted-foreground mb-4">
+                  Patients with CF are at higher risk of deficiency in these nutrients.
                 </p>
+                {micronutrients.map((n) => {
+                  const pct = Math.min(n.actual / n.target, 1);
+                  const ragColor = pct >= 0.8 ? "hsl(var(--rag-green))" : pct >= 0.5 ? "hsl(var(--rag-amber))" : "hsl(var(--rag-red))";
+                  return (
+                    <div key={n.name} className="mb-4 last:mb-0">
+                      <div className="flex justify-between text-xs mb-1">
+                        <span className="font-medium text-foreground flex items-center gap-1.5">
+                          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: n.color }} />
+                          {n.name}
+                        </span>
+                        <span className="text-muted-foreground">
+                          {n.actual}{n.unit} / {n.target}{n.unit}
+                        </span>
+                      </div>
+                      <div className="h-2.5 rounded-full bg-muted overflow-hidden">
+                        <motion.div
+                          className="h-full rounded-full"
+                          style={{ backgroundColor: ragColor }}
+                          initial={{ width: 0 }}
+                          animate={{ width: `${pct * 100}%` }}
+                          transition={{ duration: 0.8, ease: "easeOut" }}
+                        />
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {pct < 0.5 ? "⚠️ Below recommended intake" : pct < 0.8 ? "Getting closer to target" : "✓ On track"}
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
 
               {/* Action buttons */}
