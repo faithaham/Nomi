@@ -296,11 +296,11 @@ const OneTimeVisit = () => {
               className="text-center text-xs text-muted-foreground mt-16"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.7, duration: 0.4 }}>
-              
-                Already have the NHS App? Find us there to continue tracking
-                long term.
-              </motion.p>
+              transition={{ delay: 0.7, duration: 0.4 }}>Already have the NHS App? Link NOMI to your NHS app using your NHS login, which automatically connects if your details match your records.
+
+
+
+            </motion.p>
             </motion.div>
           }
 
