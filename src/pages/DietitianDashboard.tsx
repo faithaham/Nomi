@@ -353,7 +353,17 @@ const DietitianDashboard = () => {
                 <ChevronRight className="w-4 h-4 text-muted-foreground" />
               </div>
               <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-                <span>Compliance: <span className={`font-semibold ${p.compliance >= 80 ? "text-nomi-green" : p.compliance >= 50 ? "text-nomi-amber" : "text-rag-red"}`}>{p.compliance}%</span></span>
+                <span className="flex flex-wrap gap-1">
+                  {p.flags.length === 0 ? (
+                    <span className="text-nomi-green font-medium">All on track</span>
+                  ) : (
+                    p.flags.slice(0, 2).map((f) => (
+                      <span key={f.label} className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${f.severity === "red" ? "bg-rag-red/15 text-rag-red" : "bg-rag-amber/15 text-rag-amber"}`}>
+                        {f.label}
+                      </span>
+                    ))
+                  )}
+                </span>
                 <span className={getLogColor(p.lastLoggedDays)}>Last: {p.lastLogged}</span>
               </div>
             </CardContent>
