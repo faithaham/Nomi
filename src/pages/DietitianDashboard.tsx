@@ -188,11 +188,15 @@ const weeklyTrend = [
 { day: "Sun", flagCount: 0 }];
 
 
-const calendarDays = Array.from({ length: 28 }, (_, i) => ({
-  day: i + 1,
-  logged: Math.random() > 0.3,
-  compliance: Math.floor(Math.random() * 60) + 40
-}));
+const calendarDays = Array.from({ length: 28 }, (_, i) => {
+  const logged = Math.random() > 0.3;
+  const flagCount = logged ? Math.floor(Math.random() * 4) : 0;
+  return {
+    day: i + 1,
+    logged,
+    flagCount,
+  };
+});
 
 // ── Sidebar ──────────────────────────────────────────────
 
