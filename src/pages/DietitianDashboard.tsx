@@ -45,7 +45,10 @@ const mockPatients = [
   condition: "Cystic Fibrosis",
   lastLogged: "Today",
   lastLoggedDays: 0,
-  compliance: 72,
+  flags: [
+    { label: "Enzymes missed", severity: "red" as const },
+    { label: "Low fibre", severity: "amber" as const },
+  ],
   alerts: true,
   nutrients: [
   { name: "Carbohydrates", target: 250, actual: 162, unit: "g", color: "hsl(var(--nutrient-carbs))" },
@@ -54,7 +57,6 @@ const mockPatients = [
   { name: "Fibre", target: 30, actual: 9, unit: "g", color: "hsl(var(--nutrient-fibre))" },
   { name: "Sugar", target: 50, actual: 28, unit: "g", color: "hsl(var(--nutrient-sugar))" },
   { name: "Creon", target: 3, actual: 0, unit: "", color: "hsl(var(--nomi-amber))" }]
-
 },
 {
   id: 2,
@@ -63,7 +65,9 @@ const mockPatients = [
   condition: "Diabetes Type 2",
   lastLogged: "Yesterday",
   lastLoggedDays: 1,
-  compliance: 72,
+  flags: [
+    { label: "Low fibre", severity: "amber" as const },
+  ],
   alerts: false,
   nutrients: [
   { name: "Carbohydrates", target: 200, actual: 130, unit: "g", color: "hsl(var(--nutrient-carbs))" },
@@ -72,7 +76,6 @@ const mockPatients = [
   { name: "Fibre", target: 35, actual: 15, unit: "g", color: "hsl(var(--nutrient-fibre))" },
   { name: "Sugar", target: 45, actual: 30, unit: "g", color: "hsl(var(--nutrient-sugar))" },
   { name: "Medication", target: 3, actual: 2, unit: "", color: "hsl(var(--nomi-amber))" }]
-
 },
 {
   id: 3,
@@ -81,7 +84,11 @@ const mockPatients = [
   condition: "Coeliac Disease",
   lastLogged: "3 days ago",
   lastLoggedDays: 3,
-  compliance: 54,
+  flags: [
+    { label: "Not logging", severity: "red" as const },
+    { label: "Low protein", severity: "red" as const },
+    { label: "Enzymes missed", severity: "amber" as const },
+  ],
   alerts: true,
   nutrients: [
   { name: "Carbs", target: 240, actual: 100, unit: "g", color: "hsl(var(--nutrient-carbs))" },
@@ -90,7 +97,6 @@ const mockPatients = [
   { name: "Fibre", target: 28, actual: 10, unit: "g", color: "hsl(var(--nutrient-fibre))" },
   { name: "Sugar", target: 50, actual: 42, unit: "g", color: "hsl(var(--nutrient-sugar))" },
   { name: "Medication", target: 2, actual: 0, unit: "", color: "hsl(var(--nomi-amber))" }]
-
 },
 {
   id: 4,
@@ -99,7 +105,11 @@ const mockPatients = [
   condition: "High Cholesterol",
   lastLogged: "5 days ago",
   lastLoggedDays: 5,
-  compliance: 38,
+  flags: [
+    { label: "Not logging", severity: "red" as const },
+    { label: "Low fibre", severity: "red" as const },
+    { label: "High sugar", severity: "amber" as const },
+  ],
   alerts: true,
   nutrients: [
   { name: "Carbs", target: 230, actual: 80, unit: "g", color: "hsl(var(--nutrient-carbs))" },
@@ -108,7 +118,6 @@ const mockPatients = [
   { name: "Fibre", target: 30, actual: 8, unit: "g", color: "hsl(var(--nutrient-fibre))" },
   { name: "Sugar", target: 40, actual: 35, unit: "g", color: "hsl(var(--nutrient-sugar))" },
   { name: "Medication", target: 2, actual: 1, unit: "", color: "hsl(var(--nomi-amber))" }]
-
 },
 {
   id: 5,
@@ -117,7 +126,7 @@ const mockPatients = [
   condition: "Diabetes Type 1",
   lastLogged: "Today",
   lastLoggedDays: 0,
-  compliance: 93,
+  flags: [],
   alerts: false,
   nutrients: [
   { name: "Carbs", target: 220, actual: 210, unit: "g", color: "hsl(var(--nutrient-carbs))" },
@@ -126,7 +135,6 @@ const mockPatients = [
   { name: "Fibre", target: 30, actual: 28, unit: "g", color: "hsl(var(--nutrient-fibre))" },
   { name: "Sugar", target: 45, actual: 20, unit: "g", color: "hsl(var(--nutrient-sugar))" },
   { name: "Medication", target: 4, actual: 4, unit: "", color: "hsl(var(--nomi-amber))" }]
-
 }];
 
 
