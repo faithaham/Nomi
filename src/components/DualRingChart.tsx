@@ -54,31 +54,31 @@ const DualRingChart = ({ nutrients, size = 220, className = "" }: DualRingChartP
         <circle
           cx={center} cy={center} r={outerRadius}
           fill="none" stroke="hsl(var(--border))" strokeWidth={outerStroke}
-          opacity={0.5}
-        />
+          opacity={0.5} />
+        
         <circle
           cx={center} cy={center} r={innerRadius}
           fill="none" stroke="hsl(var(--border))" strokeWidth={innerStroke}
-          opacity={0.3}
-        />
+          opacity={0.3} />
+        
 
         {/* Inner ring segments (target proportions) */}
-        {segments.map((seg, i) => (
-          <motion.circle
-            key={seg.name}
-            cx={center} cy={center} r={innerRadius}
-            fill="none"
-            stroke={seg.color}
-            strokeWidth={innerStroke}
-            strokeDasharray={`${seg.dashLength} ${seg.gap}`}
-            strokeDashoffset={seg.offset}
-            strokeLinecap="butt"
-            transform={`rotate(-90 ${center} ${center})`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.7 }}
-            transition={{ delay: i * 0.1, duration: 0.5 }}
-          />
-        ))}
+        {segments.map((seg, i) =>
+        <motion.circle
+          key={seg.name}
+          cx={center} cy={center} r={innerRadius}
+          fill="none"
+          stroke={seg.color}
+          strokeWidth={innerStroke}
+          strokeDasharray={`${seg.dashLength} ${seg.gap}`}
+          strokeDashoffset={seg.offset}
+          strokeLinecap="butt"
+          transform={`rotate(-90 ${center} ${center})`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.7 }}
+          transition={{ delay: i * 0.1, duration: 0.5 }} />
+
+        )}
 
         {/* Outer ring (progress fill) */}
         <motion.circle
@@ -91,24 +91,24 @@ const DualRingChart = ({ nutrients, size = 220, className = "" }: DualRingChartP
           transform={`rotate(-90 ${center} ${center})`}
           initial={{ strokeDasharray: `0 ${outerCircumference}` }}
           animate={{ strokeDasharray: `${outerDash} ${outerCircumference - outerDash}` }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-        />
+          transition={{ duration: 1.2, ease: "easeOut" }} />
+        
       </svg>
 
       {/* Center text */}
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <motion.span
-          className="text-3xl font-bold text-foreground"
+          className="font-bold text-foreground text-base px-0"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, duration: 0.4 }}
-        >
+          transition={{ delay: 0.5, duration: 0.4 }}>
+          
           {Math.round(overallPercent * 100)}%
         </motion.span>
-        <span className="text-xs text-muted-foreground">of daily target</span>
+        <span className="text-center text-[sidebar-primary-foreground] text-sidebar-primary">on target</span>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default DualRingChart;

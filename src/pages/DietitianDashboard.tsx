@@ -46,9 +46,9 @@ const mockPatients = [
   lastLogged: "Today",
   lastLoggedDays: 0,
   flags: [
-    { label: "Enzymes missed", severity: "red" as const },
-    { label: "Low fibre", severity: "amber" as const },
-  ],
+  { label: "Enzymes missed", severity: "red" as const },
+  { label: "Low fibre", severity: "amber" as const }],
+
   alerts: true,
   nutrients: [
   { name: "Carbohydrates", target: 250, actual: 162, unit: "g", color: "hsl(var(--nutrient-carbs))" },
@@ -66,8 +66,8 @@ const mockPatients = [
   lastLogged: "Yesterday",
   lastLoggedDays: 1,
   flags: [
-    { label: "Low fibre", severity: "amber" as const },
-  ],
+  { label: "Low fibre", severity: "amber" as const }],
+
   alerts: false,
   nutrients: [
   { name: "Carbohydrates", target: 200, actual: 130, unit: "g", color: "hsl(var(--nutrient-carbs))" },
@@ -85,10 +85,10 @@ const mockPatients = [
   lastLogged: "3 days ago",
   lastLoggedDays: 3,
   flags: [
-    { label: "Not logging", severity: "red" as const },
-    { label: "Low protein", severity: "red" as const },
-    { label: "Enzymes missed", severity: "amber" as const },
-  ],
+  { label: "Not logging", severity: "red" as const },
+  { label: "Low protein", severity: "red" as const },
+  { label: "Enzymes missed", severity: "amber" as const }],
+
   alerts: true,
   nutrients: [
   { name: "Carbs", target: 240, actual: 100, unit: "g", color: "hsl(var(--nutrient-carbs))" },
@@ -106,10 +106,10 @@ const mockPatients = [
   lastLogged: "5 days ago",
   lastLoggedDays: 5,
   flags: [
-    { label: "Not logging", severity: "red" as const },
-    { label: "Low fibre", severity: "red" as const },
-    { label: "High sugar", severity: "amber" as const },
-  ],
+  { label: "Not logging", severity: "red" as const },
+  { label: "Low fibre", severity: "red" as const },
+  { label: "High sugar", severity: "amber" as const }],
+
   alerts: true,
   nutrients: [
   { name: "Carbs", target: 230, actual: 80, unit: "g", color: "hsl(var(--nutrient-carbs))" },
@@ -194,7 +194,7 @@ const calendarDays = Array.from({ length: 28 }, (_, i) => {
   return {
     day: i + 1,
     logged,
-    flagCount,
+    flagCount
   };
 });
 
@@ -298,7 +298,7 @@ const DietitianDashboard = () => {
                 
                     <td className="p-3 font-medium text-foreground">{p.name}</td>
                     <td className="p-3 text-muted-foreground">{p.condition}</td>
-                    <td className="p-3">
+                    <td className="p-3 text-sidebar-primary">
                       <div className="flex justify-center">
                         <DualRingChart nutrients={p.nutrients} size={48} />
                       </div>
@@ -306,15 +306,15 @@ const DietitianDashboard = () => {
                     <td className={`p-3 ${getLogColor(p.lastLoggedDays)}`}>{p.lastLogged}</td>
                     <td className="p-3">
                       <div className="flex flex-wrap gap-1">
-                        {p.flags.length === 0 ? (
-                          <span className="text-xs text-nomi-green font-medium">All on track</span>
-                        ) : (
-                          p.flags.map((f) => (
-                            <span key={f.label} className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${f.severity === "red" ? "bg-rag-red/15 text-rag-red" : "bg-rag-amber/15 text-rag-amber"}`}>
+                        {p.flags.length === 0 ?
+                    <span className="text-xs text-nomi-green font-medium">All on track</span> :
+
+                    p.flags.map((f) =>
+                    <span key={f.label} className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${f.severity === "red" ? "bg-rag-red/15 text-rag-red" : "bg-rag-amber/15 text-rag-amber"}`}>
                               {f.label}
                             </span>
-                          ))
-                        )}
+                    )
+                    }
                       </div>
                     </td>
                     <td className="p-3 text-center">
@@ -358,15 +358,15 @@ const DietitianDashboard = () => {
               </div>
               <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
                 <span className="flex flex-wrap gap-1">
-                  {p.flags.length === 0 ? (
-                    <span className="text-nomi-green font-medium">All on track</span>
-                  ) : (
-                    p.flags.slice(0, 2).map((f) => (
-                      <span key={f.label} className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${f.severity === "red" ? "bg-rag-red/15 text-rag-red" : "bg-rag-amber/15 text-rag-amber"}`}>
+                  {p.flags.length === 0 ?
+              <span className="text-nomi-green font-medium">All on track</span> :
+
+              p.flags.slice(0, 2).map((f) =>
+              <span key={f.label} className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${f.severity === "red" ? "bg-rag-red/15 text-rag-red" : "bg-rag-amber/15 text-rag-amber"}`}>
                         {f.label}
                       </span>
-                    ))
-                  )}
+              )
+              }
                 </span>
                 <span className={getLogColor(p.lastLoggedDays)}>Last: {p.lastLogged}</span>
               </div>
