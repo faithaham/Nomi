@@ -45,7 +45,10 @@ const mockPatients = [
   condition: "Cystic Fibrosis",
   lastLogged: "Today",
   lastLoggedDays: 0,
-  compliance: 72,
+  flags: [
+    { label: "Enzymes missed", severity: "red" as const },
+    { label: "Low fibre", severity: "amber" as const },
+  ],
   alerts: true,
   nutrients: [
   { name: "Carbohydrates", target: 250, actual: 162, unit: "g", color: "hsl(var(--nutrient-carbs))" },
@@ -54,7 +57,6 @@ const mockPatients = [
   { name: "Fibre", target: 30, actual: 9, unit: "g", color: "hsl(var(--nutrient-fibre))" },
   { name: "Sugar", target: 50, actual: 28, unit: "g", color: "hsl(var(--nutrient-sugar))" },
   { name: "Creon", target: 3, actual: 0, unit: "", color: "hsl(var(--nomi-amber))" }]
-
 },
 {
   id: 2,
@@ -63,7 +65,9 @@ const mockPatients = [
   condition: "Diabetes Type 2",
   lastLogged: "Yesterday",
   lastLoggedDays: 1,
-  compliance: 72,
+  flags: [
+    { label: "Low fibre", severity: "amber" as const },
+  ],
   alerts: false,
   nutrients: [
   { name: "Carbohydrates", target: 200, actual: 130, unit: "g", color: "hsl(var(--nutrient-carbs))" },
@@ -72,7 +76,6 @@ const mockPatients = [
   { name: "Fibre", target: 35, actual: 15, unit: "g", color: "hsl(var(--nutrient-fibre))" },
   { name: "Sugar", target: 45, actual: 30, unit: "g", color: "hsl(var(--nutrient-sugar))" },
   { name: "Medication", target: 3, actual: 2, unit: "", color: "hsl(var(--nomi-amber))" }]
-
 },
 {
   id: 3,
@@ -81,7 +84,11 @@ const mockPatients = [
   condition: "Coeliac Disease",
   lastLogged: "3 days ago",
   lastLoggedDays: 3,
-  compliance: 54,
+  flags: [
+    { label: "Not logging", severity: "red" as const },
+    { label: "Low protein", severity: "red" as const },
+    { label: "Enzymes missed", severity: "amber" as const },
+  ],
   alerts: true,
   nutrients: [
   { name: "Carbs", target: 240, actual: 100, unit: "g", color: "hsl(var(--nutrient-carbs))" },
@@ -90,7 +97,6 @@ const mockPatients = [
   { name: "Fibre", target: 28, actual: 10, unit: "g", color: "hsl(var(--nutrient-fibre))" },
   { name: "Sugar", target: 50, actual: 42, unit: "g", color: "hsl(var(--nutrient-sugar))" },
   { name: "Medication", target: 2, actual: 0, unit: "", color: "hsl(var(--nomi-amber))" }]
-
 },
 {
   id: 4,
@@ -99,7 +105,11 @@ const mockPatients = [
   condition: "High Cholesterol",
   lastLogged: "5 days ago",
   lastLoggedDays: 5,
-  compliance: 38,
+  flags: [
+    { label: "Not logging", severity: "red" as const },
+    { label: "Low fibre", severity: "red" as const },
+    { label: "High sugar", severity: "amber" as const },
+  ],
   alerts: true,
   nutrients: [
   { name: "Carbs", target: 230, actual: 80, unit: "g", color: "hsl(var(--nutrient-carbs))" },
@@ -108,7 +118,6 @@ const mockPatients = [
   { name: "Fibre", target: 30, actual: 8, unit: "g", color: "hsl(var(--nutrient-fibre))" },
   { name: "Sugar", target: 40, actual: 35, unit: "g", color: "hsl(var(--nutrient-sugar))" },
   { name: "Medication", target: 2, actual: 1, unit: "", color: "hsl(var(--nomi-amber))" }]
-
 },
 {
   id: 5,
@@ -117,7 +126,7 @@ const mockPatients = [
   condition: "Diabetes Type 1",
   lastLogged: "Today",
   lastLoggedDays: 0,
-  compliance: 93,
+  flags: [],
   alerts: false,
   nutrients: [
   { name: "Carbs", target: 220, actual: 210, unit: "g", color: "hsl(var(--nutrient-carbs))" },
@@ -126,7 +135,6 @@ const mockPatients = [
   { name: "Fibre", target: 30, actual: 28, unit: "g", color: "hsl(var(--nutrient-fibre))" },
   { name: "Sugar", target: 45, actual: 20, unit: "g", color: "hsl(var(--nutrient-sugar))" },
   { name: "Medication", target: 4, actual: 4, unit: "", color: "hsl(var(--nomi-amber))" }]
-
 }];
 
 
@@ -171,20 +179,24 @@ const mockMessages = [
 
 
 const weeklyTrend = [
-{ day: "Mon", compliance: 82 },
-{ day: "Tue", compliance: 78 },
-{ day: "Wed", compliance: 85 },
-{ day: "Thu", compliance: 70 },
-{ day: "Fri", compliance: 90 },
-{ day: "Sat", compliance: 65 },
-{ day: "Sun", compliance: 88 }];
+{ day: "Mon", flagCount: 2 },
+{ day: "Tue", flagCount: 1 },
+{ day: "Wed", flagCount: 0 },
+{ day: "Thu", flagCount: 3 },
+{ day: "Fri", flagCount: 1 },
+{ day: "Sat", flagCount: 2 },
+{ day: "Sun", flagCount: 0 }];
 
 
-const calendarDays = Array.from({ length: 28 }, (_, i) => ({
-  day: i + 1,
-  logged: Math.random() > 0.3,
-  compliance: Math.floor(Math.random() * 60) + 40
-}));
+const calendarDays = Array.from({ length: 28 }, (_, i) => {
+  const logged = Math.random() > 0.3;
+  const flagCount = logged ? Math.floor(Math.random() * 4) : 0;
+  return {
+    day: i + 1,
+    logged,
+    flagCount,
+  };
+});
 
 // ── Sidebar ──────────────────────────────────────────────
 
@@ -236,7 +248,7 @@ const DietitianDashboard = () => {
       { label: "Active Patients", value: mockPatients.length, color: "text-primary" },
       { label: "Logged Today", value: mockPatients.filter((p) => p.lastLoggedDays === 0).length, color: "text-nomi-green" },
       { label: "Open Alerts", value: activeAlerts.length, color: "text-rag-red" },
-      { label: "Avg Compliance", value: `${Math.round(mockPatients.reduce((s, p) => s + p.compliance, 0) / mockPatients.length)}%`, color: "text-primary" }].
+      { label: "Patients Flagged", value: mockPatients.filter((p) => p.flags.length > 0).length, color: "text-rag-amber" }].
       map((s, i) =>
       <motion.div key={s.label} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
             <Card className="border-border">
@@ -272,7 +284,7 @@ const DietitianDashboard = () => {
                   <th className="text-left p-3 font-medium text-muted-foreground">Condition</th>
                   <th className="text-center p-3 font-medium text-muted-foreground">Today</th>
                   <th className="text-left p-3 font-medium text-muted-foreground">Last Logged</th>
-                  <th className="text-center p-3 font-medium text-muted-foreground">Compliance</th>
+                  <th className="text-left p-3 font-medium text-muted-foreground">Flagged Areas</th>
                   <th className="text-center p-3 font-medium text-muted-foreground">Alert</th>
                   <th className="text-center p-3 font-medium text-muted-foreground"></th>
                 </tr>
@@ -292,10 +304,18 @@ const DietitianDashboard = () => {
                       </div>
                     </td>
                     <td className={`p-3 ${getLogColor(p.lastLoggedDays)}`}>{p.lastLogged}</td>
-                    <td className="p-3 text-center">
-                      <span className={`font-semibold ${p.compliance >= 80 ? "text-nomi-green" : p.compliance >= 50 ? "text-nomi-amber" : "text-rag-red"}`}>
-                        {p.compliance}%
-                      </span>
+                    <td className="p-3">
+                      <div className="flex flex-wrap gap-1">
+                        {p.flags.length === 0 ? (
+                          <span className="text-xs text-nomi-green font-medium">All on track</span>
+                        ) : (
+                          p.flags.map((f) => (
+                            <span key={f.label} className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${f.severity === "red" ? "bg-rag-red/15 text-rag-red" : "bg-rag-amber/15 text-rag-amber"}`}>
+                              {f.label}
+                            </span>
+                          ))
+                        )}
+                      </div>
                     </td>
                     <td className="p-3 text-center">
                       {p.alerts && <AlertTriangle className="w-4 h-4 text-rag-amber mx-auto" />}
@@ -337,7 +357,17 @@ const DietitianDashboard = () => {
                 <ChevronRight className="w-4 h-4 text-muted-foreground" />
               </div>
               <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-                <span>Compliance: <span className={`font-semibold ${p.compliance >= 80 ? "text-nomi-green" : p.compliance >= 50 ? "text-nomi-amber" : "text-rag-red"}`}>{p.compliance}%</span></span>
+                <span className="flex flex-wrap gap-1">
+                  {p.flags.length === 0 ? (
+                    <span className="text-nomi-green font-medium">All on track</span>
+                  ) : (
+                    p.flags.slice(0, 2).map((f) => (
+                      <span key={f.label} className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${f.severity === "red" ? "bg-rag-red/15 text-rag-red" : "bg-rag-amber/15 text-rag-amber"}`}>
+                        {f.label}
+                      </span>
+                    ))
+                  )}
+                </span>
                 <span className={getLogColor(p.lastLoggedDays)}>Last: {p.lastLogged}</span>
               </div>
             </CardContent>
@@ -536,19 +566,19 @@ const DietitianDashboard = () => {
               </CardContent>
             </Card>
 
-            {/* Weekly trend */}
+            {/* Weekly flags trend */}
             <Card className="border-border">
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Weekly Compliance Trend</CardTitle>
+                <CardTitle className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Flagged Areas This Week</CardTitle>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={200}>
                   <LineChart data={weeklyTrend}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                     <XAxis dataKey="day" tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
-                    <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
+                    <YAxis domain={[0, 5]} allowDecimals={false} tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
                     <Tooltip />
-                    <Line type="monotone" dataKey="compliance" stroke="hsl(var(--primary))" strokeWidth={2} dot={{ fill: "hsl(var(--primary))", r: 4 }} />
+                    <Line type="monotone" dataKey="flagCount" name="Flags" stroke="hsl(var(--rag-amber))" strokeWidth={2} dot={{ fill: "hsl(var(--rag-amber))", r: 4 }} />
                   </LineChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -574,7 +604,7 @@ const DietitianDashboard = () => {
                     
                       <span className="text-foreground font-medium">{d.day}</span>
                       {d.logged &&
-                    <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${d.compliance >= 80 ? "bg-nomi-green" : d.compliance >= 50 ? "bg-nomi-amber" : "bg-rag-red"}`} />
+                    <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${d.flagCount === 0 ? "bg-nomi-green" : d.flagCount <= 1 ? "bg-nomi-amber" : "bg-rag-red"}`} />
                     }
                     </button>
                   )}

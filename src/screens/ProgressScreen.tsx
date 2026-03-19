@@ -16,7 +16,7 @@ const ProgressScreen = () => {
         animate={{ opacity: 1, y: 0 }}>
         
         <h1 className="text-2xl font-bold text-foreground mb-1">Progress</h1>
-        <p className="text-sm text-muted-foreground mb-5">Your nutritional journey</p>
+        <p className="text-sm text-muted-foreground mb-5">How you're tracking against your targets</p>
       </motion.div>
 
       {/* Period toggle */}
