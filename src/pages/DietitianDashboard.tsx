@@ -300,10 +300,18 @@ const DietitianDashboard = () => {
                       </div>
                     </td>
                     <td className={`p-3 ${getLogColor(p.lastLoggedDays)}`}>{p.lastLogged}</td>
-                    <td className="p-3 text-center">
-                      <span className={`font-semibold ${p.compliance >= 80 ? "text-nomi-green" : p.compliance >= 50 ? "text-nomi-amber" : "text-rag-red"}`}>
-                        {p.compliance}%
-                      </span>
+                    <td className="p-3">
+                      <div className="flex flex-wrap gap-1">
+                        {p.flags.length === 0 ? (
+                          <span className="text-xs text-nomi-green font-medium">All on track</span>
+                        ) : (
+                          p.flags.map((f) => (
+                            <span key={f.label} className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${f.severity === "red" ? "bg-rag-red/15 text-rag-red" : "bg-rag-amber/15 text-rag-amber"}`}>
+                              {f.label}
+                            </span>
+                          ))
+                        )}
+                      </div>
                     </td>
                     <td className="p-3 text-center">
                       {p.alerts && <AlertTriangle className="w-4 h-4 text-rag-amber mx-auto" />}
