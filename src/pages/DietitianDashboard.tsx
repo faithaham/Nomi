@@ -604,7 +604,7 @@ const DietitianDashboard = () => {
                     
                       <span className="text-foreground font-medium">{d.day}</span>
                       {d.logged &&
-                    <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${d.compliance >= 80 ? "bg-nomi-green" : d.compliance >= 50 ? "bg-nomi-amber" : "bg-rag-red"}`} />
+                    <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${d.flagCount === 0 ? "bg-nomi-green" : d.flagCount <= 1 ? "bg-nomi-amber" : "bg-rag-red"}`} />
                     }
                     </button>
                   )}
