@@ -244,7 +244,7 @@ const DietitianDashboard = () => {
       { label: "Active Patients", value: mockPatients.length, color: "text-primary" },
       { label: "Logged Today", value: mockPatients.filter((p) => p.lastLoggedDays === 0).length, color: "text-nomi-green" },
       { label: "Open Alerts", value: activeAlerts.length, color: "text-rag-red" },
-      { label: "Avg Compliance", value: `${Math.round(mockPatients.reduce((s, p) => s + p.compliance, 0) / mockPatients.length)}%`, color: "text-primary" }].
+      { label: "Patients Flagged", value: mockPatients.filter((p) => p.flags.length > 0).length, color: "text-rag-amber" }].
       map((s, i) =>
       <motion.div key={s.label} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
             <Card className="border-border">
