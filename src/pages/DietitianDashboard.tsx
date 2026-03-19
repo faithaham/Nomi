@@ -562,19 +562,19 @@ const DietitianDashboard = () => {
               </CardContent>
             </Card>
 
-            {/* Weekly trend */}
+            {/* Weekly flags trend */}
             <Card className="border-border">
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Weekly Compliance Trend</CardTitle>
+                <CardTitle className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Flagged Areas This Week</CardTitle>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={200}>
                   <LineChart data={weeklyTrend}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                     <XAxis dataKey="day" tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
-                    <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
+                    <YAxis domain={[0, 5]} allowDecimals={false} tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
                     <Tooltip />
-                    <Line type="monotone" dataKey="compliance" stroke="hsl(var(--primary))" strokeWidth={2} dot={{ fill: "hsl(var(--primary))", r: 4 }} />
+                    <Line type="monotone" dataKey="flagCount" name="Flags" stroke="hsl(var(--rag-amber))" strokeWidth={2} dot={{ fill: "hsl(var(--rag-amber))", r: 4 }} />
                   </LineChart>
                 </ResponsiveContainer>
               </CardContent>

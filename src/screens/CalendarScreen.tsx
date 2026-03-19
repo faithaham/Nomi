@@ -91,9 +91,9 @@ const CalendarScreen = () => {
       {/* Legend */}
       <div className="flex items-center justify-center gap-4 mt-4">
         {[
-          { label: "On track", cls: "bg-rag-green" },
-          { label: "Partial", cls: "bg-rag-amber" },
-          { label: "Low", cls: "bg-rag-red" },
+          { label: "Targets met", cls: "bg-rag-green" },
+          { label: "Partially met", cls: "bg-rag-amber" },
+          { label: "Targets missed", cls: "bg-rag-red" },
         ].map((item) => (
           <div key={item.label} className="flex items-center gap-1.5">
             <div className={`w-2.5 h-2.5 rounded-full ${item.cls}`} />
