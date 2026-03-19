@@ -280,7 +280,7 @@ const DietitianDashboard = () => {
                   <th className="text-left p-3 font-medium text-muted-foreground">Condition</th>
                   <th className="text-center p-3 font-medium text-muted-foreground">Today</th>
                   <th className="text-left p-3 font-medium text-muted-foreground">Last Logged</th>
-                  <th className="text-center p-3 font-medium text-muted-foreground">Compliance</th>
+                  <th className="text-left p-3 font-medium text-muted-foreground">Flagged Areas</th>
                   <th className="text-center p-3 font-medium text-muted-foreground">Alert</th>
                   <th className="text-center p-3 font-medium text-muted-foreground"></th>
                 </tr>
