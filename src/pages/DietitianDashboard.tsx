@@ -179,13 +179,13 @@ const mockMessages = [
 
 
 const weeklyTrend = [
-{ day: "Mon", compliance: 82 },
-{ day: "Tue", compliance: 78 },
-{ day: "Wed", compliance: 85 },
-{ day: "Thu", compliance: 70 },
-{ day: "Fri", compliance: 90 },
-{ day: "Sat", compliance: 65 },
-{ day: "Sun", compliance: 88 }];
+{ day: "Mon", flagCount: 2 },
+{ day: "Tue", flagCount: 1 },
+{ day: "Wed", flagCount: 0 },
+{ day: "Thu", flagCount: 3 },
+{ day: "Fri", flagCount: 1 },
+{ day: "Sat", flagCount: 2 },
+{ day: "Sun", flagCount: 0 }];
 
 
 const calendarDays = Array.from({ length: 28 }, (_, i) => ({
