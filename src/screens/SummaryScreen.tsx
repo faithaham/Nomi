@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Flame, TrendingUp, ShieldCheck, AlertTriangle } from "lucide-react";
+import { Flame, Lightbulb, TrendingUp, ShieldCheck, AlertTriangle } from "lucide-react";
 
 const weeklyData = [65, 72, 58, 80, 75, 88, 70];
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
