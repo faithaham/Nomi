@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Flame, TrendingUp } from "lucide-react";
+import { Flame, TrendingUp, ShieldCheck, AlertTriangle } from "lucide-react";
 
 const weeklyData = [65, 72, 58, 80, 75, 88, 70];
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-const ProgressScreen = () => {
+const SummaryScreen = () => {
   const [period, setPeriod] = useState<"weekly" | "monthly">("weekly");
   const maxVal = Math.max(...weeklyData);
 
@@ -15,8 +15,8 @@ const ProgressScreen = () => {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}>
         
-        <h1 className="text-2xl font-bold text-foreground mb-1">Progress</h1>
-        <p className="text-sm text-muted-foreground mb-5">How you're tracking against your targets</p>
+        <h1 className="text-2xl font-bold text-foreground mb-1">Summary</h1>
+        <p className="text-sm text-muted-foreground mb-5">How you're managing your targets this week</p>
       </motion.div>
 
       {/* Period toggle */}
@@ -44,7 +44,7 @@ const ProgressScreen = () => {
         transition={{ delay: 0.15 }}>
         
         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-          Target Achievement %
+          Daily Targets Met %
         </p>
         <div className="flex items-end justify-between gap-2 h-32">
           {weeklyData.map((val, i) =>
@@ -75,9 +75,9 @@ const ProgressScreen = () => {
         </div>
       </motion.div>
 
-      {/* Insight card */}
+      {/* Management insight */}
       <motion.div
-        className="bg-nomi-blue-soft rounded-lg p-4 flex items-start gap-3"
+        className="bg-nomi-blue-soft rounded-lg p-4 flex items-start gap-3 mb-4"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}>
@@ -87,13 +87,48 @@ const ProgressScreen = () => {
           <p className="text-sm font-medium text-foreground">
             Your fibre intake has improved 20% this week
           </p>
-          <p className="text-xs text-muted-foreground mt-1">Keep it up — consistent fibre helps with bowel movement regularity
-
+          <p className="text-xs text-muted-foreground mt-1">
+            Consistent fibre helps with bowel movement regularity
           </p>
+        </div>
+      </motion.div>
+
+      {/* Condition management summary */}
+      <motion.div
+        className="bg-card rounded-lg border border-border p-4 mb-4"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}>
+        
+        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
+          This Week's Management
+        </p>
+        <div className="space-y-3">
+          <div className="flex items-center gap-3">
+            <ShieldCheck className="w-4 h-4 text-rag-green flex-shrink-0" />
+            <div>
+              <p className="text-sm font-medium text-foreground">Energy intake on target</p>
+              <p className="text-xs text-muted-foreground">Averaging 2,180 kcal/day (target: 2,200)</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <AlertTriangle className="w-4 h-4 text-rag-amber flex-shrink-0" />
+            <div>
+              <p className="text-sm font-medium text-foreground">Creon taken with 5 of 7 meals</p>
+              <p className="text-xs text-muted-foreground">2 meals logged without enzyme replacement</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <ShieldCheck className="w-4 h-4 text-rag-green flex-shrink-0" />
+            <div>
+              <p className="text-sm font-medium text-foreground">Protein targets consistently met</p>
+              <p className="text-xs text-muted-foreground">Averaging 82g/day (target: 80g)</p>
+            </div>
+          </div>
         </div>
       </motion.div>
     </div>);
 
 };
 
-export default ProgressScreen;
+export default SummaryScreen;

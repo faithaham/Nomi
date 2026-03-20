@@ -4,14 +4,14 @@ import HomeButton from "@/components/HomeButton";
 import TodayScreen from "@/screens/TodayScreen";
 import LogScreen from "@/screens/LogScreen";
 import CalendarScreen from "@/screens/CalendarScreen";
-import ProgressScreen from "@/screens/ProgressScreen";
+import SummaryScreen from "@/screens/SummaryScreen";
 import ProfileScreen from "@/screens/ProfileScreen";
 
 const screens: Record<string, React.FC> = {
   today: TodayScreen,
   log: LogScreen,
   calendar: CalendarScreen,
-  progress: ProgressScreen,
+  summary: SummaryScreen,
   profile: ProfileScreen,
 };
 
