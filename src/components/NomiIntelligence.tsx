@@ -12,7 +12,7 @@ const NomiIntelligence = () => {
         </span>
       </div>
       <p className="text-sm text-foreground leading-relaxed">
-        NOMI can see that you've recently logged a <span className="font-semibold">sandwich</span> for lunch. NOMI suggests adding a slice of cheese for a source of fat and calcium. For further guidance, message your dietitian in the <span className="font-semibold text-primary">Messages</span> tab.
+        NOMI has noticed that a <span className="font-semibold">sandwich</span> was recently logged for lunch. NOMI suggests adding a slice of cheese for a source of fat and calcium. For further guidance, message your dietitian in the <span className="font-semibold text-primary">Messages</span> tab.
       </p>
     </div>
   );

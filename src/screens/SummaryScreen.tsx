@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Flame, TrendingUp, ShieldCheck, AlertTriangle } from "lucide-react";
+import { Flame, Lightbulb, TrendingUp, ShieldCheck, AlertTriangle } from "lucide-react";
 
 const weeklyData = [65, 72, 58, 80, 75, 88, 70];
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -75,22 +75,24 @@ const SummaryScreen = () => {
         </div>
       </motion.div>
 
-      {/* Management insight */}
+      {/* NOMI Intelligence */}
       <motion.div
-        className="bg-nomi-blue-soft rounded-lg p-4 flex items-start gap-3 mb-4"
+        className="bg-ai-card rounded-lg border border-primary/15 p-4 mb-4"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}>
         
-        <TrendingUp className="w-5 h-5 text-primary mt-0.5" />
-        <div>
-          <p className="text-sm font-medium text-foreground">
-            Your fibre intake has improved 20% this week
-          </p>
-          <p className="text-xs text-muted-foreground mt-1">
-            Consistent fibre helps with bowel movement regularity
-          </p>
+        <div className="flex items-center gap-2 mb-3">
+          <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
+            <Lightbulb className="w-4 h-4 text-primary" />
+          </div>
+          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+            NOMI Intelligence
+          </span>
         </div>
+        <p className="text-sm text-foreground leading-relaxed">
+          NOMI has noticed your fibre intake has improved by 20% this week. Consistent fibre helps with bowel movement regularity — keep it up!
+        </p>
       </motion.div>
 
       {/* Condition management summary */}
