@@ -1003,7 +1003,7 @@ const OneTimeVisit = () => {
                   </span>
                 </div>
                 <p className="text-sm text-foreground mb-3 leading-relaxed">
-                  Based on what you've logged today, here are some good nutrient sources NOMI spotted in your diet:
+                  Based on what has been logged today, here are some good nutrient sources NOMI has identified:
                 </p>
                 <div className="space-y-2.5">
                   {nomiNutrientInsights.map((item) =>
