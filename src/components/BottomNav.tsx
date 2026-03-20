@@ -1,4 +1,4 @@
-import { Home, Plus, Calendar, TrendingUp, User } from "lucide-react";
+import { Home, Plus, Calendar, ClipboardList, User } from "lucide-react";
 
 interface BottomNavProps {
   activeTab: string;
