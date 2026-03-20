@@ -11,7 +11,7 @@ const screens: Record<string, React.FC> = {
   today: TodayScreen,
   log: LogScreen,
   calendar: CalendarScreen,
-  progress: ProgressScreen,
+  summary: SummaryScreen,
   profile: ProfileScreen,
 };
 
