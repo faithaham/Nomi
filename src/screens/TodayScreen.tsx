@@ -56,7 +56,7 @@ const TodayScreen = () => {
           <div>
             <p className="text-sm font-semibold text-foreground">Creon (enzyme replacement) not logged</p>
             <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-              NOMI has noted you have not logged your enzyme replacement with lunch. Please let us know what happened — this helps your care team support you better.
+              NOMI has noticed that enzyme replacement has not been logged with lunch. Please let NOMI know what happened — this helps your care team support you better.
             </p>
           </div>
         </div>
