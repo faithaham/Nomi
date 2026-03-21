@@ -637,15 +637,15 @@ const DietitianDashboard = () => {
                         </div>
                         <p className="text-sm text-foreground">Grilled chicken salad with quinoa and mixed vegetables</p>
                         <div className="bg-ai-card rounded-lg p-3">
-                          <p className="text-xs font-medium text-ai-card-foreground mb-1">AI Observation</p>
+                          <p className="text-xs font-medium text-ai-card-foreground mb-1">
+</p>
                           <p className="text-xs text-ai-card-foreground/80">Good protein source. Fibre intake from vegetables estimated at 6g. Consider adding more leafy greens.</p>
                         </div>
                         <div className="bg-nomi-yellow-soft rounded-lg p-2 border border-accent/20">
                           <p className="text-[11px] text-nomi-amber font-medium">⚠ Portion size appears smaller than patient described</p>
                         </div>
                       </div>
-                    </motion.div>
-                  }
+                    </motion.div>}
                 </AnimatePresence>
               </CardContent>
             </Card>
