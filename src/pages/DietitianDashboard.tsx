@@ -638,7 +638,8 @@ const DietitianDashboard = () => {
                         <p className="text-sm text-foreground">Grilled chicken salad with quinoa and mixed vegetables</p>
                         <div className="bg-ai-card rounded-lg p-3">
                           <p className="text-xs font-medium text-ai-card-foreground mb-1">
-</p>
+                            NOMI Intelligence
+                          </p>
                           <p className="text-xs text-ai-card-foreground/80">Good protein source. Fibre intake from vegetables estimated at 6g. Consider adding more leafy greens.</p>
                         </div>
                         <div className="bg-nomi-yellow-soft rounded-lg p-2 border border-accent/20">
