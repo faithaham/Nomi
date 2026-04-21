@@ -9,7 +9,7 @@
     --font-sans: 'DM Sans', system-ui, sans-serif;
 
     --background: 210 20% 98%;
-    --foreground: 215 25% 15%;
+    --foreground: 220 15% 10%;
 
     --card: 0 0% 100%;
     --card-foreground: 215 25% 15%;
@@ -17,8 +17,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 215 25% 15%;
 
-    /* Blue - NHS-inspired trust blue */
-    --primary: 210 65% 45%;
+    /* Brand sky cyan */
+    --primary: 194 80% 49%;
     --primary-foreground: 0 0% 100%;
 
     /* Soft warm grey */
@@ -37,16 +37,16 @@
 
     --border: 210 18% 90%;
     --input: 210 18% 90%;
-    --ring: 210 65% 45%;
+    --ring: 194 80% 49%;
 
     --radius: 0.75rem;
 
     /* NOMI custom tokens */
     --nomi-yellow: 45 90% 55%;
     --nomi-yellow-soft: 45 85% 92%;
-    --nomi-blue: 210 65% 45%;
-    --nomi-blue-soft: 210 60% 94%;
-    --nomi-blue-dark: 215 50% 22%;
+    --nomi-blue: 194 80% 49%;
+    --nomi-blue-soft: 194 75% 95%;
+    --nomi-blue-dark: 200 50% 18%;
     --nomi-red: 0 65% 55%;
     --nomi-red-soft: 0 60% 94%;
     --nomi-green: 145 55% 42%;
@@ -54,12 +54,12 @@
     --nomi-amber: 35 85% 50%;
 
     /* Nutrient colors */
-    --nutrient-carbs: 210 65% 50%;
+    --nutrient-carbs: 200 70% 50%;
     --nutrient-protein: 0 65% 55%;
     --nutrient-fat: 45 90% 50%;
     --nutrient-fibre: 145 55% 42%;
     --nutrient-sugar: 280 50% 55%;
-    --nutrient-fluids: 195 70% 50%;
+    --nutrient-fluids: 194 80% 49%;
     --nutrient-vitd: 30 80% 55%;
     --nutrient-calcium: 170 45% 45%;
     --nutrient-iron: 0 55% 50%;
@@ -70,8 +70,8 @@
     --rag-red: 0 65% 55%;
 
     /* AI observation card */
-    --ai-card: 215 30% 95%;
-    --ai-card-foreground: 215 25% 20%;
+    --ai-card: 194 60% 96%;
+    --ai-card-foreground: 200 50% 18%;
 
     /* Log action button */
     --log-action: 145 55% 42%;
@@ -79,7 +79,7 @@
 
     /* Nav */
     --nav-bg: 0 0% 100%;
-    --nav-active: 210 65% 45%;
+    --nav-active: 194 80% 49%;
     --nav-inactive: 215 12% 55%;
 
     --sidebar-background: 0 0% 98%;

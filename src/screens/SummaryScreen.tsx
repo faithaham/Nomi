@@ -15,7 +15,7 @@ const SummaryScreen = () => {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}>
         
-        <h1 className="text-2xl font-bold text-foreground mb-1">Summary</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground mb-1">Summary</h1>
         <p className="text-sm text-muted-foreground mb-5">How you're managing your targets this week</p>
       </motion.div>
 

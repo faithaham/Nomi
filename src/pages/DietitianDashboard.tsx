@@ -25,6 +25,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
+import nomiLogo from "@/assets/nomi-logo.png";
 import {
   LineChart,
   Line,
@@ -705,8 +706,15 @@ const DietitianDashboard = () => {
       <aside className={`fixed md:relative z-50 md:z-auto top-0 left-0 h-full w-60 shrink-0 bg-card border-r border-border flex flex-col transition-transform duration-200 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}>
         <div className="p-5 flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-bold text-primary tracking-tight">NOMI</h1>
-            <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-0.5">Clinical Portal</p>
+            <img
+              src={nomiLogo}
+              alt="NOMI logo"
+              width={768}
+              height={512}
+              loading="lazy"
+              className="h-9 w-auto"
+            />
+            <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Clinical Portal</p>
           </div>
           <button className="md:hidden p-1 hover:bg-muted/50 rounded-lg" onClick={() => setSidebarOpen(false)}>
             <X className="w-5 h-5 text-muted-foreground" />

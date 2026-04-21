@@ -35,7 +35,7 @@ const CalendarScreen = () => {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-2xl font-bold text-foreground mb-4">Calendar</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground mb-4">Calendar</h1>
       </motion.div>
 
       {/* Month nav */}

@@ -41,7 +41,7 @@ const TodayScreen = () => {
         transition={{ duration: 0.4 }}>
         
         <p className="text-muted-foreground text-sm">{getGreeting()}</p>
-        <h1 className="text-2xl font-bold text-foreground">Sarah</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">Sarah</h1>
       </motion.div>
 
       {/* NOMI Gentle Prompt — Enzyme not logged */}
