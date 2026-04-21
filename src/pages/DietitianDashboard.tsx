@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import nomiLogo from "@/assets/nomi-logo.png";
+import FlagsBadge from "@/components/FlagsBadge";
 import {
   LineChart,
   Line,
@@ -306,17 +307,7 @@ const DietitianDashboard = () => {
                     </td>
                     <td className={`p-3 ${getLogColor(p.lastLoggedDays)}`}>{p.lastLogged}</td>
                     <td className="p-3">
-                      <div className="flex flex-wrap gap-1">
-                        {p.flags.length === 0 ?
-                    <span className="text-xs text-nomi-green font-medium">All on track</span> :
-
-                    p.flags.map((f) =>
-                    <span key={f.label} className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${f.severity === "red" ? "bg-rag-red/15 text-rag-red" : "bg-rag-amber/15 text-rag-amber"}`}>
-                              {f.label}
-                            </span>
-                    )
-                    }
-                      </div>
+                      <FlagsBadge flags={p.flags} />
                     </td>
                     <td className="p-3 text-center">
                       {p.alerts && <AlertTriangle className="w-4 h-4 text-rag-amber mx-auto" />}
@@ -358,17 +349,7 @@ const DietitianDashboard = () => {
                 <ChevronRight className="w-4 h-4 text-muted-foreground" />
               </div>
               <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-                <span className="flex flex-wrap gap-1">
-                  {p.flags.length === 0 ?
-              <span className="text-nomi-green font-medium">All on track</span> :
-
-              p.flags.slice(0, 2).map((f) =>
-              <span key={f.label} className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${f.severity === "red" ? "bg-rag-red/15 text-rag-red" : "bg-rag-amber/15 text-rag-amber"}`}>
-                        {f.label}
-                      </span>
-              )
-              }
-                </span>
+                <FlagsBadge flags={p.flags} />
                 <span className={getLogColor(p.lastLoggedDays)}>Last: {p.lastLogged}</span>
               </div>
             </CardContent>
