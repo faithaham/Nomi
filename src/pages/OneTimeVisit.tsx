@@ -27,6 +27,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import nomiLogo from "@/assets/nomi-logo.png";
 
 const CONDITIONS = [
 "Diabetes Type 1",
@@ -238,7 +239,14 @@ const OneTimeVisit = () => {
 
     <div className="w-9" />
     }
-      <div className="text-lg font-bold text-foreground tracking-tight">NOMI</div>
+      <img
+        src={nomiLogo}
+        alt="NOMI logo"
+        width={768}
+        height={512}
+        loading="lazy"
+        className="h-8 w-auto"
+      />
       <button
       onClick={() => navigate("/")}
       className="w-9 h-9 rounded-full bg-card border border-border shadow-sm flex items-center justify-center hover:shadow-md active:scale-95 transition-all">

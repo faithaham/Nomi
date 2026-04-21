@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { UserRound, Stethoscope, User } from "lucide-react";
+import nomiLogo from "@/assets/nomi-logo.png";
 
 const cards = [
 {
@@ -56,9 +57,13 @@ const Landing = () => {
         transition={{ duration: 0.5, delay: 0.1 }}
         className="text-center mb-10">
         
-        <h1 className="text-4xl font-bold tracking-tight text-primary">
-          NOMI
-        </h1>
+        <img
+          src={nomiLogo}
+          alt="NOMI logo"
+          width={768}
+          height={512}
+          className="w-40 h-auto mx-auto mb-2"
+        />
         <p className="text-muted-foreground text-sm mt-1">
           Nutrition Optimisation. Made Intelligent.
         </p>

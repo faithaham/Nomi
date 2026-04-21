@@ -10,7 +10,7 @@ const LogScreen = () => {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-2xl font-bold text-foreground mb-1">Log a Meal</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground mb-1">Log a Meal</h1>
         <p className="text-sm text-muted-foreground mb-5">Search for foods or use Photo Log</p>
       </motion.div>
 
