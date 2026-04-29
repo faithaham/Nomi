@@ -96,6 +96,9 @@ const CalendarScreen = ({ onNavigateToLog }: CalendarScreenProps = {}) => {
   const [viewMonth, setViewMonth] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [plans, setPlans] = useState<Record<string, PlannedMeal[]>>({});
+  // Retrospective logs added by the patient for past days
+  const [retroLogs, setRetroLogs] = useState<Record<string, LoggedMeal[]>>({});
+  const [retroOpen, setRetroOpen] = useState(false);
 
   // Planning form state
   const [mealType, setMealType] = useState<string>("Lunch");
@@ -155,6 +158,7 @@ const CalendarScreen = ({ onNavigateToLog }: CalendarScreenProps = {}) => {
     setItems([]);
     setTime("12:30");
     setPortion(1);
+    setRetroOpen(false);
   };
 
   const closeDay = () => setSelectedDay(null);
@@ -189,14 +193,56 @@ const CalendarScreen = ({ onNavigateToLog }: CalendarScreenProps = {}) => {
     }));
   };
 
+  const saveRetroLog = () => {
+    if (selectedDay === null || items.length === 0) return;
+    const k = dayKey(selectedDay);
+    setRetroLogs((prev) => ({
+      ...prev,
+      [k]: [...(prev[k] || []), { type: mealType, time, items: [...items] }],
+    }));
+    setSearch("");
+    setItems([]);
+    setRetroOpen(false);
+  };
+
+  const removeRetroLog = (idx: number) => {
+    if (selectedDay === null) return;
+    const k = dayKey(selectedDay);
+    setRetroLogs((prev) => ({
+      ...prev,
+      [k]: (prev[k] || []).filter((_, i) => i !== idx),
+    }));
+  };
+
   const selectedDate = useMemo(() => {
     if (selectedDay === null) return null;
     return new Date(viewMonth.getFullYear(), viewMonth.getMonth(), selectedDay);
   }, [selectedDay, viewMonth]);
 
   const selectedState = selectedDay !== null ? getDayState(selectedDay) : null;
-  const selectedHistory = selectedDay !== null ? mockHistory[selectedDay] || [] : [];
+  const selectedHistory = useMemo(() => {
+    if (selectedDay === null) return [] as LoggedMeal[];
+    const base = mockHistory[selectedDay] || [];
+    const retro = retroLogs[dayKey(selectedDay)] || [];
+    return [...base, ...retro];
+  }, [selectedDay, retroLogs, viewMonth]);
   const selectedPlans = selectedDay !== null ? plans[dayKey(selectedDay)] || [] : [];
+
+  // Group meals into the 5 daily sections
+  const SECTION_DEFS: { key: string; label: string; types: string[] }[] = [
+    { key: "breakfast", label: "Breakfast", types: ["Breakfast"] },
+    { key: "lunch", label: "Lunch", types: ["Lunch"] },
+    { key: "dinner", label: "Dinner", types: ["Dinner"] },
+    { key: "snacks", label: "Snacks", types: ["Morning Snack", "Afternoon Snack", "Evening Snack", "Snack"] },
+    { key: "drinks", label: "Drinks", types: ["Drink"] },
+  ];
+
+  const groupedHistory = useMemo(() => {
+    return SECTION_DEFS.map((s) => ({
+      ...s,
+      meals: selectedHistory.filter((m) => s.types.includes(m.type)),
+    }));
+  }, [selectedHistory]);
 
   return (
     <div className="px-5 pt-6 pb-28 max-w-lg mx-auto">
@@ -366,64 +412,244 @@ const CalendarScreen = ({ onNavigateToLog }: CalendarScreenProps = {}) => {
             {/* PAST / TODAY: review */}
             {(selectedState === "past" || selectedState === "today") && (
               <>
-                {selectedHistory.length === 0 ? (
-                  <div className="bg-card rounded-2xl border border-border p-8 text-center">
-                    <Utensils className="w-8 h-8 text-muted-foreground mx-auto mb-2 opacity-50" />
-                    <p className="text-sm font-medium text-foreground">
-                      No entries logged
+                {selectedHistory.length > 0 && (
+                  <div className="bg-nomi-blue-soft rounded-2xl p-4 mb-4">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-1">
+                      Day summary
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Nothing was recorded for this day
+                    <p className="text-sm text-foreground">
+                      {selectedHistory.length} entr{selectedHistory.length === 1 ? "y" : "ies"} logged across the day.
                     </p>
                   </div>
-                ) : (
-                  <>
-                    <div className="bg-nomi-blue-soft rounded-2xl p-4 mb-4">
-                      <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-1">
-                        Day summary
-                      </p>
-                      <p className="text-sm text-foreground">
-                        {selectedHistory.length} meal{selectedHistory.length === 1 ? "" : "s"} logged across the day
-                        {" — "}
-                        {selectedHistory
-                          .map((m) => m.type.toLowerCase())
-                          .join(", ")}
-                        .
-                      </p>
-                    </div>
+                )}
 
-                    <div className="space-y-2">
-                      {selectedHistory.map((meal, i) => (
+                <div className="space-y-3">
+                  {groupedHistory.map((section) => {
+                    const retroKeyForDay = selectedDay !== null ? dayKey(selectedDay) : "";
+                    const retroForDay = retroLogs[retroKeyForDay] || [];
+                    return (
+                      <div
+                        key={section.key}
+                        className="bg-card rounded-2xl border border-border p-4"
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <p className="text-sm font-semibold text-foreground">
+                            {section.label}
+                          </p>
+                          <span className="text-[10px] font-medium text-muted-foreground">
+                            {section.meals.length}{" "}
+                            {section.meals.length === 1 ? "entry" : "entries"}
+                          </span>
+                        </div>
+                        {section.meals.length === 0 ? (
+                          <p className="text-xs text-muted-foreground italic">
+                            No {section.label.toLowerCase()} logged
+                          </p>
+                        ) : (
+                          <div className="space-y-2">
+                            {section.meals.map((meal, i) => {
+                              const retroIdx = retroForDay.findIndex(
+                                (r) =>
+                                  r.type === meal.type &&
+                                  r.time === meal.time &&
+                                  r.items.join("|") === meal.items.join("|"),
+                              );
+                              return (
+                                <div
+                                  key={`${section.key}-${i}`}
+                                  className="border-t border-border pt-2 first:border-t-0 first:pt-0"
+                                >
+                                  <div className="flex items-center justify-between mb-1.5">
+                                    <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                                      <Clock className="w-3 h-3" />
+                                      {meal.time}
+                                      <span className="text-foreground/60">
+                                        · {meal.type}
+                                      </span>
+                                      {retroIdx !== -1 && (
+                                        <span className="text-[9px] font-semibold uppercase px-1.5 py-0.5 rounded bg-nomi-blue-soft text-primary">
+                                          Added later
+                                        </span>
+                                      )}
+                                    </span>
+                                    {retroIdx !== -1 && (
+                                      <button
+                                        onClick={() => removeRetroLog(retroIdx)}
+                                        className="text-muted-foreground hover:text-destructive transition-colors"
+                                      >
+                                        <X className="w-3.5 h-3.5" />
+                                      </button>
+                                    )}
+                                  </div>
+                                  <div className="flex flex-wrap gap-1.5">
+                                    {meal.items.map((item, idx) => (
+                                      <span
+                                        key={idx}
+                                        className="text-xs px-2.5 py-1 rounded-full bg-secondary text-secondary-foreground"
+                                      >
+                                        {item}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Retrospective logging */}
+                {selectedState === "past" && (
+                  <div className="mt-5">
+                    <Button
+                      variant={retroOpen ? "secondary" : "outline"}
+                      className="w-full h-11 rounded-xl gap-2"
+                      onClick={() => setRetroOpen((o) => !o)}
+                    >
+                      {retroOpen ? (
+                        <>
+                          <X className="w-4 h-4" /> Cancel
+                        </>
+                      ) : (
+                        <>
+                          <Plus className="w-4 h-4" /> Log a missed meal
+                        </>
+                      )}
+                    </Button>
+
+                    <AnimatePresence initial={false}>
+                      {retroOpen && (
                         <motion.div
-                          key={i}
-                          initial={{ opacity: 0, y: 6 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: i * 0.04 }}
-                          className="bg-card rounded-2xl border border-border p-4"
+                          key="retro"
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="overflow-hidden"
                         >
-                          <div className="flex items-center justify-between mb-2">
-                            <p className="text-sm font-semibold text-foreground">
-                              {meal.type}
+                          <p className="text-xs text-muted-foreground mt-3 mb-2">
+                            Forgot to log something? Add it now — it'll be saved
+                            to this day's diary.
+                          </p>
+
+                          <div className="mb-3">
+                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+                              Meal type
                             </p>
-                            <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                              <Clock className="w-3 h-3" />
-                              {meal.time}
-                            </span>
+                            <div className="flex flex-wrap gap-2">
+                              {MEAL_TYPES.map((t) => (
+                                <button
+                                  key={t}
+                                  onClick={() => setMealType(t)}
+                                  className={cn(
+                                    "px-3 py-1.5 rounded-full text-xs font-medium transition-colors",
+                                    mealType === t
+                                      ? "bg-primary text-primary-foreground"
+                                      : "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+                                  )}
+                                >
+                                  {t}
+                                </button>
+                              ))}
+                            </div>
                           </div>
-                          <div className="flex flex-wrap gap-1.5">
-                            {meal.items.map((item, idx) => (
-                              <span
-                                key={idx}
-                                className="text-xs px-2.5 py-1 rounded-full bg-secondary text-secondary-foreground"
-                              >
-                                {item}
+
+                          <div className="bg-card rounded-2xl border border-border p-4 mb-4">
+                            <p className="text-sm font-medium text-foreground mb-3">
+                              What did you have?
+                            </p>
+                            <div className="flex gap-2 mb-3">
+                              <div className="flex-1 relative">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                                <Input
+                                  value={search}
+                                  onChange={(e) => setSearch(e.target.value)}
+                                  onKeyDown={(e) => e.key === "Enter" && addItem()}
+                                  placeholder="Add a food item..."
+                                  className="h-11 pl-10 rounded-xl bg-background border-border"
+                                />
+                              </div>
+                              <Button onClick={addItem} className="h-11 px-4 rounded-xl">
+                                Add
+                              </Button>
+                            </div>
+
+                            <div className="flex items-center gap-2 mb-3">
+                              <div className="h-px flex-1 bg-border" />
+                              <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                                or log with
                               </span>
-                            ))}
+                              <div className="h-px flex-1 bg-border" />
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-2 mb-3">
+                              <Button variant="outline" className="h-11 rounded-xl border-border gap-2">
+                                <Camera className="w-4 h-4 text-primary" />
+                                <span className="text-sm font-medium">Photo</span>
+                              </Button>
+                              <Button variant="outline" className="h-11 rounded-xl border-border gap-2">
+                                <Mic className="w-4 h-4 text-destructive" />
+                                <span className="text-sm font-medium">Voice</span>
+                              </Button>
+                            </div>
+
+                            {items.length > 0 && (
+                              <div className="flex flex-wrap gap-2">
+                                {items.map((item, i) => (
+                                  <motion.span
+                                    key={`${item}-${i}`}
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nomi-blue-soft text-primary text-sm font-medium"
+                                  >
+                                    {item}
+                                    <button
+                                      onClick={() => removeItem(i)}
+                                      className="hover:text-destructive transition-colors"
+                                    >
+                                      <X className="w-3.5 h-3.5" />
+                                    </button>
+                                  </motion.span>
+                                ))}
+                              </div>
+                            )}
                           </div>
+
+                          <div className="bg-card rounded-2xl border border-border p-4 mb-4 space-y-5">
+                            <div>
+                              <label className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-1.5">
+                                <Clock className="w-3.5 h-3.5" />
+                                What time did you have this?
+                              </label>
+                              <Input
+                                type="time"
+                                value={time}
+                                onChange={(e) => setTime(e.target.value)}
+                                className="h-10 rounded-xl bg-background border-border w-36"
+                              />
+                            </div>
+                            <div>
+                              <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
+                                How much did you finish?
+                              </label>
+                              <PortionSelector value={portion} onChange={setPortion} />
+                            </div>
+                          </div>
+
+                          <Button
+                            onClick={saveRetroLog}
+                            className="w-full h-12 rounded-xl text-base font-semibold gap-2"
+                            disabled={items.length === 0}
+                          >
+                            <Plus className="w-4 h-4" />
+                            Add to this day's diary
+                          </Button>
                         </motion.div>
-                      ))}
-                    </div>
-                  </>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 )}
               </>
             )}
