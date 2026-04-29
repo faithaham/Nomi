@@ -14,15 +14,6 @@ const cards = [
   iconColor: "text-accent"
 },
 {
-  id: "dietitian",
-  icon: Stethoscope,
-  label: "Dietitian Dashboard",
-  subtitle: "Professional patient management portal",
-  route: "/dietitian",
-  colorClass: "bg-nomi-blue-soft text-primary-foreground border-primary/30",
-  iconColor: "text-primary"
-},
-{
   id: "patient",
   icon: User,
   label: "Patient Interface",
@@ -30,6 +21,15 @@ const cards = [
   route: "/patient",
   colorClass: "bg-nomi-green-soft text-foreground border-nomi-green/30",
   iconColor: "text-nomi-green"
+},
+{
+  id: "dietitian",
+  icon: Stethoscope,
+  label: "Dietitian Dashboard",
+  subtitle: "Professional patient management portal",
+  route: "/dietitian",
+  colorClass: "bg-nomi-blue-soft text-primary-foreground border-primary/30",
+  iconColor: "text-primary"
 }];
 
 
