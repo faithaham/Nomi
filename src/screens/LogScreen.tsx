@@ -1,129 +1,42 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Camera, Mic, Clock, CalendarIcon, X } from "lucide-react";
-import { format } from "date-fns";
+import { Camera, Mic, Clock, X, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import PortionSelector from "@/components/PortionSelector";
 import MedicationTracker from "@/components/MedicationTracker";
 
-const MEAL_SECTIONS = ["Breakfast", "Lunch", "Dinner", "Snacks", "Drinks"] as const;
-const SNACK_SUBSECTIONS = ["Morning Snack", "Afternoon Snack", "Evening Snack"] as const;
-const ALL_SECTIONS = [
+const MEAL_TYPES = [
   "Breakfast",
-  "Lunch",
-  "Dinner",
   "Morning Snack",
+  "Lunch",
   "Afternoon Snack",
+  "Dinner",
   "Evening Snack",
-  "Snacks",
-  "Drinks",
-];
+  "Drink",
+] as const;
 
 const LogScreen = () => {
-  const [diaryDate, setDiaryDate] = useState<Date>(new Date());
-  const [meals, setMeals] = useState<Record<string, string[]>>(
-    Object.fromEntries(ALL_SECTIONS.map((s) => [s, []])),
-  );
-  const [searchInputs, setSearchInputs] = useState<Record<string, string>>(
-    Object.fromEntries(ALL_SECTIONS.map((s) => [s, ""])),
-  );
-  const [mealTimes, setMealTimes] = useState<Record<string, string>>(
-    Object.fromEntries(ALL_SECTIONS.map((s) => [s, ""])),
-  );
-  const [mealPortions, setMealPortions] = useState<Record<string, number>>(
-    Object.fromEntries(ALL_SECTIONS.map((s) => [s, 1])),
-  );
+  const [mealType, setMealType] = useState<string>("Lunch");
+  const [search, setSearch] = useState("");
+  const [items, setItems] = useState<string[]>([]);
+  const [time, setTime] = useState<string>(() => {
+    const d = new Date();
+    return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+  });
+  const [portion, setPortion] = useState(1);
 
-  const addFoodItem = (section: string) => {
-    const val = searchInputs[section]?.trim();
-    if (!val) return;
-    setMeals((prev) => ({ ...prev, [section]: [...prev[section], val] }));
-    setSearchInputs((prev) => ({ ...prev, [section]: "" }));
+  const addItem = () => {
+    const v = search.trim();
+    if (!v) return;
+    setItems((prev) => [...prev, v]);
+    setSearch("");
   };
 
-  const removeFoodItem = (section: string, index: number) => {
-    setMeals((prev) => ({
-      ...prev,
-      [section]: prev[section].filter((_, i) => i !== index),
-    }));
+  const removeItem = (i: number) => {
+    setItems((prev) => prev.filter((_, idx) => idx !== i));
   };
-
-  const renderSectionInputs = (section: string, isSnackSub = false) => (
-    <>
-      <div className="flex gap-2 mb-3">
-        <Input
-          value={searchInputs[section]}
-          onChange={(e) =>
-            setSearchInputs((prev) => ({ ...prev, [section]: e.target.value }))
-          }
-          onKeyDown={(e) => e.key === "Enter" && addFoodItem(section)}
-          placeholder={
-            section === "Drinks" ? "Search for a drink..." : "Search for a food item..."
-          }
-          className="h-11 rounded-xl bg-background border-border flex-1"
-        />
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-11 w-11 rounded-xl border-border shrink-0"
-        >
-          <Camera className="w-4 h-4 text-muted-foreground" />
-        </Button>
-      </div>
-
-      {meals[section].length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-3">
-          {meals[section].map((item, i) => (
-            <motion.span
-              key={`${item}-${i}`}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nomi-blue-soft text-primary text-sm font-medium"
-            >
-              {item}
-              <button
-                onClick={() => removeFoodItem(section, i)}
-                className="hover:text-destructive transition-colors"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </motion.span>
-          ))}
-        </div>
-      )}
-
-      <div className="mb-3">
-        <label className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-1.5">
-          <Clock className="w-3.5 h-3.5" />
-          {isSnackSub ? "When did you have this snack?" : "When did you have this meal?"}
-        </label>
-        <Input
-          type="time"
-          value={mealTimes[section]}
-          onChange={(e) =>
-            setMealTimes((prev) => ({ ...prev, [section]: e.target.value }))
-          }
-          className="h-10 rounded-xl bg-background border-border w-36"
-        />
-      </div>
-
-      <div>
-        <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
-          How much did you finish?
-        </label>
-        <PortionSelector
-          value={mealPortions[section]}
-          onChange={(val) =>
-            setMealPortions((prev) => ({ ...prev, [section]: val }))
-          }
-        />
-      </div>
-    </>
-  );
 
   return (
     <div className="px-5 pt-6 pb-28 max-w-lg mx-auto">
@@ -135,123 +48,165 @@ const LogScreen = () => {
           Log a Meal
         </h1>
         <p className="text-sm text-muted-foreground mb-5">
-          Record your day of eating
+          Add to today's food diary
         </p>
       </motion.div>
 
-      {/* Diary date */}
+      {/* Quick input methods */}
       <motion.div
-        className="mb-4"
+        className="grid grid-cols-2 gap-2 mb-6"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.05 }}
       >
-        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 block">
-          Diary date
-        </label>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              className={cn(
-                "w-full h-11 justify-start rounded-xl bg-card border-border font-normal",
-                !diaryDate && "text-muted-foreground",
-              )}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {diaryDate ? format(diaryDate, "PPP") : <span>Pick a date</span>}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              mode="single"
-              selected={diaryDate}
-              onSelect={(d) => d && setDiaryDate(d)}
-              initialFocus
-              className={cn("p-3 pointer-events-auto")}
-            />
-          </PopoverContent>
-        </Popover>
+        <Button
+          variant="outline"
+          className="h-14 rounded-xl border-border gap-2 flex-col py-2"
+        >
+          <Camera className="w-5 h-5 text-primary" />
+          <span className="text-xs font-medium">Photo Log</span>
+        </Button>
+        <Button
+          variant="outline"
+          className="h-14 rounded-xl border-border gap-2 flex-col py-2"
+        >
+          <Mic className="w-5 h-5 text-destructive" />
+          <span className="text-xs font-medium">Voice Log</span>
+        </Button>
       </motion.div>
 
-      {/* Voice recording */}
+      {/* Meal type */}
       <motion.div
-        className="bg-card rounded-2xl border border-border p-4 mb-6"
+        className="mb-5"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
       >
-        <label className="text-sm font-medium text-foreground mb-1 block">
-          Record a verbal diet history
-        </label>
-        <p className="text-xs text-muted-foreground mb-3">
-          Tap the microphone to dictate what you ate. Your recording will be
-          transcribed automatically.
+        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+          Meal type
         </p>
-        <Button
-          variant="outline"
-          className="h-12 w-full rounded-xl border-border gap-2 text-muted-foreground hover:text-foreground"
-        >
-          <Mic className="w-5 h-5 text-destructive" />
-          Start recording
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          {MEAL_TYPES.map((t) => (
+            <button
+              key={t}
+              onClick={() => setMealType(t)}
+              className={cn(
+                "px-3.5 py-1.5 rounded-full text-sm font-medium transition-colors",
+                mealType === t
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+              )}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
       </motion.div>
 
-      {/* Manual meal logging */}
-      <div className="pt-2 pb-3">
-        <h2 className="text-lg font-bold text-foreground">
-          Manually record your meal
-        </h2>
-      </div>
+      {/* Manual search */}
+      <motion.div
+        className="bg-card rounded-2xl border border-border p-4 mb-6"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+      >
+        <p className="text-sm font-medium text-foreground mb-3">
+          What did you have?
+        </p>
 
-      <div className="space-y-6">
-        {MEAL_SECTIONS.map((section) => {
-          if (section === "Snacks") {
-            return (
-              <div
-                key="Snacks"
-                className="bg-card rounded-2xl border border-border p-4"
+        <div className="flex gap-2 mb-3">
+          <div className="flex-1 relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && addItem()}
+              placeholder={
+                mealType === "Drink"
+                  ? "Search for a drink..."
+                  : "Search for a food item..."
+              }
+              className="h-11 pl-10 rounded-xl bg-background border-border"
+            />
+          </div>
+          <Button
+            onClick={addItem}
+            className="h-11 px-4 rounded-xl"
+          >
+            Add
+          </Button>
+        </div>
+
+        {items.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {items.map((item, i) => (
+              <motion.span
+                key={`${item}-${i}`}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nomi-blue-soft text-primary text-sm font-medium"
               >
-                <h3 className="text-base font-semibold text-foreground mb-4">
-                  Snacks
-                </h3>
-                <div className="space-y-6">
-                  {SNACK_SUBSECTIONS.map((sub) => (
-                    <div
-                      key={sub}
-                      className="border-t border-border pt-4 first:border-t-0 first:pt-0"
-                    >
-                      <h4 className="text-sm font-medium text-muted-foreground mb-2">
-                        {sub}
-                      </h4>
-                      {renderSectionInputs(sub, true)}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            );
-          }
+                {item}
+                <button
+                  onClick={() => removeItem(i)}
+                  className="hover:text-destructive transition-colors"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </motion.span>
+            ))}
+          </div>
+        )}
+      </motion.div>
 
-          return (
-            <div
-              key={section}
-              className="bg-card rounded-2xl border border-border p-4"
-            >
-              <h3 className="text-base font-semibold text-foreground mb-3">
-                {section}
-              </h3>
-              {renderSectionInputs(section)}
-            </div>
-          );
-        })}
-      </div>
+      {/* Time + portion */}
+      <motion.div
+        className="bg-card rounded-2xl border border-border p-4 mb-6 space-y-5"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+      >
+        <div>
+          <label className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-1.5">
+            <Clock className="w-3.5 h-3.5" />
+            What time did you have this?
+          </label>
+          <Input
+            type="time"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+            className="h-10 rounded-xl bg-background border-border w-36"
+          />
+        </div>
+
+        <div>
+          <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
+            How much did you finish?
+          </label>
+          <PortionSelector value={portion} onChange={setPortion} />
+        </div>
+      </motion.div>
+
+      {/* Save */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.25 }}
+      >
+        <Button
+          className="w-full h-12 rounded-xl text-base font-semibold"
+          disabled={items.length === 0}
+        >
+          Add to food diary
+        </Button>
+      </motion.div>
 
       {/* Medication tracker */}
       <motion.div
         className="mt-8"
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
+        transition={{ delay: 0.3 }}
       >
         <MedicationTracker />
       </motion.div>
