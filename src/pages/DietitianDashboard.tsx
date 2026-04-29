@@ -284,7 +284,6 @@ const DietitianDashboard = () => {
                 <tr className="border-b border-border bg-muted/40">
                   <th className="text-left p-3 font-medium text-muted-foreground">Patient Name</th>
                   <th className="text-left p-3 font-medium text-muted-foreground">Condition</th>
-                  <th className="text-center p-3 font-medium text-muted-foreground">Today</th>
                   <th className="text-left p-3 font-medium text-muted-foreground">Last Logged</th>
                   <th className="text-left p-3 font-medium text-muted-foreground">Flagged Areas</th>
                   <th className="text-center p-3 font-medium text-muted-foreground">Alert</th>
@@ -300,11 +299,6 @@ const DietitianDashboard = () => {
                 
                     <td className="p-3 font-medium text-foreground">{p.name}</td>
                     <td className="p-3 text-muted-foreground">{p.condition}</td>
-                    <td className="p-3 text-sidebar-primary">
-                      <div className="flex justify-center">
-                        <DualRingChart nutrients={p.nutrients} size={48} />
-                      </div>
-                    </td>
                     <td className={`p-3 ${getLogColor(p.lastLoggedDays)}`}>{p.lastLogged}</td>
                     <td className="p-3">
                       <FlagsBadge flags={p.flags} />
