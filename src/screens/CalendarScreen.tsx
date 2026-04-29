@@ -87,7 +87,11 @@ const mockHistory: Record<number, LoggedMeal[]> = {
   ],
 };
 
-const CalendarScreen = () => {
+interface CalendarScreenProps {
+  onNavigateToLog?: () => void;
+}
+
+const CalendarScreen = ({ onNavigateToLog }: CalendarScreenProps = {}) => {
   const today = new Date();
   const [viewMonth, setViewMonth] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
@@ -140,6 +144,10 @@ const CalendarScreen = () => {
     setViewMonth(new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1));
 
   const openDay = (day: number) => {
+    if (getDayState(day) === "today" && onNavigateToLog) {
+      onNavigateToLog();
+      return;
+    }
     setSelectedDay(day);
     // reset planner
     setMealType("Lunch");
