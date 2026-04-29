@@ -293,7 +293,7 @@ const LogScreen = () => {
       >
         <div className="flex items-end justify-between mb-3">
           <div>
-            <h2 className="text-lg font-bold tracking-tight text-foreground flex items-center gap-2">
+            <h2 className="font-bold tracking-tight text-foreground flex items-center gap-2 text-2xl">
               <BookOpen className="w-4 h-4 text-primary" />
               Recipes
             </h2>

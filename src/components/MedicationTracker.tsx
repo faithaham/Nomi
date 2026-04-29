@@ -29,13 +29,11 @@ const MedicationTracker = () => {
   };
 
   return (
-    <div className="bg-card rounded-lg border border-border p-4">
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <Pill className="w-4 h-4 text-primary" />
-          <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-            Medication
-          </span>
+    <div className="bg-card rounded-2xl border border-border p-4">
+      <div className="flex items-end justify-between mb-3">
+        <div className="font-bold tracking-tight text-foreground flex items-center gap-2 text-2xl">
+          <Pill className="w-5 h-5 text-primary" />
+          Your Medication
         </div>
         <span className="text-xs font-medium text-muted-foreground">
           {takenCount}/{medications.length} taken
