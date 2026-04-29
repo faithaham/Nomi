@@ -1,5 +1,6 @@
 import { Camera, Search } from "lucide-react";
 import { motion } from "framer-motion";
+import MedicationTracker from "@/components/MedicationTracker";
 
 const mealTypes = ["Breakfast", "Lunch", "Dinner", "Snack"];
 
@@ -72,6 +73,16 @@ const LogScreen = () => {
         <p className="text-sm text-muted-foreground">
           Search for a food item or tap Photo Log to analyse a meal photo
         </p>
+      </motion.div>
+
+      {/* Medication tracker */}
+      <motion.div
+        className="mt-6"
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+      >
+        <MedicationTracker />
       </motion.div>
     </div>
   );
