@@ -10,8 +10,6 @@ import {
   Plus,
   ChefHat,
   Check,
-  CalendarDays,
-  History,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -66,12 +64,6 @@ const LogScreen = () => {
     return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
   });
   const [portion, setPortion] = useState(1);
-  const todayISO = (() => {
-    const d = new Date();
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-  })();
-  const [logDate, setLogDate] = useState<string>(todayISO);
-  const isBackdated = logDate !== todayISO;
 
   // Recipes
   const [recipes, setRecipes] = useState<Recipe[]>(STARTER_RECIPES);
@@ -259,41 +251,6 @@ const LogScreen = () => {
       >
         <div>
           <label className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-1.5">
-            <CalendarDays className="w-3.5 h-3.5" />
-            When was this meal?
-          </label>
-          <div className="flex items-center gap-2 flex-wrap">
-            <Input
-              type="date"
-              value={logDate}
-              max={todayISO}
-              onChange={(e) => setLogDate(e.target.value)}
-              className="h-10 rounded-xl bg-background border-border w-44"
-            />
-            {!isBackdated ? (
-              <span className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-nomi-blue-soft text-primary">
-                Today
-              </span>
-            ) : (
-              <button
-                type="button"
-                onClick={() => setLogDate(todayISO)}
-                className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors"
-              >
-                Reset to today
-              </button>
-            )}
-          </div>
-          {isBackdated && (
-            <p className="mt-2 flex items-start gap-1.5 text-[11px] text-muted-foreground">
-              <History className="w-3 h-3 mt-0.5 shrink-0" />
-              Logging retrospectively — no problem if you forgot earlier.
-            </p>
-          )}
-        </div>
-
-        <div>
-          <label className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-1.5">
             <Clock className="w-3.5 h-3.5" />
             What time did you have this?
           </label>
@@ -323,7 +280,7 @@ const LogScreen = () => {
           className="w-full h-12 rounded-xl text-base font-semibold"
           disabled={items.length === 0}
         >
-          {isBackdated ? "Add to past food diary" : "Add to food diary"}
+          Add to food diary
         </Button>
       </motion.div>
 
