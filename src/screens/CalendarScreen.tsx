@@ -96,6 +96,9 @@ const CalendarScreen = ({ onNavigateToLog }: CalendarScreenProps = {}) => {
   const [viewMonth, setViewMonth] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [plans, setPlans] = useState<Record<string, PlannedMeal[]>>({});
+  // Retrospective logs added by the patient for past days
+  const [retroLogs, setRetroLogs] = useState<Record<string, LoggedMeal[]>>({});
+  const [retroOpen, setRetroOpen] = useState(false);
 
   // Planning form state
   const [mealType, setMealType] = useState<string>("Lunch");
@@ -155,6 +158,7 @@ const CalendarScreen = ({ onNavigateToLog }: CalendarScreenProps = {}) => {
     setItems([]);
     setTime("12:30");
     setPortion(1);
+    setRetroOpen(false);
   };
 
   const closeDay = () => setSelectedDay(null);
@@ -189,14 +193,56 @@ const CalendarScreen = ({ onNavigateToLog }: CalendarScreenProps = {}) => {
     }));
   };
 
+  const saveRetroLog = () => {
+    if (selectedDay === null || items.length === 0) return;
+    const k = dayKey(selectedDay);
+    setRetroLogs((prev) => ({
+      ...prev,
+      [k]: [...(prev[k] || []), { type: mealType, time, items: [...items] }],
+    }));
+    setSearch("");
+    setItems([]);
+    setRetroOpen(false);
+  };
+
+  const removeRetroLog = (idx: number) => {
+    if (selectedDay === null) return;
+    const k = dayKey(selectedDay);
+    setRetroLogs((prev) => ({
+      ...prev,
+      [k]: (prev[k] || []).filter((_, i) => i !== idx),
+    }));
+  };
+
   const selectedDate = useMemo(() => {
     if (selectedDay === null) return null;
     return new Date(viewMonth.getFullYear(), viewMonth.getMonth(), selectedDay);
   }, [selectedDay, viewMonth]);
 
   const selectedState = selectedDay !== null ? getDayState(selectedDay) : null;
-  const selectedHistory = selectedDay !== null ? mockHistory[selectedDay] || [] : [];
+  const selectedHistory = useMemo(() => {
+    if (selectedDay === null) return [] as LoggedMeal[];
+    const base = mockHistory[selectedDay] || [];
+    const retro = retroLogs[dayKey(selectedDay)] || [];
+    return [...base, ...retro];
+  }, [selectedDay, retroLogs, viewMonth]);
   const selectedPlans = selectedDay !== null ? plans[dayKey(selectedDay)] || [] : [];
+
+  // Group meals into the 5 daily sections
+  const SECTION_DEFS: { key: string; label: string; types: string[] }[] = [
+    { key: "breakfast", label: "Breakfast", types: ["Breakfast"] },
+    { key: "lunch", label: "Lunch", types: ["Lunch"] },
+    { key: "dinner", label: "Dinner", types: ["Dinner"] },
+    { key: "snacks", label: "Snacks", types: ["Morning Snack", "Afternoon Snack", "Evening Snack", "Snack"] },
+    { key: "drinks", label: "Drinks", types: ["Drink"] },
+  ];
+
+  const groupedHistory = useMemo(() => {
+    return SECTION_DEFS.map((s) => ({
+      ...s,
+      meals: selectedHistory.filter((m) => s.types.includes(m.type)),
+    }));
+  }, [selectedHistory]);
 
   return (
     <div className="px-5 pt-6 pb-28 max-w-lg mx-auto">
