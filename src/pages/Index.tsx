@@ -7,22 +7,28 @@ import CalendarScreen from "@/screens/CalendarScreen";
 import SummaryScreen from "@/screens/SummaryScreen";
 import ProfileScreen from "@/screens/ProfileScreen";
 
-const screens: Record<string, React.FC> = {
-  today: TodayScreen,
-  log: LogScreen,
-  calendar: CalendarScreen,
-  summary: SummaryScreen,
-  profile: ProfileScreen,
-};
-
 const Index = () => {
   const [activeTab, setActiveTab] = useState("today");
-  const Screen = screens[activeTab] || TodayScreen;
+
+  const renderScreen = () => {
+    switch (activeTab) {
+      case "log":
+        return <LogScreen />;
+      case "calendar":
+        return <CalendarScreen onNavigateToLog={() => setActiveTab("log")} />;
+      case "summary":
+        return <SummaryScreen />;
+      case "profile":
+        return <ProfileScreen />;
+      default:
+        return <TodayScreen />;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background max-w-lg mx-auto relative">
       <HomeButton />
-      <Screen />
+      {renderScreen()}
       <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
     </div>
   );
