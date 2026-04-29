@@ -52,29 +52,6 @@ const LogScreen = () => {
         </p>
       </motion.div>
 
-      {/* Quick input methods */}
-      <motion.div
-        className="grid grid-cols-2 gap-2 mb-6"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.05 }}
-      >
-        <Button
-          variant="outline"
-          className="h-14 rounded-xl border-border gap-2 flex-col py-2"
-        >
-          <Camera className="w-5 h-5 text-primary" />
-          <span className="text-xs font-medium">Photo Log</span>
-        </Button>
-        <Button
-          variant="outline"
-          className="h-14 rounded-xl border-border gap-2 flex-col py-2"
-        >
-          <Mic className="w-5 h-5 text-destructive" />
-          <span className="text-xs font-medium">Voice Log</span>
-        </Button>
-      </motion.div>
-
       {/* Meal type */}
       <motion.div
         className="mb-5"
@@ -134,6 +111,31 @@ const LogScreen = () => {
             className="h-11 px-4 rounded-xl"
           >
             Add
+          </Button>
+        </div>
+
+        <div className="flex items-center gap-2 mb-3">
+          <div className="h-px flex-1 bg-border" />
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            or log with
+          </span>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 mb-3">
+          <Button
+            variant="outline"
+            className="h-11 rounded-xl border-border gap-2"
+          >
+            <Camera className="w-4 h-4 text-primary" />
+            <span className="text-sm font-medium">Photo</span>
+          </Button>
+          <Button
+            variant="outline"
+            className="h-11 rounded-xl border-border gap-2"
+          >
+            <Mic className="w-4 h-4 text-destructive" />
+            <span className="text-sm font-medium">Voice</span>
           </Button>
         </div>
 
