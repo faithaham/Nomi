@@ -94,6 +94,9 @@ interface CalendarScreenProps {
 const CalendarScreen = ({ onNavigateToLog }: CalendarScreenProps = {}) => {
   const today = new Date();
   const [viewMonth, setViewMonth] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
+  const [showExport, setShowExport] = useState(false);
+  const [exportFrom, setExportFrom] = useState("");
+  const [exportTo, setExportTo] = useState("");
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [plans, setPlans] = useState<Record<string, PlannedMeal[]>>({});
   // Retrospective logs added by the patient for past days
