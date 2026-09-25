@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { UserRound, Stethoscope, User } from "lucide-react";
+import { Moon, Stethoscope, Sun, User, UserRound } from "lucide-react";
 import nomiLogo from "@/assets/nomi-logo.png";
+import { Button } from "@/components/ui/button";
 
 const cards = [
 {
@@ -35,9 +37,31 @@ const cards = [
 
 const Landing = () => {
   const navigate = useNavigate();
+  const [isDark, setIsDark] = useState(() => {
+    const savedTheme = localStorage.getItem("nomi-theme");
+    if (savedTheme) return savedTheme === "dark";
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", isDark);
+    localStorage.setItem("nomi-theme", isDark ? "dark" : "light");
+  }, [isDark]);
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6 py-12 max-w-lg mx-auto relative">
+      <Button
+        type="button"
+        variant="outline"
+        size="icon"
+        aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+        title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+        onClick={() => setIsDark((current) => !current)}
+        className="absolute left-4 top-4 rounded-full bg-card/80 shadow-sm"
+      >
+        {isDark ? <Sun aria-hidden="true" /> : <Moon aria-hidden="true" />}
+      </Button>
+
       {/* Demo Mode Pill */}
       <motion.div
         initial={{ opacity: 0 }}

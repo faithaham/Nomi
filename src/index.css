@@ -91,6 +91,82 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  .dark {
+    color-scheme: dark;
+
+    --background: 210 10% 9%;
+    --foreground: 210 18% 94%;
+
+    --card: 210 9% 13%;
+    --card-foreground: 210 18% 94%;
+
+    --popover: 210 9% 13%;
+    --popover-foreground: 210 18% 94%;
+
+    --primary: 194 78% 55%;
+    --primary-foreground: 200 55% 9%;
+
+    --secondary: 210 8% 18%;
+    --secondary-foreground: 210 16% 90%;
+
+    --muted: 210 8% 17%;
+    --muted-foreground: 210 10% 67%;
+
+    --accent: 45 82% 58%;
+    --accent-foreground: 40 70% 10%;
+
+    --destructive: 0 68% 59%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 210 8% 24%;
+    --input: 210 8% 24%;
+    --ring: 194 78% 55%;
+
+    --nomi-yellow: 45 82% 58%;
+    --nomi-yellow-soft: 44 30% 17%;
+    --nomi-blue: 194 78% 55%;
+    --nomi-blue-soft: 194 28% 16%;
+    --nomi-blue-dark: 194 45% 78%;
+    --nomi-red: 0 68% 62%;
+    --nomi-red-soft: 0 26% 17%;
+    --nomi-green: 145 48% 55%;
+    --nomi-green-soft: 145 24% 16%;
+    --nomi-amber: 35 78% 58%;
+
+    --nutrient-carbs: 200 72% 58%;
+    --nutrient-protein: 0 65% 62%;
+    --nutrient-fat: 45 84% 58%;
+    --nutrient-fibre: 145 48% 55%;
+    --nutrient-sugar: 280 52% 68%;
+    --nutrient-fluids: 194 78% 55%;
+    --nutrient-vitd: 30 78% 60%;
+    --nutrient-calcium: 170 44% 56%;
+    --nutrient-iron: 0 56% 60%;
+
+    --rag-green: 145 48% 55%;
+    --rag-amber: 35 78% 58%;
+    --rag-red: 0 68% 62%;
+
+    --ai-card: 194 27% 15%;
+    --ai-card-foreground: 194 35% 88%;
+
+    --log-action: 145 48% 49%;
+    --log-action-foreground: 145 50% 8%;
+
+    --nav-bg: 210 9% 12%;
+    --nav-active: 194 78% 55%;
+    --nav-inactive: 210 10% 62%;
+
+    --sidebar-background: 210 10% 10%;
+    --sidebar-foreground: 210 18% 92%;
+    --sidebar-primary: 194 78% 55%;
+    --sidebar-primary-foreground: 200 55% 9%;
+    --sidebar-accent: 210 8% 18%;
+    --sidebar-accent-foreground: 210 16% 90%;
+    --sidebar-border: 210 8% 24%;
+    --sidebar-ring: 194 78% 55%;
+  }
 }
 
 @layer base {
