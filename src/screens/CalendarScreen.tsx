@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Clock, Utensils, Plus, X, Search, Camera, Mic, ArrowLeft, CalendarDays, Sparkles } from "lucide-react";
+import { Download, ChevronLeft, ChevronRight, Clock, Utensils, Plus, X, Search, Camera, Mic, ArrowLeft, CalendarDays, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
