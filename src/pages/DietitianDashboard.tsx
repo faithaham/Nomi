@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { sendMessage, useConversations } from "@/lib/messagesStore";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -221,6 +222,7 @@ const DietitianDashboard = () => {
   const [dismissedAlerts, setDismissedAlerts] = useState<number[]>([]);
   const [selectedMessagePatient, setSelectedMessagePatient] = useState(0);
   const [newMessage, setNewMessage] = useState("");
+  const conversations = useConversations();
   const [feedback, setFeedback] = useState("");
   const [selectedCalDay, setSelectedCalDay] = useState<number | null>(null);
   const [patientSearch, setPatientSearch] = useState("");
@@ -387,7 +389,11 @@ const DietitianDashboard = () => {
 
 
   const renderMessages = () => {
-    const convo = mockMessages[selectedMessagePatient];
+    const convo = conversations[selectedMessagePatient];
+    const sendDietitian = () => {
+      sendMessage(convo.patientId, "dietitian", newMessage);
+      setNewMessage("");
+    };
     return (
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col md:flex-row gap-4 h-auto md:h-[calc(100vh-140px)]">
         {/* Patient list */}
@@ -396,14 +402,14 @@ const DietitianDashboard = () => {
             <p className="text-sm font-semibold text-foreground">Conversations</p>
           </div>
           <div className="flex md:flex-col overflow-x-auto md:overflow-x-visible">
-            {mockMessages.map((m, i) =>
+            {conversations.map((m, i) =>
             <button
               key={m.patientId}
               onClick={() => setSelectedMessagePatient(i)}
               className={`w-full min-w-[160px] md:min-w-0 text-left p-3 border-b border-border transition-colors ${i === selectedMessagePatient ? "bg-primary/5" : "hover:bg-muted/30"}`}>
               
                 <p className="text-sm font-medium text-foreground">{m.patient}</p>
-                <p className="text-xs text-muted-foreground truncate mt-0.5">{m.preview}</p>
+                <p className="text-xs text-muted-foreground truncate mt-0.5">{m.messages[m.messages.length - 1]?.text}</p>
               </button>
             )}
           </div>
@@ -429,9 +435,10 @@ const DietitianDashboard = () => {
               placeholder="Type a message..."
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
+              onKeyDown={(e) => { if (e.key === "Enter") sendDietitian(); }}
               className="flex-1" />
             
-            <Button size="sm" className="bg-primary text-primary-foreground">
+            <Button size="sm" className="bg-primary text-primary-foreground" onClick={sendDietitian}>
               <Send className="w-4 h-4" />
             </Button>
           </div>
