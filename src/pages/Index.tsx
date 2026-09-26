@@ -6,6 +6,7 @@ import LogScreen from "@/screens/LogScreen";
 import CalendarScreen from "@/screens/CalendarScreen";
 import SummaryScreen from "@/screens/SummaryScreen";
 import ProfileScreen from "@/screens/ProfileScreen";
+import MessagesScreen from "@/screens/MessagesScreen";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("today");
@@ -18,6 +19,8 @@ const Index = () => {
         return <CalendarScreen onNavigateToLog={() => setActiveTab("log")} />;
       case "summary":
         return <SummaryScreen />;
+      case "messages":
+        return <MessagesScreen />;
       case "profile":
         return <ProfileScreen />;
       default:

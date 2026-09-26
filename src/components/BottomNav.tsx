@@ -1,4 +1,4 @@
-import { Home, Plus, Calendar, ClipboardList, User } from "lucide-react";
+import { Home, Plus, Calendar, ClipboardList, User, MessageSquare } from "lucide-react";
 
 interface BottomNavProps {
   activeTab: string;
@@ -10,6 +10,7 @@ const tabs = [
   { id: "calendar", icon: Calendar, label: "Calendar" },
   { id: "log", icon: Plus, label: "Log", isAction: true },
   { id: "summary", icon: ClipboardList, label: "Summary" },
+  { id: "messages", icon: MessageSquare, label: "Messages" },
   { id: "profile", icon: User, label: "Profile" },
 ];
 
