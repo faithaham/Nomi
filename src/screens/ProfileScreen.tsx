@@ -52,9 +52,6 @@ const ProfileScreen = () => {
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
         </div>
-        <p className="text-xs text-muted-foreground mt-2 ml-13 pl-[52px]">
-          "Hi Sarah — I noticed you've had a few meals this week without logging your Creon. Remember to take it with every meal and snack that contains fat or protein. It really helps with absorption. Let me know if you're having trouble remembering! 💊"
-        </p>
       </motion.div>
 
       {/* Menu items */}
@@ -65,7 +62,7 @@ const ProfileScreen = () => {
         transition={{ delay: 0.3 }}
       >
         {[
-          { icon: Stethoscope, label: "Nutritional Targets", sub: "Personalised to your condition" },
+          { icon: Stethoscope, label: "Nutrition Guidance", sub: "Personalised by your dietitian" },
           { icon: Bell, label: "Notifications", sub: "Meal reminders, dietitian messages" },
           { icon: Shield, label: "Privacy & Data Sharing", sub: "How your data is shared with NHS" },
         ].map((item) => (

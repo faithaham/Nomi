@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Flame, Lightbulb, TrendingUp, ShieldCheck, AlertTriangle } from "lucide-react";
+import { Flame, Lightbulb, Utensils, ShieldCheck, AlertTriangle } from "lucide-react";
 
-const weeklyData = [65, 72, 58, 80, 75, 88, 70];
+const weeklyData = [5, 6, 4, 7, 6, 8, 5];
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 const SummaryScreen = () => {
@@ -16,7 +16,7 @@ const SummaryScreen = () => {
         animate={{ opacity: 1, y: 0 }}>
         
         <h1 className="text-3xl font-bold tracking-tight text-foreground mb-1">Summary</h1>
-        <p className="text-sm text-muted-foreground mb-5">How you're managing your targets this week</p>
+        <p className="text-sm text-muted-foreground mb-5">Your food diary and clinical review for this week</p>
       </motion.div>
 
       {/* Period toggle */}
@@ -44,7 +44,7 @@ const SummaryScreen = () => {
         transition={{ delay: 0.15 }}>
         
         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-          Daily Targets Met %
+          Food diary entries
         </p>
         <div className="flex items-end justify-between gap-2 h-32">
           {weeklyData.map((val, i) =>
@@ -109,8 +109,8 @@ const SummaryScreen = () => {
           <div className="flex items-center gap-3">
             <ShieldCheck className="w-4 h-4 text-rag-green flex-shrink-0" />
             <div>
-              <p className="text-sm font-medium text-foreground">Energy intake on target</p>
-              <p className="text-xs text-muted-foreground">Averaging 2,180 kcal/day (target: 2,200)</p>
+              <p className="text-sm font-medium text-foreground">Energy intake remains stable</p>
+              <p className="text-xs text-muted-foreground">Averaging 2,180 kcal/day this week</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -123,8 +123,8 @@ const SummaryScreen = () => {
           <div className="flex items-center gap-3">
             <ShieldCheck className="w-4 h-4 text-rag-green flex-shrink-0" />
             <div>
-              <p className="text-sm font-medium text-foreground">Protein targets consistently met</p>
-              <p className="text-xs text-muted-foreground">Averaging 82g/day (target: 80g)</p>
+              <p className="text-sm font-medium text-foreground">Protein intake remains consistent</p>
+              <p className="text-xs text-muted-foreground">Averaging 82g/day this week</p>
             </div>
           </div>
         </div>

@@ -2,50 +2,43 @@ import { motion } from "framer-motion";
 
 interface Nutrient {
   name: string;
-  target: number;
+  guide: number;
   actual: number;
   color: string;
 }
 
 interface DualRingChartProps {
   nutrients: Nutrient[];
+  energyLogged: number;
   size?: number;
   className?: string;
 }
 
-const DualRingChart = ({ nutrients, size = 220, className = "" }: DualRingChartProps) => {
+const DualRingChart = ({ nutrients, energyLogged, size = 220, className = "" }: DualRingChartProps) => {
   const center = size / 2;
   const outerRadius = size / 2 - 8;
   const innerRadius = size / 2 - 32;
   const outerStroke = 16;
   const innerStroke = 14;
 
-  const totalTarget = nutrients.reduce((sum, n) => sum + n.target, 0);
-  const totalActual = nutrients.reduce((sum, n) => sum + n.actual, 0);
-  const overallPercent = Math.min(totalActual / totalTarget, 1);
+  // Each arc is an individual nutrient reading against the dietitian's guide.
+  // The values are never added together into a combined clinical score.
+  const buildSegments = (items: Nutrient[], radius: number) => {
+    const circumference = 2 * Math.PI * radius;
+    const slot = circumference / items.length;
+    const slotGap = 7;
 
-  // RAG color for outer ring
-  const getRagColor = (pct: number) => {
-    if (pct >= 0.8) return "hsl(var(--rag-green))";
-    if (pct >= 0.5) return "hsl(var(--rag-amber))";
-    return "hsl(var(--rag-red))";
+    return items.map((item, index) => ({
+      ...item,
+      radius,
+      circumference,
+      dashLength: Math.max(0, (slot - slotGap) * Math.min(item.actual / item.guide, 1)),
+      offset: -(index * slot),
+    }));
   };
 
-  // Inner ring: nutrient segments
-  const innerCircumference = 2 * Math.PI * innerRadius;
-  let cumulativeOffset = 0;
-  const segments = nutrients.map((n) => {
-    const fraction = n.target / totalTarget;
-    const dashLength = fraction * innerCircumference;
-    const gap = innerCircumference - dashLength;
-    const offset = -cumulativeOffset;
-    cumulativeOffset += dashLength;
-    return { ...n, dashLength, gap, offset };
-  });
-
-  // Outer ring
-  const outerCircumference = 2 * Math.PI * outerRadius;
-  const outerDash = overallPercent * outerCircumference;
+  const outerSegments = buildSegments(nutrients.slice(0, 3), outerRadius);
+  const innerSegments = buildSegments(nutrients.slice(3), innerRadius);
 
   return (
     <div className={`relative inline-flex items-center justify-center ${className}`}>
@@ -62,36 +55,22 @@ const DualRingChart = ({ nutrients, size = 220, className = "" }: DualRingChartP
           opacity={0.3} />
         
 
-        {/* Inner ring segments (target proportions) */}
-        {segments.map((seg, i) =>
+        {[...outerSegments, ...innerSegments].map((seg, i) =>
         <motion.circle
           key={seg.name}
-          cx={center} cy={center} r={innerRadius}
+          cx={center} cy={center} r={seg.radius}
           fill="none"
           stroke={seg.color}
-          strokeWidth={innerStroke}
-          strokeDasharray={`${seg.dashLength} ${seg.gap}`}
+          strokeWidth={seg.radius === outerRadius ? outerStroke : innerStroke}
+          strokeDasharray={`${seg.dashLength} ${seg.circumference - seg.dashLength}`}
           strokeDashoffset={seg.offset}
-          strokeLinecap="butt"
+          strokeLinecap="round"
           transform={`rotate(-90 ${center} ${center})`}
           initial={{ opacity: 0 }}
-          animate={{ opacity: 0.7 }}
+          animate={{ opacity: 0.85 }}
           transition={{ delay: i * 0.1, duration: 0.5 }} />
 
         )}
-
-        {/* Outer ring (progress fill) */}
-        <motion.circle
-          cx={center} cy={center} r={outerRadius}
-          fill="none"
-          stroke={getRagColor(overallPercent)}
-          strokeWidth={outerStroke}
-          strokeDasharray={`${outerDash} ${outerCircumference - outerDash}`}
-          strokeLinecap="round"
-          transform={`rotate(-90 ${center} ${center})`}
-          initial={{ strokeDasharray: `0 ${outerCircumference}` }}
-          animate={{ strokeDasharray: `${outerDash} ${outerCircumference - outerDash}` }}
-          transition={{ duration: 1.2, ease: "easeOut" }} />
         
       </svg>
 
@@ -103,9 +82,9 @@ const DualRingChart = ({ nutrients, size = 220, className = "" }: DualRingChartP
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5, duration: 0.4 }}>
           
-          {Math.round(overallPercent * 100)}%
+          {energyLogged.toLocaleString("en-GB")} kcal
         </motion.span>
-        <span className="text-center text-[sidebar-primary-foreground] text-sidebar-primary">on target</span>
+        <span className="text-center text-xs text-muted-foreground">logged today</span>
       </div>
     </div>);
 
