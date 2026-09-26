@@ -15,6 +15,7 @@ const initialMeds: Medication[] = [
   { id: "2", name: "Creon 25,000", dose: "2 caps", time: "Lunch", taken: false },
   { id: "3", name: "Creon 25,000", dose: "2 caps", time: "Dinner", taken: false },
   { id: "4", name: "Kaftrio", dose: "2 tabs", time: "Morning", taken: true },
+  { id: "5", name: "Vitamin D", dose: "1,000 IU", time: "Morning", taken: true },
 ];
 
 const MedicationTracker = () => {

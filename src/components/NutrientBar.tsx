@@ -3,13 +3,13 @@ import { motion } from "framer-motion";
 interface NutrientBarProps {
   name: string;
   actual: number;
-  target: number;
+  guide: number;
   unit: string;
   color: string;
 }
 
-const NutrientBar = ({ name, actual, target, unit, color }: NutrientBarProps) => {
-  const pct = Math.min(actual / target, 1);
+const NutrientBar = ({ name, actual, guide, unit, color }: NutrientBarProps) => {
+  const pct = Math.min(actual / guide, 1);
 
   return (
     <div className="flex items-center gap-3">
@@ -18,7 +18,7 @@ const NutrientBar = ({ name, actual, target, unit, color }: NutrientBarProps) =>
         <div className="flex justify-between items-baseline mb-1">
           <span className="text-sm font-medium text-foreground">{name}</span>
           <span className="text-xs text-muted-foreground">
-            {actual}{unit} / {target}{unit}
+            {actual}{unit} logged · guide {guide}{unit}
           </span>
         </div>
         <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
