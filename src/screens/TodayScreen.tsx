@@ -11,7 +11,7 @@ const nutrients = [
  { name: "Protein", guide: 80, actual: 34, unit: "g", color: "hsl(var(--nutrient-protein))" },
  { name: "Fat", guide: 65, actual: 41, unit: "g", color: "hsl(var(--nutrient-fat))" },
  { name: "Fibre", guide: 30, actual: 9, unit: "g", color: "hsl(var(--nutrient-fibre))" },
- { name: "Sugar", guide: 50, actual: 28, unit: "g", color: "hsl(var(--nutrient-sugar))" }];
+ { name: "Fluids", guide: 2000, actual: 1250, unit: "ml", color: "hsl(var(--nutrient-fluids))" }];
 
 // Which meals and ingredients today contributed to each nutrient
 const contributions: Record<string, { meal: string; time: string; items: { food: string; amount: number }[] }[]> = {
@@ -33,10 +33,10 @@ const contributions: Record<string, { meal: string; time: string; items: { food:
   { meal: "Breakfast", time: "08:10", items: [{ food: "Porridge with whole milk", amount: 4 }, { food: "Banana", amount: 2 }] },
   { meal: "Lunch", time: "12:48", items: [{ food: "Chicken & mayo sandwich", amount: 3 }] }],
 
-  Sugar: [
-  { meal: "Breakfast", time: "08:10", items: [{ food: "Banana", amount: 12 }] },
-  { meal: "Morning snack", time: "10:30", items: [{ food: "Flapjack", amount: 7 }] },
-  { meal: "Lunch", time: "12:48", items: [{ food: "Orange juice", amount: 9 }] }]
+  Fluids: [
+  { meal: "Breakfast", time: "08:10", items: [{ food: "Cup of tea", amount: 250 }, { food: "Glass of water", amount: 200 }] },
+  { meal: "Morning snack", time: "10:30", items: [{ food: "Glass of water", amount: 200 }] },
+  { meal: "Lunch", time: "12:48", items: [{ food: "Orange juice", amount: 300 }, { food: "Glass of water", amount: 300 }] }]
 
 };
 
