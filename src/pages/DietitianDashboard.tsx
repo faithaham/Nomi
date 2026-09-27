@@ -48,6 +48,7 @@ const mockPatients = [
   condition: "Cystic Fibrosis",
   lastLogged: "Today",
   lastLoggedDays: 0,
+  energyLogged: 1840,
   flags: [
   { label: "Enzymes missed", severity: "red" as const },
   { label: "Low fibre", severity: "amber" as const }],
@@ -67,6 +68,7 @@ const mockPatients = [
   condition: "Diabetes Type 2",
   lastLogged: "Yesterday",
   lastLoggedDays: 1,
+  energyLogged: 1960,
   flags: [
   { label: "Low fibre", severity: "amber" as const }],
 
@@ -85,6 +87,7 @@ const mockPatients = [
   condition: "Coeliac Disease",
   lastLogged: "3 days ago",
   lastLoggedDays: 3,
+  energyLogged: 1420,
   flags: [
   { label: "Not logging", severity: "red" as const },
   { label: "Low protein", severity: "red" as const },
@@ -105,6 +108,7 @@ const mockPatients = [
   condition: "High Cholesterol",
   lastLogged: "5 days ago",
   lastLoggedDays: 5,
+  energyLogged: 1180,
   flags: [
   { label: "Not logging", severity: "red" as const },
   { label: "Low fibre", severity: "red" as const },
@@ -125,6 +129,7 @@ const mockPatients = [
   condition: "Diabetes Type 1",
   lastLogged: "Today",
   lastLoggedDays: 0,
+  energyLogged: 2650,
   flags: [],
   alerts: false,
   nutrients: [
