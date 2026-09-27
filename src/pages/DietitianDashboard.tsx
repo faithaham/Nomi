@@ -48,18 +48,18 @@ const mockPatients = [
   condition: "Cystic Fibrosis",
   lastLogged: "Today",
   lastLoggedDays: 0,
+  energyLogged: 1840,
   flags: [
   { label: "Enzymes missed", severity: "red" as const },
   { label: "Low fibre", severity: "amber" as const }],
 
   alerts: true,
   nutrients: [
-  { name: "Carbohydrates", target: 250, actual: 162, unit: "g", color: "hsl(var(--nutrient-carbs))" },
-  { name: "Protein", target: 80, actual: 34, unit: "g", color: "hsl(var(--nutrient-protein))" },
-  { name: "Fat", target: 65, actual: 41, unit: "g", color: "hsl(var(--nutrient-fat))" },
-  { name: "Fibre", target: 30, actual: 9, unit: "g", color: "hsl(var(--nutrient-fibre))" },
-  { name: "Sugar", target: 50, actual: 28, unit: "g", color: "hsl(var(--nutrient-sugar))" },
-  { name: "Creon", target: 3, actual: 0, unit: "", color: "hsl(var(--nomi-amber))" }]
+  { name: "Carbohydrates", guide: 250, actual: 162, unit: "g", color: "hsl(var(--nutrient-carbs))" },
+  { name: "Protein", guide: 80, actual: 34, unit: "g", color: "hsl(var(--nutrient-protein))" },
+  { name: "Fat", guide: 65, actual: 41, unit: "g", color: "hsl(var(--nutrient-fat))" },
+  { name: "Fibre", guide: 30, actual: 9, unit: "g", color: "hsl(var(--nutrient-fibre))" },
+  { name: "Sugar", guide: 50, actual: 28, unit: "g", color: "hsl(var(--nutrient-sugar))" }]
 },
 {
   id: 2,
@@ -68,17 +68,17 @@ const mockPatients = [
   condition: "Diabetes Type 2",
   lastLogged: "Yesterday",
   lastLoggedDays: 1,
+  energyLogged: 1960,
   flags: [
   { label: "Low fibre", severity: "amber" as const }],
 
   alerts: false,
   nutrients: [
-  { name: "Carbohydrates", target: 200, actual: 130, unit: "g", color: "hsl(var(--nutrient-carbs))" },
-  { name: "Protein", target: 90, actual: 70, unit: "g", color: "hsl(var(--nutrient-protein))" },
-  { name: "Fat", target: 55, actual: 48, unit: "g", color: "hsl(var(--nutrient-fat))" },
-  { name: "Fibre", target: 35, actual: 15, unit: "g", color: "hsl(var(--nutrient-fibre))" },
-  { name: "Sugar", target: 45, actual: 30, unit: "g", color: "hsl(var(--nutrient-sugar))" },
-  { name: "Medication", target: 3, actual: 2, unit: "", color: "hsl(var(--nomi-amber))" }]
+  { name: "Carbohydrates", guide: 200, actual: 130, unit: "g", color: "hsl(var(--nutrient-carbs))" },
+  { name: "Protein", guide: 90, actual: 70, unit: "g", color: "hsl(var(--nutrient-protein))" },
+  { name: "Fat", guide: 55, actual: 48, unit: "g", color: "hsl(var(--nutrient-fat))" },
+  { name: "Fibre", guide: 35, actual: 15, unit: "g", color: "hsl(var(--nutrient-fibre))" },
+  { name: "Sugar", guide: 45, actual: 30, unit: "g", color: "hsl(var(--nutrient-sugar))" }]
 },
 {
   id: 3,
@@ -87,6 +87,7 @@ const mockPatients = [
   condition: "Coeliac Disease",
   lastLogged: "3 days ago",
   lastLoggedDays: 3,
+  energyLogged: 1420,
   flags: [
   { label: "Not logging", severity: "red" as const },
   { label: "Low protein", severity: "red" as const },
@@ -94,12 +95,11 @@ const mockPatients = [
 
   alerts: true,
   nutrients: [
-  { name: "Carbs", target: 240, actual: 100, unit: "g", color: "hsl(var(--nutrient-carbs))" },
-  { name: "Protein", target: 75, actual: 40, unit: "g", color: "hsl(var(--nutrient-protein))" },
-  { name: "Fat", target: 60, actual: 55, unit: "g", color: "hsl(var(--nutrient-fat))" },
-  { name: "Fibre", target: 28, actual: 10, unit: "g", color: "hsl(var(--nutrient-fibre))" },
-  { name: "Sugar", target: 50, actual: 42, unit: "g", color: "hsl(var(--nutrient-sugar))" },
-  { name: "Medication", target: 2, actual: 0, unit: "", color: "hsl(var(--nomi-amber))" }]
+  { name: "Carbs", guide: 240, actual: 100, unit: "g", color: "hsl(var(--nutrient-carbs))" },
+  { name: "Protein", guide: 75, actual: 40, unit: "g", color: "hsl(var(--nutrient-protein))" },
+  { name: "Fat", guide: 60, actual: 55, unit: "g", color: "hsl(var(--nutrient-fat))" },
+  { name: "Fibre", guide: 28, actual: 10, unit: "g", color: "hsl(var(--nutrient-fibre))" },
+  { name: "Sugar", guide: 50, actual: 42, unit: "g", color: "hsl(var(--nutrient-sugar))" }]
 },
 {
   id: 4,
@@ -108,6 +108,7 @@ const mockPatients = [
   condition: "High Cholesterol",
   lastLogged: "5 days ago",
   lastLoggedDays: 5,
+  energyLogged: 1180,
   flags: [
   { label: "Not logging", severity: "red" as const },
   { label: "Low fibre", severity: "red" as const },
@@ -115,12 +116,11 @@ const mockPatients = [
 
   alerts: true,
   nutrients: [
-  { name: "Carbs", target: 230, actual: 80, unit: "g", color: "hsl(var(--nutrient-carbs))" },
-  { name: "Protein", target: 85, actual: 50, unit: "g", color: "hsl(var(--nutrient-protein))" },
-  { name: "Fat", target: 50, actual: 45, unit: "g", color: "hsl(var(--nutrient-fat))" },
-  { name: "Fibre", target: 30, actual: 8, unit: "g", color: "hsl(var(--nutrient-fibre))" },
-  { name: "Sugar", target: 40, actual: 35, unit: "g", color: "hsl(var(--nutrient-sugar))" },
-  { name: "Medication", target: 2, actual: 1, unit: "", color: "hsl(var(--nomi-amber))" }]
+  { name: "Carbs", guide: 230, actual: 80, unit: "g", color: "hsl(var(--nutrient-carbs))" },
+  { name: "Protein", guide: 85, actual: 50, unit: "g", color: "hsl(var(--nutrient-protein))" },
+  { name: "Fat", guide: 50, actual: 45, unit: "g", color: "hsl(var(--nutrient-fat))" },
+  { name: "Fibre", guide: 30, actual: 8, unit: "g", color: "hsl(var(--nutrient-fibre))" },
+  { name: "Sugar", guide: 40, actual: 35, unit: "g", color: "hsl(var(--nutrient-sugar))" }]
 },
 {
   id: 5,
@@ -129,15 +129,15 @@ const mockPatients = [
   condition: "Diabetes Type 1",
   lastLogged: "Today",
   lastLoggedDays: 0,
+  energyLogged: 2650,
   flags: [],
   alerts: false,
   nutrients: [
-  { name: "Carbs", target: 220, actual: 210, unit: "g", color: "hsl(var(--nutrient-carbs))" },
-  { name: "Protein", target: 80, actual: 78, unit: "g", color: "hsl(var(--nutrient-protein))" },
-  { name: "Fat", target: 60, actual: 55, unit: "g", color: "hsl(var(--nutrient-fat))" },
-  { name: "Fibre", target: 30, actual: 28, unit: "g", color: "hsl(var(--nutrient-fibre))" },
-  { name: "Sugar", target: 45, actual: 20, unit: "g", color: "hsl(var(--nutrient-sugar))" },
-  { name: "Medication", target: 4, actual: 4, unit: "", color: "hsl(var(--nomi-amber))" }]
+  { name: "Carbs", guide: 220, actual: 210, unit: "g", color: "hsl(var(--nutrient-carbs))" },
+  { name: "Protein", guide: 80, actual: 78, unit: "g", color: "hsl(var(--nutrient-protein))" },
+  { name: "Fat", guide: 60, actual: 55, unit: "g", color: "hsl(var(--nutrient-fat))" },
+  { name: "Fibre", guide: 30, actual: 28, unit: "g", color: "hsl(var(--nutrient-fibre))" },
+  { name: "Sugar", guide: 45, actual: 20, unit: "g", color: "hsl(var(--nutrient-sugar))" }]
 }];
 
 
@@ -472,8 +472,8 @@ const DietitianDashboard = () => {
   const renderPatientProfile = () => {
     if (!selectedPatient) return null;
     const p = selectedPatient;
-    const deficient = p.nutrients.reduce((min, n) => n.actual / n.target < min.actual / min.target ? n : min, p.nutrients[0]);
-    const consistent = p.nutrients.reduce((max, n) => n.actual / n.target > max.actual / max.target ? n : max, p.nutrients[0]);
+    const deficient = p.nutrients.reduce((min, n) => n.actual / n.guide < min.actual / min.guide ? n : min, p.nutrients[0]);
+    const consistent = p.nutrients.reduce((max, n) => n.actual / n.guide > max.actual / max.guide ? n : max, p.nutrients[0]);
 
     return (
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
@@ -496,8 +496,8 @@ const DietitianDashboard = () => {
         {/* Insight cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
-          { label: "Most Deficient", value: deficient.name, sub: `${Math.round(deficient.actual / deficient.target * 100)}% of target`, color: "text-rag-red" },
-          { label: "Most Consistent", value: consistent.name, sub: `${Math.round(consistent.actual / consistent.target * 100)}% of target`, color: "text-nomi-green" },
+          { label: "Most Deficient", value: deficient.name, sub: `${Math.round(deficient.actual / deficient.guide * 100)}% of guide`, color: "text-rag-red" },
+          { label: "Most Consistent", value: consistent.name, sub: `${Math.round(consistent.actual / consistent.guide * 100)}% of guide`, color: "text-nomi-green" },
           { label: "Logging Streak", value: "5 days", sub: "Current streak", color: "text-primary" }].
           map((c) =>
           <Card key={c.label} className="border-border">
@@ -521,7 +521,7 @@ const DietitianDashboard = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col items-center pb-6">
-                <DualRingChart nutrients={p.nutrients} size={200} />
+                <DualRingChart nutrients={p.nutrients} energyLogged={p.energyLogged} size={200} />
               </CardContent>
             </Card>
 
@@ -532,13 +532,13 @@ const DietitianDashboard = () => {
               </CardHeader>
               <CardContent className="space-y-3">
                 {p.nutrients.map((n) => {
-                  const pct = Math.min(n.actual / n.target, 1);
+                  const pct = Math.min(n.actual / n.guide, 1);
                   const ragColor = pct >= 0.8 ? "bg-nomi-green" : pct >= 0.5 ? "bg-nomi-amber" : "bg-rag-red";
                   return (
                     <div key={n.name}>
                       <div className="flex justify-between text-xs mb-1">
                         <span className="font-medium text-foreground">{n.name}</span>
-                        <span className="text-muted-foreground">{n.actual}{n.unit} / {n.target}{n.unit}</span>
+                        <span className="text-muted-foreground">{n.actual}{n.unit} · guide {n.guide}{n.unit}</span>
                       </div>
                       <div className="h-2 rounded-full bg-muted">
                         <div className={`h-2 rounded-full ${ragColor} transition-all`} style={{ width: `${pct * 100}%` }} />
