@@ -58,6 +58,8 @@ const getGreeting = () => {
 
 const TodayScreen = () => {
   const [creonResponse, setCreonResponse] = useState<string | null>(null);
+  const [selectedNutrient, setSelectedNutrient] = useState<string | null>(null);
+  const selected = nutrients.find((n) => n.name === selectedNutrient) || null;
   return (
     <div className="px-5 pt-6 pb-28 max-w-lg mx-auto">
       {/* Greeting */}
