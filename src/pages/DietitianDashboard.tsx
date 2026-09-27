@@ -472,8 +472,8 @@ const DietitianDashboard = () => {
   const renderPatientProfile = () => {
     if (!selectedPatient) return null;
     const p = selectedPatient;
-    const deficient = p.nutrients.reduce((min, n) => n.actual / n.target < min.actual / min.target ? n : min, p.nutrients[0]);
-    const consistent = p.nutrients.reduce((max, n) => n.actual / n.target > max.actual / max.target ? n : max, p.nutrients[0]);
+    const deficient = p.nutrients.reduce((min, n) => n.actual / n.guide < min.actual / min.guide ? n : min, p.nutrients[0]);
+    const consistent = p.nutrients.reduce((max, n) => n.actual / n.guide > max.actual / max.guide ? n : max, p.nutrients[0]);
 
     return (
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
@@ -496,8 +496,8 @@ const DietitianDashboard = () => {
         {/* Insight cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
-          { label: "Most Deficient", value: deficient.name, sub: `${Math.round(deficient.actual / deficient.target * 100)}% of target`, color: "text-rag-red" },
-          { label: "Most Consistent", value: consistent.name, sub: `${Math.round(consistent.actual / consistent.target * 100)}% of target`, color: "text-nomi-green" },
+          { label: "Most Deficient", value: deficient.name, sub: `${Math.round(deficient.actual / deficient.guide * 100)}% of guide`, color: "text-rag-red" },
+          { label: "Most Consistent", value: consistent.name, sub: `${Math.round(consistent.actual / consistent.guide * 100)}% of guide`, color: "text-nomi-green" },
           { label: "Logging Streak", value: "5 days", sub: "Current streak", color: "text-primary" }].
           map((c) =>
           <Card key={c.label} className="border-border">
@@ -532,13 +532,13 @@ const DietitianDashboard = () => {
               </CardHeader>
               <CardContent className="space-y-3">
                 {p.nutrients.map((n) => {
-                  const pct = Math.min(n.actual / n.target, 1);
+                  const pct = Math.min(n.actual / n.guide, 1);
                   const ragColor = pct >= 0.8 ? "bg-nomi-green" : pct >= 0.5 ? "bg-nomi-amber" : "bg-rag-red";
                   return (
                     <div key={n.name}>
                       <div className="flex justify-between text-xs mb-1">
                         <span className="font-medium text-foreground">{n.name}</span>
-                        <span className="text-muted-foreground">{n.actual}{n.unit} / {n.target}{n.unit}</span>
+                        <span className="text-muted-foreground">{n.actual}{n.unit} · guide {n.guide}{n.unit}</span>
                       </div>
                       <div className="h-2 rounded-full bg-muted">
                         <div className={`h-2 rounded-full ${ragColor} transition-all`} style={{ width: `${pct * 100}%` }} />
