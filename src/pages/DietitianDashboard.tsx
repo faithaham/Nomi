@@ -58,8 +58,7 @@ const mockPatients = [
   { name: "Protein", guide: 80, actual: 34, unit: "g", color: "hsl(var(--nutrient-protein))" },
   { name: "Fat", guide: 65, actual: 41, unit: "g", color: "hsl(var(--nutrient-fat))" },
   { name: "Fibre", guide: 30, actual: 9, unit: "g", color: "hsl(var(--nutrient-fibre))" },
-  { name: "Sugar", guide: 50, actual: 28, unit: "g", color: "hsl(var(--nutrient-sugar))" },
-  { name: "Creon", target: 3, actual: 0, unit: "", color: "hsl(var(--nomi-amber))" }]
+  { name: "Sugar", guide: 50, actual: 28, unit: "g", color: "hsl(var(--nutrient-sugar))" }]
 },
 {
   id: 2,
@@ -77,8 +76,7 @@ const mockPatients = [
   { name: "Protein", guide: 90, actual: 70, unit: "g", color: "hsl(var(--nutrient-protein))" },
   { name: "Fat", guide: 55, actual: 48, unit: "g", color: "hsl(var(--nutrient-fat))" },
   { name: "Fibre", guide: 35, actual: 15, unit: "g", color: "hsl(var(--nutrient-fibre))" },
-  { name: "Sugar", guide: 45, actual: 30, unit: "g", color: "hsl(var(--nutrient-sugar))" },
-  { name: "Medication", target: 3, actual: 2, unit: "", color: "hsl(var(--nomi-amber))" }]
+  { name: "Sugar", guide: 45, actual: 30, unit: "g", color: "hsl(var(--nutrient-sugar))" }]
 },
 {
   id: 3,
@@ -98,8 +96,7 @@ const mockPatients = [
   { name: "Protein", guide: 75, actual: 40, unit: "g", color: "hsl(var(--nutrient-protein))" },
   { name: "Fat", guide: 60, actual: 55, unit: "g", color: "hsl(var(--nutrient-fat))" },
   { name: "Fibre", guide: 28, actual: 10, unit: "g", color: "hsl(var(--nutrient-fibre))" },
-  { name: "Sugar", guide: 50, actual: 42, unit: "g", color: "hsl(var(--nutrient-sugar))" },
-  { name: "Medication", target: 2, actual: 0, unit: "", color: "hsl(var(--nomi-amber))" }]
+  { name: "Sugar", guide: 50, actual: 42, unit: "g", color: "hsl(var(--nutrient-sugar))" }]
 },
 {
   id: 4,
@@ -119,8 +116,7 @@ const mockPatients = [
   { name: "Protein", guide: 85, actual: 50, unit: "g", color: "hsl(var(--nutrient-protein))" },
   { name: "Fat", guide: 50, actual: 45, unit: "g", color: "hsl(var(--nutrient-fat))" },
   { name: "Fibre", guide: 30, actual: 8, unit: "g", color: "hsl(var(--nutrient-fibre))" },
-  { name: "Sugar", guide: 40, actual: 35, unit: "g", color: "hsl(var(--nutrient-sugar))" },
-  { name: "Medication", target: 2, actual: 1, unit: "", color: "hsl(var(--nomi-amber))" }]
+  { name: "Sugar", guide: 40, actual: 35, unit: "g", color: "hsl(var(--nutrient-sugar))" }]
 },
 {
   id: 5,
@@ -136,8 +132,7 @@ const mockPatients = [
   { name: "Protein", guide: 80, actual: 78, unit: "g", color: "hsl(var(--nutrient-protein))" },
   { name: "Fat", guide: 60, actual: 55, unit: "g", color: "hsl(var(--nutrient-fat))" },
   { name: "Fibre", guide: 30, actual: 28, unit: "g", color: "hsl(var(--nutrient-fibre))" },
-  { name: "Sugar", guide: 45, actual: 20, unit: "g", color: "hsl(var(--nutrient-sugar))" },
-  { name: "Medication", target: 4, actual: 4, unit: "", color: "hsl(var(--nomi-amber))" }]
+  { name: "Sugar", guide: 45, actual: 20, unit: "g", color: "hsl(var(--nutrient-sugar))" }]
 }];
 
 
@@ -521,7 +516,7 @@ const DietitianDashboard = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col items-center pb-6">
-                <DualRingChart nutrients={p.nutrients} size={200} />
+                <DualRingChart nutrients={p.nutrients} energyLogged={p.energyLogged} size={200} />
               </CardContent>
             </Card>
 
