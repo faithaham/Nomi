@@ -143,17 +143,73 @@ const TodayScreen = () => {
 
       {/* Ring Chart */}
       <motion.div
-        className="flex justify-center mt-6 mb-6"
+        className="flex justify-center mt-6 mb-4"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}>
         
         <div className="text-center">
           <h2 className="text-sm font-semibold text-foreground mb-1">Today's dietary intake</h2>
-          <p className="text-xs text-muted-foreground mb-4">Each colour shows one nutrient against Sarah's dietitian guide.</p>
-          <DualRingChart nutrients={nutrients} energyLogged={1840} size={240} />
+          <p className="text-xs text-muted-foreground mb-4">
+            Tap a colour to see which meals and ingredients contributed to it.
+          </p>
+          <DualRingChart
+            nutrients={nutrients}
+            energyLogged={1840}
+            size={240}
+            selectedName={selectedNutrient}
+            onSelect={(name) => setSelectedNutrient((prev) => prev === name ? null : name)} />
         </div>
       </motion.div>
+
+      {/* Segment breakdown */}
+      {selected &&
+      <motion.div
+        className="mb-6 bg-card border border-border rounded-xl p-4"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}>
+        
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: selected.color }} />
+              <div>
+                <p className="text-sm font-semibold text-foreground">{selected.name}</p>
+                <p className="text-xs text-muted-foreground">
+                  {selected.actual}{selected.unit} logged · guide {selected.guide}{selected.unit}
+                </p>
+              </div>
+            </div>
+            <button
+            onClick={() => setSelectedNutrient(null)}
+            className="text-xs text-muted-foreground hover:text-foreground">
+            Close
+          </button>
+          </div>
+
+          <div className="mt-3 space-y-3">
+            {(contributions[selected.name] || []).map((entry) =>
+          <div key={entry.meal}>
+                <div className="flex items-baseline justify-between">
+                  <p className="text-xs font-medium text-foreground">{entry.meal}</p>
+                  <p className="text-xs text-muted-foreground">{entry.time}</p>
+                </div>
+                <ul className="mt-1 space-y-1">
+                  {entry.items.map((item) =>
+              <li key={item.food} className="flex justify-between text-xs text-muted-foreground">
+                      <span>{item.food}</span>
+                      <span className="text-foreground font-medium">+{item.amount}{selected.unit}</span>
+                    </li>
+              )}
+                </ul>
+              </div>
+          )}
+            {!contributions[selected.name] &&
+          <p className="text-xs text-muted-foreground">No meals logged for this nutrient yet today.</p>
+          }
+          </div>
+        </motion.div>
+      }
 
       {/* Nutrient breakdown */}
       <motion.div
@@ -162,13 +218,24 @@ const TodayScreen = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.35 }}>
         
-        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-          Nutrients logged today
-        </h2>
+        <div>
+          <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+            From the meals logged today
+          </h2>
+          <p className="text-xs text-muted-foreground mt-1 normal-case">
+            NOMI works out this breakdown from the meals and drinks Sarah has logged.
+          </p>
+        </div>
         {nutrients.map((n) =>
-        <NutrientBar key={n.name} {...n} />
+        <button
+          key={n.name}
+          onClick={() => setSelectedNutrient((prev) => prev === n.name ? null : n.name)}
+          className="w-full text-left">
+          <NutrientBar {...n} />
+        </button>
         )}
       </motion.div>
+
 
       <motion.div
         initial={{ opacity: 0, y: 15 }}
