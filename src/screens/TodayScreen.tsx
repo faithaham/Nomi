@@ -13,6 +13,34 @@ const nutrients = [
  { name: "Fibre", guide: 30, actual: 9, unit: "g", color: "hsl(var(--nutrient-fibre))" },
  { name: "Sugar", guide: 50, actual: 28, unit: "g", color: "hsl(var(--nutrient-sugar))" }];
 
+// Which meals and ingredients today contributed to each nutrient
+const contributions: Record<string, { meal: string; time: string; items: { food: string; amount: number }[] }[]> = {
+  Carbohydrates: [
+  { meal: "Breakfast", time: "08:10", items: [{ food: "Porridge with whole milk", amount: 48 }, { food: "Banana", amount: 24 }] },
+  { meal: "Morning snack", time: "10:30", items: [{ food: "Flapjack", amount: 28 }] },
+  { meal: "Lunch", time: "12:48", items: [{ food: "Chicken & mayo sandwich", amount: 38 }, { food: "Crisps", amount: 14 }, { food: "Orange juice", amount: 10 }] }],
+
+  Protein: [
+  { meal: "Breakfast", time: "08:10", items: [{ food: "Porridge with whole milk", amount: 9 }] },
+  { meal: "Lunch", time: "12:48", items: [{ food: "Chicken & mayo sandwich", amount: 23 }, { food: "Crisps", amount: 2 }] }],
+
+  Fat: [
+  { meal: "Breakfast", time: "08:10", items: [{ food: "Porridge with whole milk", amount: 11 }] },
+  { meal: "Morning snack", time: "10:30", items: [{ food: "Flapjack", amount: 9 }] },
+  { meal: "Lunch", time: "12:48", items: [{ food: "Chicken & mayo sandwich", amount: 15 }, { food: "Crisps", amount: 6 }] }],
+
+  Fibre: [
+  { meal: "Breakfast", time: "08:10", items: [{ food: "Porridge with whole milk", amount: 4 }, { food: "Banana", amount: 2 }] },
+  { meal: "Lunch", time: "12:48", items: [{ food: "Chicken & mayo sandwich", amount: 3 }] }],
+
+  Sugar: [
+  { meal: "Breakfast", time: "08:10", items: [{ food: "Banana", amount: 12 }] },
+  { meal: "Morning snack", time: "10:30", items: [{ food: "Flapjack", amount: 7 }] },
+  { meal: "Lunch", time: "12:48", items: [{ food: "Orange juice", amount: 9 }] }]
+
+};
+
+
 
 const recentMeal = {
   name: "Sandwich, crisps & orange juice",
