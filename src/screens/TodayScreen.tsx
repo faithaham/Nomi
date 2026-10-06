@@ -5,6 +5,9 @@ import DualRingChart from "@/components/DualRingChart";
 import NutrientBar from "@/components/NutrientBar";
 import RecentlyLogged from "@/components/RecentlyLogged";
 import NomiIntelligence from "@/components/NomiIntelligence";
+import { Button } from "@/components/ui/button";
+
+const energyLogged = 1840;
 
 const nutrients = [
  { name: "Carbohydrates", guide: 250, actual: 162, unit: "g", color: "hsl(var(--nutrient-carbs))" },
@@ -13,8 +16,43 @@ const nutrients = [
  { name: "Fibre", guide: 30, actual: 9, unit: "g", color: "hsl(var(--nutrient-fibre))" },
  { name: "Fluids", guide: 2000, actual: 1250, unit: "ml", color: "hsl(var(--nutrient-fluids))" }];
 
+type ContributionEntry = {
+  meal: string;
+  time: string;
+  items: { food: string; amount: number }[];
+};
+
+const energyContributions: ContributionEntry[] = [
+  {
+    meal: "Breakfast",
+    time: "08:10",
+    items: [
+      { food: "Porridge with whole milk", amount: 360 },
+      { food: "Banana", amount: 105 },
+      { food: "Cup of tea", amount: 35 }],
+
+  },
+  { meal: "Morning snack", time: "10:30", items: [{ food: "Flapjack", amount: 260 }] },
+  {
+    meal: "Lunch",
+    time: "12:48",
+    items: [
+      { food: "Chicken & mayo sandwich", amount: 515 },
+      { food: "Crisps", amount: 165 },
+      { food: "Orange juice", amount: 90 }],
+
+  },
+  {
+    meal: "Afternoon snack",
+    time: "15:35",
+    items: [
+      { food: "Greek yoghurt", amount: 190 },
+      { food: "Granola", amount: 120 }],
+
+  }];
+
 // Which meals and ingredients today contributed to each nutrient
-const contributions: Record<string, { meal: string; time: string; items: { food: string; amount: number }[] }[]> = {
+const contributions: Record<string, ContributionEntry[]> = {
   Carbohydrates: [
   { meal: "Breakfast", time: "08:10", items: [{ food: "Porridge with whole milk", amount: 48 }, { food: "Banana", amount: 24 }] },
   { meal: "Morning snack", time: "10:30", items: [{ food: "Flapjack", amount: 28 }] },
@@ -58,8 +96,13 @@ const getGreeting = () => {
 
 const TodayScreen = () => {
   const [creonResponse, setCreonResponse] = useState<string | null>(null);
-  const [selectedNutrient, setSelectedNutrient] = useState<string | null>(null);
-  const selected = nutrients.find((n) => n.name === selectedNutrient) || null;
+  const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
+  const selectedNutrient = nutrients.find((n) => n.name === selectedMetric) || null;
+  const selectedEnergy = selectedMetric === "Energy";
+  const selectedTitle = selectedEnergy ? "Energy (kcal)" : selectedNutrient?.name;
+  const selectedUnit = selectedEnergy ? "kcal" : selectedNutrient?.unit ?? "g";
+  const selectedColor = selectedEnergy ? "hsl(var(--accent))" : selectedNutrient?.color;
+  const selectedEntries = selectedEnergy ? energyContributions : selectedNutrient ? contributions[selectedNutrient.name] || [] : [];
   return (
     <div className="px-5 pt-6 pb-28 max-w-lg mx-auto">
       {/* Greeting */}
@@ -157,15 +200,17 @@ const TodayScreen = () => {
           </p>
           <DualRingChart
             nutrients={nutrients}
-            energyLogged={1840}
+            energyLogged={energyLogged}
             size={240}
-            selectedName={selectedNutrient}
-            onSelect={(name) => setSelectedNutrient((prev) => prev === name ? null : name)} />
+            selectedName={selectedMetric}
+            onSelect={(name) => setSelectedMetric((prev) => prev === name ? null : name)}
+            energySelected={selectedEnergy}
+            onEnergySelect={() => setSelectedMetric((prev) => prev === "Energy" ? null : "Energy")} />
         </div>
       </motion.div>
 
       {/* Segment breakdown */}
-      {selected &&
+      {selectedTitle && selectedColor &&
       <motion.div
         className="mb-6 bg-card border border-border rounded-xl p-4"
         initial={{ opacity: 0, y: 8 }}
@@ -174,23 +219,28 @@ const TodayScreen = () => {
         
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: selected.color }} />
+              <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: selectedColor }} />
               <div>
-                <p className="text-sm font-semibold text-foreground">{selected.name}</p>
+                <p className="text-sm font-semibold text-foreground">{selectedTitle}</p>
                 <p className="text-xs text-muted-foreground">
-                  {selected.actual}{selected.unit} logged · guide {selected.guide}{selected.unit}
+                  {selectedEnergy ?
+                `${energyLogged.toLocaleString("en-GB")} kcal logged from meals and drinks` :
+                `${selectedNutrient?.actual}${selectedNutrient?.unit} logged · guide ${selectedNutrient?.guide}${selectedNutrient?.unit}`}
                 </p>
               </div>
             </div>
-            <button
-            onClick={() => setSelectedNutrient(null)}
-            className="text-xs text-muted-foreground hover:text-foreground">
+            <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() => setSelectedMetric(null)}
+            className="h-auto px-2 py-1 text-xs text-muted-foreground hover:text-foreground">
             Close
-          </button>
+          </Button>
           </div>
 
           <div className="mt-3 space-y-3">
-            {(contributions[selected.name] || []).map((entry) =>
+            {selectedEntries.map((entry) =>
           <div key={entry.meal}>
                 <div className="flex items-baseline justify-between">
                   <p className="text-xs font-medium text-foreground">{entry.meal}</p>
@@ -200,20 +250,20 @@ const TodayScreen = () => {
                   {entry.items.map((item) =>
               <li key={item.food} className="flex justify-between text-xs text-muted-foreground">
                       <span>{item.food}</span>
-                      <span className="text-foreground font-medium">+{item.amount}{selected.unit}</span>
+                      <span className="text-foreground font-medium">+{item.amount}{selectedUnit}</span>
                     </li>
               )}
                 </ul>
               </div>
           )}
-            {!contributions[selected.name] &&
-          <p className="text-xs text-muted-foreground">No meals logged for this nutrient yet today.</p>
+            {selectedEntries.length === 0 &&
+          <p className="text-xs text-muted-foreground">No meals logged for this breakdown yet today.</p>
           }
           </div>
         </motion.div>
       }
 
-      {/* Nutrient breakdown */}
+      {/* Meal-derived breakdown */}
       <motion.div
         className="space-y-3 mb-6"
         initial={{ opacity: 0, y: 15 }}
@@ -228,11 +278,32 @@ const TodayScreen = () => {
             NOMI works out this breakdown from the meals and drinks Sarah has logged.
           </p>
         </div>
+        <button
+          type="button"
+          onClick={() => setSelectedMetric((prev) => prev === "Energy" ? null : "Energy")}
+          className={`w-full text-left rounded-lg border p-3 transition-colors ${
+          selectedEnergy ? "border-primary bg-primary/10" : "border-border bg-card hover:bg-muted"}`}
+        >
+          <div className="flex items-center gap-3">
+            <span className="w-2 h-2 rounded-full flex-shrink-0 bg-accent" />
+            <div className="flex-1 min-w-0">
+              <div className="flex justify-between items-baseline gap-3">
+                <span className="text-sm font-medium text-foreground">Energy (kcal)</span>
+                <span className="text-xs text-muted-foreground">
+                  {energyLogged.toLocaleString("en-GB")} kcal logged
+                </span>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                See which meals, snacks and drinks contributed calories today.
+              </p>
+            </div>
+          </div>
+        </button>
         {nutrients.map((n) =>
         <button
           key={n.name}
-          onClick={() => setSelectedNutrient((prev) => prev === n.name ? null : n.name)}
-          className="w-full text-left">
+          onClick={() => setSelectedMetric((prev) => prev === n.name ? null : n.name)}
+          className={`w-full text-left rounded-lg transition-colors ${selectedMetric === n.name ? "bg-primary/10" : ""}`}>
           <NutrientBar {...n} />
         </button>
         )}

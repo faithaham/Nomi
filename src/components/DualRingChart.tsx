@@ -15,6 +15,8 @@ interface DualRingChartProps {
   className?: string;
   selectedName?: string | null;
   onSelect?: (name: string) => void;
+  energySelected?: boolean;
+  onEnergySelect?: () => void;
 }
 
 const DualRingChart = ({
@@ -24,6 +26,8 @@ const DualRingChart = ({
   className = "",
   selectedName = null,
   onSelect,
+  energySelected = false,
+  onEnergySelect,
 }: DualRingChartProps) => {
   const center = size / 2;
   const outerRadius = size / 2 - 8;
@@ -116,6 +120,26 @@ const DualRingChart = ({
               guide {selected.guide}{selected.unit ?? "g"}
             </span>
           </> :
+
+        onEnergySelect ?
+        <button
+          type="button"
+          aria-pressed={energySelected}
+          aria-label="Show where today's calories came from"
+          onClick={onEnergySelect}
+          className={`pointer-events-auto rounded-lg px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+          energySelected ? "bg-primary/10" : "hover:bg-muted"}`}
+        >
+            <motion.span
+            className="block font-bold text-foreground text-base px-0"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 0.4 }}>
+
+              {energyLogged.toLocaleString("en-GB")} kcal
+            </motion.span>
+            <span className="block text-center text-xs text-muted-foreground">logged today</span>
+          </button> :
 
         <>
             <motion.span
