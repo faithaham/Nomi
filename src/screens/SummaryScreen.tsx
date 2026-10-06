@@ -91,7 +91,7 @@ const SummaryScreen = () => {
           </span>
         </div>
         <p className="text-sm text-foreground leading-relaxed">
-          NOMI has noticed your fibre intake has improved by 20% this week. Consistent fibre helps with bowel movement regularity — keep it up!
+          NOMI has noticed your fibre intake increased this week — <span className="font-semibold">porridge with seeds</span> at breakfast and <span className="font-semibold">wholemeal bread</span> at lunch were the main contributors. Keeping these in your diary helps NOMI show your dietitian what's working.
         </p>
       </motion.div>
 
