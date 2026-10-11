@@ -19,7 +19,7 @@ const logTab = { id: "log", icon: Plus, label: "Log" };
 const BottomNav = ({ activeTab, onTabChange }: BottomNavProps) => {
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-nav-bg border-t border-border safe-bottom z-50">
-      <div className="relative flex items-end justify-around px-2 pt-1 pb-2 max-w-lg mx-auto">
+      <div className="relative flex items-end max-w-lg mx-auto px-2 pt-1 pb-2">
         {/* Centred Log action button */}
         <button
           onClick={() => onTabChange(logTab.id)}
@@ -39,11 +39,11 @@ const BottomNav = ({ activeTab, onTabChange }: BottomNavProps) => {
 
           return (
             <Fragment key={tab.id}>
-              {/* Spacer keeps the centre clear for the Log button */}
-              {index === 3 && <div className="w-14" aria-hidden="true" />}
+              {/* Equal-width spacer keeps the centre clear for the Log button */}
+              {index === 2 && <div className="flex-1 min-w-0" aria-hidden="true" />}
               <button
                 onClick={() => onTabChange(tab.id)}
-                className="flex flex-col items-center py-1 px-3 transition-colors"
+                className="flex-1 min-w-0 flex flex-col items-center py-1"
               >
                 <Icon
                   className={`w-5 h-5 transition-colors ${
