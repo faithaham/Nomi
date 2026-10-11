@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Home, Plus, Calendar, ClipboardList, User, MessageSquare } from "lucide-react";
 
 interface BottomNavProps {
