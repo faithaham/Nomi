@@ -99,7 +99,7 @@ const TodayScreen = () => {
   const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
   const selectedNutrient = nutrients.find((n) => n.name === selectedMetric) || null;
   const selectedEnergy = selectedMetric === "Energy";
-  const selectedTitle = selectedEnergy ? "Energy (kcal)" : selectedNutrient?.name;
+  const selectedTitle = selectedEnergy ? "Energy " : selectedNutrient?.name;
   const selectedUnit = selectedEnergy ? "kcal" : selectedNutrient?.unit ?? "g";
   const selectedColor = selectedEnergy ? "hsl(var(--accent))" : selectedNutrient?.color;
   const selectedEntries = selectedEnergy ? energyContributions : selectedNutrient ? contributions[selectedNutrient.name] || [] : [];
