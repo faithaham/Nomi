@@ -37,25 +37,28 @@ const BottomNav = ({ activeTab, onTabChange }: BottomNavProps) => {
           const Icon = tab.icon;
 
           return (
-            <button
-              key={tab.id}
-              onClick={() => onTabChange(tab.id)}
-              className="flex flex-col items-center py-1 px-3 transition-colors"
-            >
-              <Icon
-                className={`w-5 h-5 transition-colors ${
-                  isActive ? "text-nav-active" : "text-nav-inactive"
-                }`}
-                strokeWidth={isActive ? 2.5 : 2}
-              />
-              <span
-                className={`text-[10px] mt-0.5 font-medium transition-colors ${
-                  isActive ? "text-nav-active" : "text-nav-inactive"
-                }`}
+            <Fragment key={tab.id}>
+              {/* Spacer keeps the centre clear for the Log button */}
+              {index === 3 && <div className="w-14" aria-hidden="true" />}
+              <button
+                onClick={() => onTabChange(tab.id)}
+                className="flex flex-col items-center py-1 px-3 transition-colors"
               >
-                {tab.label}
-              </span>
-            </button>
+                <Icon
+                  className={`w-5 h-5 transition-colors ${
+                    isActive ? "text-nav-active" : "text-nav-inactive"
+                  }`}
+                  strokeWidth={isActive ? 2.5 : 2}
+                />
+                <span
+                  className={`text-[10px] mt-0.5 font-medium transition-colors ${
+                    isActive ? "text-nav-active" : "text-nav-inactive"
+                  }`}
+                >
+                  {tab.label}
+                </span>
+              </button>
+            </Fragment>
           );
         })}
       </div>
