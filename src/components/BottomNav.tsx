@@ -8,11 +8,12 @@ interface BottomNavProps {
 const tabs = [
   { id: "today", icon: Home, label: "Today" },
   { id: "calendar", icon: Calendar, label: "Calendar" },
-  { id: "log", icon: Plus, label: "Log", isAction: true },
   { id: "summary", icon: ClipboardList, label: "Summary" },
   { id: "messages", icon: MessageSquare, label: "Messages" },
   { id: "profile", icon: User, label: "Profile" },
 ];
+
+const logTab = { id: "log", icon: Plus, label: "Log" };
 
 const BottomNav = ({ activeTab, onTabChange }: BottomNavProps) => {
   return (
