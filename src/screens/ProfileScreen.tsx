@@ -1,9 +1,17 @@
 import { motion } from "framer-motion";
-import { Bell, ChevronRight, Shield, User, Stethoscope, Link2 } from "lucide-react";
+import { ArrowLeft, Bell, ChevronRight, Shield, User, Stethoscope, Link2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-const ProfileScreen = () => {
+interface ProfileScreenProps {
+  onBack: () => void;
+}
+
+const ProfileScreen = ({ onBack }: ProfileScreenProps) => {
   return (
-    <div className="px-5 pt-6 pb-28 max-w-lg mx-auto">
+    <div className="px-5 pt-20 pb-28 max-w-lg mx-auto">
+      <Button variant="ghost" onClick={onBack} className="mb-4 gap-2 px-0 hover:bg-transparent">
+        <ArrowLeft /> Back to Today
+      </Button>
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -47,7 +55,7 @@ const ProfileScreen = () => {
             <Stethoscope className="w-5 h-5 text-primary" />
           </div>
           <div className="flex-1">
-             <p className="text-sm font-medium text-foreground"><p className="text-sm font-medium text-foreground">Faith Ahamefula</p></p>
+             <p className="text-sm font-medium text-foreground">Faith Ahamefula</p>
              <p className="text-xs text-muted-foreground">Registered Dietitian</p>
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />

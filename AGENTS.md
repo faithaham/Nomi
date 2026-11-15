@@ -1,0 +1,2 @@
+## Patient navigation
+- Keep patient screen selection in the patient page and pass explicit navigation callbacks to Today and Profile; this keeps the avatar, back action, and bottom navigation in sync.

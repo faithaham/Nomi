@@ -22,9 +22,9 @@ const Index = () => {
       case "messages":
         return <MessagesScreen />;
       case "profile":
-        return <ProfileScreen />;
+        return <ProfileScreen onBack={() => setActiveTab("today")} />;
       default:
-        return <TodayScreen />;
+        return <TodayScreen onOpenProfile={() => setActiveTab("profile")} />;
     }
   };
 

@@ -6,6 +6,7 @@ import NutrientBar from "@/components/NutrientBar";
 import RecentlyLogged from "@/components/RecentlyLogged";
 import NomiIntelligence from "@/components/NomiIntelligence";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const energyLogged = 1840;
 
@@ -94,7 +95,11 @@ const getGreeting = () => {
   return "Good evening";
 };
 
-const TodayScreen = () => {
+interface TodayScreenProps {
+  onOpenProfile: () => void;
+}
+
+const TodayScreen = ({ onOpenProfile }: TodayScreenProps) => {
   const [creonResponse, setCreonResponse] = useState<string | null>(null);
   const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
   const selectedNutrient = nutrients.find((n) => n.name === selectedMetric) || null;
@@ -104,15 +109,33 @@ const TodayScreen = () => {
   const selectedColor = selectedEnergy ? "hsl(var(--accent))" : selectedNutrient?.color;
   const selectedEntries = selectedEnergy ? energyContributions : selectedNutrient ? contributions[selectedNutrient.name] || [] : [];
   return (
-    <div className="px-5 pt-6 pb-28 max-w-lg mx-auto">
+    <div className="px-5 pt-20 pb-28 max-w-lg mx-auto">
       {/* Greeting */}
       <motion.div
+        className="flex items-center justify-between gap-4"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}>
         
-        <p className="text-muted-foreground text-sm">{getGreeting()}</p>
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">Sarah</h1>
+        <div>
+          <p className="text-muted-foreground text-sm">{getGreeting()}</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Sarah</h1>
+        </div>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              onClick={onOpenProfile}
+              aria-label="Open profile"
+              variant="outline"
+              size="icon"
+              className="relative h-12 w-12 shrink-0 rounded-full border-primary/20 bg-nomi-blue-soft text-primary text-base font-bold hover:bg-nomi-blue-soft"
+            >
+              SJ
+              <span aria-hidden="true" className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-background bg-nomi-green" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Profile</TooltipContent>
+        </Tooltip>
       </motion.div>
 
       {/* NOMI Gentle Prompt — Enzyme not logged */}
